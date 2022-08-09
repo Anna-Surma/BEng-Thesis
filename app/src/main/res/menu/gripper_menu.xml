@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/autoFragment"
+        android:icon="@drawable/auto_mode"
+        android:title="AUTO">
+    </item>
+    <item
+        android:id="@+id/manualFragment"
+        android:icon="@drawable/manual_mode"
+        android:title="MANUAL">
+    </item>
+    <item
+        android:id="@+id/blockFragment"
+        android:icon="@drawable/block_mode"
+        android:title="BLOCK">
+    </item>
+</menu>
