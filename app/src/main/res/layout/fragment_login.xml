@@ -51,36 +51,6 @@
             android:layout_gravity="center">
         </Button>
 
-        <TextView
-            android:id="@+id/PLC_data"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="brak"
-            android:textSize="30sp">
-        </TextView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="WYSŁANE?"
-            android:textSize="20sp">
-        </TextView>
-
-        <TextView
-            android:id="@+id/write_data"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="jeszcze nie"
-            android:textSize="20sp">
-        </TextView>
-
-        <Button
-            android:id="@+id/get_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="GET">
-        </Button>
-
     </LinearLayout>
 
 </FrameLayout>

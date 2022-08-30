@@ -1,4 +1,4 @@
-package com.example.inzynierka_app.model
+package com.example.inzynierka_app.api
 
 import android.content.Context
 import android.util.Log
@@ -12,7 +12,8 @@ class AuthInterceptor(context: Context) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val requestBuilder = chain.request().newBuilder()
         sessionManager.fetchAuthToken()?.let {
-            requestBuilder.addHeader("Authorization", "Bearer $it")
+            requestBuilder
+                .addHeader("X-Auth-Token", it)
             Log.i("LoginAuth", "Bearer $it")
         }
         return chain.proceed(requestBuilder.build())

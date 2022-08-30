@@ -55,4 +55,6 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
 
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.24'
+
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.3.1'
 }

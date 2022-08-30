@@ -8,7 +8,6 @@ data class WriteDataRequest(var id: Int,
                             var params: ParamsWriteVar
                             )
 
-data class ParamsWriteVar(@SerializedName("var")
-                          var params_var:String,
+data class ParamsWriteVar(val `var`: String,
                           var value: Int
                           )
