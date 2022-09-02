@@ -10,7 +10,7 @@ interface ApiService {
     fun login(@Body request: LoginRequest): Call<LoginResponse>
 
     @POST(Constants.LOGIN_URL)
-    fun readData(@Body request: ReadDataRequest): Call<DataResponse>
+    fun readData(@Body request: ReadDataRequest): Call<ReadDataResponse>
 
     @POST(Constants.LOGIN_URL)
     fun write_data(@Body request: WriteDataRequest): Call<DataResponse>

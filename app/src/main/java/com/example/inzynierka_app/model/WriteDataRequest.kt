@@ -9,5 +9,5 @@ data class WriteDataRequest(var id: Int,
                             )
 
 data class ParamsWriteVar(val `var`: String,
-                          var value: Int
+                          var value: Boolean
                           )

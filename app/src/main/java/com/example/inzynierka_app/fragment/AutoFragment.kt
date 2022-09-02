@@ -18,9 +18,6 @@ class AutoFragment : Fragment() {
 
     private lateinit var viewModel: AutoViewModel
 
-    private lateinit var read_param: Params
-    private lateinit var write_param: ParamsWriteVar
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,19 +27,63 @@ class AutoFragment : Fragment() {
 
         viewModel = ViewModelProvider(this).get(AutoViewModel::class.java)
 
-        read_param = Params("\"Data\".Random_Int")
-        write_param = ParamsWriteVar("\"Data\".Random_Int", 7)
-        binding.getButton.setOnClickListener {
-            viewModel.readData(read_param)
-            viewModel.write_data(write_param)
-        }
-
-        viewModel.readData.observe(viewLifecycleOwner) {
-            if (it != null) {
-                binding.PLCData.text = viewModel.readData.value.toString()
+        binding.activeButton.setOnCheckedChangeListener { _, isChecked ->
+            if(isChecked) {
+                viewModel.activeControl()
+            }
+            else {
+                viewModel.deactiveControl()
+                viewModel.stopAuto()
             }
         }
 
+        binding.startButton.setOnClickListener {
+            viewModel.startAuto()
+            viewModel.resetCycles()
+            viewModel.readData(Params("\"Data\".licznik_cykli"))
+        }
+
+        binding.stopButton.setOnClickListener {
+            viewModel.stopAuto()
+        }
+
+        viewModel.controlActive.observe(viewLifecycleOwner) {
+            if (it != null) {
+                if(viewModel.controlActive.value == true){
+                    viewModel.write_data(ParamsWriteVar("\"Data\".app_control", true))
+                }
+                else{
+                    viewModel.write_data(ParamsWriteVar("\"Data\".app_control", false))
+                }
+            }
+        }
+
+        viewModel.autoMode.observe(viewLifecycleOwner) {
+            if (it != null) {
+                if(viewModel.controlActive.value == true){
+                    if(viewModel.autoMode.value == true){
+                        viewModel.write_data(ParamsWriteVar("\"Data\".app_auto", true))
+                    }
+                    else
+                        viewModel.write_data(ParamsWriteVar("\"Data\".app_auto", false))
+                }
+                else{
+                    viewModel.write_data(ParamsWriteVar("\"Data\".app_auto", false))
+                }
+            }
+        }
+
+        viewModel.resetCycles.observe(viewLifecycleOwner) {
+            if (it != null){
+                viewModel.write_data(ParamsWriteVar("\"Data\".app_reset_liczba_cykli", true))
+            }
+        }
+
+        viewModel.readData.observe(viewLifecycleOwner) {
+            if (it != null){
+                binding.cyclesNumber.text = it.toString()
+            }
+        }
         return view
     }
 
