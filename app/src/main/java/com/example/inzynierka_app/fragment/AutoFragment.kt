@@ -75,13 +75,21 @@ class AutoFragment : Fragment() {
 
         viewModel.resetCycles.observe(viewLifecycleOwner) {
             if (it != null){
-                viewModel.write_data(ParamsWriteVar("\"Data\".app_reset_liczba_cykli", true))
+                if (viewModel.resetCycles.value == true){
+                    viewModel.write_data(ParamsWriteVar("\"Data\".app_reset_liczba_cykli", true))
+                    viewModel.stopResetCycles()
+                }
+                else{
+                    viewModel.write_data(ParamsWriteVar("\"Data\".app_reset_liczba_cykli", false))
+                }
             }
         }
 
         viewModel.readData.observe(viewLifecycleOwner) {
             if (it != null){
-                binding.cyclesNumber.text = it.toString()
+                if(it.toString() != binding.cyclesNumber.text){
+                    binding.cyclesNumber.text = it.toString()
+                }
             }
         }
         return view

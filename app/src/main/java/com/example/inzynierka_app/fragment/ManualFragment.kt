@@ -5,14 +5,48 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.inzynierka_app.R
+import androidx.lifecycle.ViewModelProvider
+import com.example.inzynierka_app.databinding.FragmentManualBinding
+import com.example.inzynierka_app.model.ParamsWriteVar
+import com.example.inzynierka_app.viewmodel.ManualViewModel
 
 class ManualFragment : Fragment() {
+
+    private var _binding: FragmentManualBinding? = null
+    private val binding get() = _binding!!
+
+    private lateinit var viewModel: ManualViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_manual, container, false)
+
+        _binding = FragmentManualBinding.inflate(inflater, container, false)
+        val view = binding.root
+
+        viewModel = ViewModelProvider(this).get(ManualViewModel::class.java)
+
+        binding.stepButton.setOnClickListener {
+            viewModel.startStep()
+        }
+
+        viewModel.manualMode.observe(viewLifecycleOwner) {
+            if (it != null) {
+                    if(viewModel.manualMode.value == true){
+                        viewModel.write_data(ParamsWriteVar("\"Data\".app_krok", true))
+                        viewModel.stopStep()
+                    }
+                    else
+                        viewModel.write_data(ParamsWriteVar("\"Data\".app_krok", false))
+            }
+        }
+
+        return view
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

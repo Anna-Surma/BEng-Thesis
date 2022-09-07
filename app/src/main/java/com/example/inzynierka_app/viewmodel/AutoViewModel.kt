@@ -97,4 +97,8 @@ class AutoViewModel : ViewModel() {
     fun resetCycles(){
         _resetCycles.value = true
     }
+
+    fun stopResetCycles(){
+        _resetCycles.value = false
+    }
 }
