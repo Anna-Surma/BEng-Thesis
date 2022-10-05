@@ -14,4 +14,7 @@ interface ApiService {
 
     @POST(Constants.LOGIN_URL)
     fun write_data(@Body request: WriteDataRequest): Call<DataResponse>
+
+    @POST(Constants.LOGIN_URL)
+    fun readArray(@Body request: ReadArrayRequest): Call<ReadArrayResponse>
 }
