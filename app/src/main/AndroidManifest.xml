@@ -14,17 +14,10 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/Theme.Inzynierka_app">
         <activity
-            android:name=".viewmodel.GripperViewModel"
-            android:exported="false" />
-        <activity
-            android:name=".GripperActivity"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

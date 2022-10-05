@@ -7,7 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.inzynierka_app.GripperActivity
+import androidx.navigation.fragment.findNavController
+import com.example.inzynierka_app.R
 import com.example.inzynierka_app.api.ApiClient
 import com.example.inzynierka_app.api.SessionManager
 import com.example.inzynierka_app.databinding.FragmentLoginBinding
@@ -37,15 +38,15 @@ class LoginFragment : Fragment() {
 
         binding.loginButton.setOnClickListener {
             viewModel.onSignInButtonClicked()
+            findNavController().navigate(R.id.action_loginFragment_to_autoFragment)
         }
 
-        viewModel.logInEvent.observe(viewLifecycleOwner) {
-            if (it.canLogIn && it.token != null) {
-                sessionManager.saveAuthToken(it.token!!)
-                val intent = Intent(activity, GripperActivity::class.java)
-                startActivity(intent)
-            }
-        }
+     //   viewModel.logInEvent.observe(viewLifecycleOwner) {
+         //   if (it.canLogIn && it.token != null) {
+            //    sessionManager.saveAuthToken(it.token!!)
+       //     findNavController().navigate(R.id.action_loginFragment_to_autoFragment)
+       // }
+
         return view
     }
 

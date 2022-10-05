@@ -19,7 +19,11 @@
         android:id="@+id/loginFragment"
         android:name="com.example.inzynierka_app.fragment.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_autoFragment"
+            app:destination="@id/autoFragment" />
+    </fragment>
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.example.inzynierka_app.fragment.SplashFragment"
@@ -32,4 +36,18 @@
             app:exitAnim="@anim/nav_default_exit_anim"
  />
     </fragment>
+    <fragment
+        android:id="@+id/manualFragment"
+        android:name="com.example.inzynierka_app.fragment.ManualFragment"
+        android:label="fragment_manual"
+        tools:layout="@layout/fragment_manual" />
+    <fragment
+        android:id="@+id/autoFragment"
+        android:name="com.example.inzynierka_app.fragment.AutoFragment"
+        android:label="fragment_auto"
+        tools:layout="@layout/fragment_auto" />
+    <fragment
+        android:id="@+id/blockFragment"
+        android:name="com.example.inzynierka_app.fragment.BlockFragment"
+        android:label="fragment_block" />
 </navigation>
