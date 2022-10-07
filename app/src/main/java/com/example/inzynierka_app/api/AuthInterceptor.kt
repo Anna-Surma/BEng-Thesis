@@ -1,14 +1,17 @@
 package com.example.inzynierka_app.api
 
-import android.content.Context
 import android.util.Log
 import okhttp3.Interceptor
 import okhttp3.Response
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class AuthInterceptor(context: Context) : Interceptor {
+@Singleton
+class AuthInterceptor @Inject constructor(
+    private val sessionManager: SessionManager
+): Interceptor {
 
-    private val sessionManager = SessionManager(context)
-
+    //TODO Why interceptor is call during all request? is that correct?
     override fun intercept(chain: Interceptor.Chain): Response {
         val requestBuilder = chain.request().newBuilder()
         sessionManager.fetchAuthToken()?.let {

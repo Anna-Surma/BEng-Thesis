@@ -1,18 +1,19 @@
 package com.example.inzynierka_app.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.inzynierka_app.api.ApiClient
-import com.example.inzynierka_app.model.DataResponse
-import com.example.inzynierka_app.model.ParamsWriteVar
-import com.example.inzynierka_app.model.WriteDataRequest
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import androidx.lifecycle.viewModelScope
+import com.example.inzynierka_app.model.*
+import com.example.inzynierka_app.repository.MainRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ManualViewModel : ViewModel(){
+@HiltViewModel
+class ManualViewModel @Inject constructor(
+    private val mainRepository: MainRepository
+) : ViewModel() {
 
     private val _manualMode = MutableLiveData<Boolean>()
     val manualMode: LiveData<Boolean> = _manualMode
@@ -24,25 +25,14 @@ class ManualViewModel : ViewModel(){
         _manualMode.value = false
     }
 
-    fun write_data(write_param: ParamsWriteVar) {
-        ApiClient().getService()
-            ?.write_data(WriteDataRequest(1, "2.0", "PlcProgram.Write", write_param))
-            ?.enqueue(object : Callback<DataResponse> {
-                override fun onFailure(call: Call<DataResponse>, t: Throwable) {
-                    Log.i("LoginActivity", t.message.toString())
-                }
-
-                override fun onResponse(
-                    call: Call<DataResponse>, response: Response<DataResponse>
-                ) {
-                    val responseBody = response.body()
-                    if (response.isSuccessful) {
-                        if (responseBody?.result != null) {
-                            _writeData.value = responseBody.result
-                        }
-                    }
-                }
-            })
+    fun write_data(write_param: ParamsWriteVar) = viewModelScope.launch {
+        val response = mainRepository.write_data(WriteDataRequest(1, "2.0", "PlcProgram.Write", write_param))
+        val responseBody = response.body()
+        if (response.isSuccessful) {
+            if (responseBody?.result != null) {
+                _writeData.value = responseBody.result
+            }
+        }
     }
 
     fun startStep(){

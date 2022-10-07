@@ -9,7 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.inzynierka_app.databinding.FragmentManualBinding
 import com.example.inzynierka_app.model.ParamsWriteVar
 import com.example.inzynierka_app.viewmodel.ManualViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ManualFragment : Fragment() {
 
     private var _binding: FragmentManualBinding? = null

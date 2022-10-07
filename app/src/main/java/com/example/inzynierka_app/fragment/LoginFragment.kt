@@ -1,6 +1,5 @@
 package com.example.inzynierka_app.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,18 +8,17 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.inzynierka_app.R
-import com.example.inzynierka_app.api.ApiClient
-import com.example.inzynierka_app.api.SessionManager
 import com.example.inzynierka_app.databinding.FragmentLoginBinding
 import com.example.inzynierka_app.viewmodel.LoginViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var viewModel: LoginViewModel
-    private lateinit var sessionManager: SessionManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,20 +30,17 @@ class LoginFragment : Fragment() {
 
         viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
 
-        viewModel.initializeSessionManager(requireActivity())
-        ApiClient().initialize(requireContext())
-        sessionManager = SessionManager(requireActivity())
-
         binding.loginButton.setOnClickListener {
             viewModel.onSignInButtonClicked()
-            findNavController().navigate(R.id.action_loginFragment_to_autoFragment)
         }
 
-     //   viewModel.logInEvent.observe(viewLifecycleOwner) {
-         //   if (it.canLogIn && it.token != null) {
-            //    sessionManager.saveAuthToken(it.token!!)
-       //     findNavController().navigate(R.id.action_loginFragment_to_autoFragment)
-       // }
+        viewModel.logInEvent.observe(viewLifecycleOwner) {
+            if (it.canLogIn && it.token != null) {
+                //whas this necessary???
+              //  sessionManager.saveAuthToken(it.token!!)
+                findNavController().navigate(R.id.action_loginFragment_to_autoFragment)
+            }
+        }
 
         return view
     }

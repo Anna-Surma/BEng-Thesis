@@ -1,7 +1,6 @@
 package com.example.inzynierka_app.fragment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +10,10 @@ import com.example.inzynierka_app.databinding.FragmentBlockBinding
 
 import com.example.inzynierka_app.model.Params
 import com.example.inzynierka_app.model.ReadDataRequest
-import com.example.inzynierka_app.viewmodel.AutoViewModel
 import com.example.inzynierka_app.viewmodel.BlockViewModel
-import com.example.inzynierka_app.viewmodel.ManualViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class BlockFragment : Fragment() {
 
     private var _binding: FragmentBlockBinding? = null

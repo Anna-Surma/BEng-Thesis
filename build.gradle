@@ -3,6 +3,13 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.6.4'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.6.0-alpha01"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:2.42"
     }
 }
 

@@ -4,13 +4,17 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.inzynierka_app.api.ApiClient
+import androidx.lifecycle.viewModelScope
 import com.example.inzynierka_app.model.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.inzynierka_app.repository.MainRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class BlockViewModel : ViewModel() {
+@HiltViewModel
+class BlockViewModel @Inject constructor(
+    private val mainRepository: MainRepository
+) : ViewModel() {
 
     private val _rightDir = MutableLiveData<Boolean>()
     val rightDir: LiveData<Boolean> = _rightDir
@@ -18,29 +22,18 @@ class BlockViewModel : ViewModel() {
     private val _readData = MutableLiveData<ArrayList<ReadDataRequest>>()
     val readData: LiveData<ArrayList<ReadDataRequest>> = _readData
 
-    fun readData(array: ArrayList<ReadDataRequest>) {
-        ApiClient().getService()?.readArray(ReadArrayRequest(array))
-            ?.enqueue(object : Callback<ReadArrayResponse> {
-                override fun onFailure(call: Call<ReadArrayResponse>, t: Throwable) {
-                    Log.i("BlockActivity", t.message.toString())
+    fun readData(array: ArrayList<ReadDataRequest>) = viewModelScope.launch {
+        val response = mainRepository.readArray(ReadArrayRequest(array))
+            val responseBody = response.body()
+            Log.i("BlockViewModel", responseBody?.araayRes.toString())
+            if (response.isSuccessful) {
+                if (responseBody?.araayRes != null) {
+                    _readData.value = responseBody.araayRes
+                    Log.i("BlockViewModel", responseBody.araayRes.toString())
+                    //  readData(array)
                 }
-                override fun onResponse(
-                    call: Call<ReadArrayResponse>,
-                    response: Response<ReadArrayResponse>
-                ) {
-                    val responseBody = response.body()
-                    Log.i("BlockViewModel", responseBody?.araayRes.toString())
-                    if (response.isSuccessful) {
-                        if (responseBody?.araayRes != null) {
-                            _readData.value = responseBody.araayRes
-                            Log.i("BlockViewModel", responseBody.araayRes.toString())
-                            readData(array)
-                        }
-                    }
-                }
-            })
-    }
-
+            }
+        }
 
     fun rightDirClick(){
         _rightDir.value = true

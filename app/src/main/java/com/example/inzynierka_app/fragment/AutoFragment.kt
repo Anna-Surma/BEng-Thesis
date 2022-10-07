@@ -10,7 +10,9 @@ import com.example.inzynierka_app.databinding.FragmentAutoBinding
 import com.example.inzynierka_app.model.Params
 import com.example.inzynierka_app.model.ParamsWriteVar
 import com.example.inzynierka_app.viewmodel.AutoViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AutoFragment : Fragment() {
 
     private var _binding: FragmentAutoBinding? = null
