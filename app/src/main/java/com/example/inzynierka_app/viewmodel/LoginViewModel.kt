@@ -19,15 +19,11 @@ class LoginViewModel @Inject constructor(
     private val mainRepository: MainRepository
 ) : ViewModel() {
 
-    private var params: LoginParams
+    private var params: LoginParams = LoginParams("json", "json")
 
     private val _logInEvent = MutableLiveData(LogInEvent(false, null))
     val logInEvent: LiveData<LogInEvent>
         get() = _logInEvent
-
-    init {
-        params = LoginParams("json", "json")
-    }
 
     fun onSignInButtonClicked() {
         loginUser(params)

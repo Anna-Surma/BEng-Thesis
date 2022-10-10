@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="mode_text_size">25sp</dimen>
+    <dimen name="heading_text_size">17sp</dimen>
+    <dimen name="params_text_size">20sp</dimen>
+    <dimen name="param_margin_bottom">10dp</dimen>
+    <dimen name="params_margin_start">20dp</dimen>
+    <dimen name="led_dimen">20dp</dimen>
+</resources>

@@ -1,8 +1,58 @@
 <resources>
     <string name="app_name">Inzynierka_app</string>
-    <string name="company_desc">Naszym celem są wysokiej jakości okucia meblowe, które sprawiają, że mieszka się wygodniej. Produkujemy systemy podnośników, zawiasów i szuflad oraz rozwiązania kieszeniowe do mebli, a naszą ofertę uzupełniają serwisy i pomoce montażowe.</string>
+    <string name="company_desc">Our goal is high-quality furniture fittings that make living more comfortable. We produce lift systems, hinges and drawers as well as pocket solutions for furniture, and our offer is complemented by services and assembly aids.</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="gripper_control">GRIPPER\nCONTROL</string>
+    <string name="auto_mode">AUTO MODE</string>
+    <string name="manual_mode">MANUAL MODE</string>
+    <string name="block_mode">BLOCK MODE</string>
+    <string name="parameters">PARAMETERS</string>
+    <string name="commands">COMMANDS</string>
+    <string name="set_start">Set start</string>
+    <string name="set_cycles">Set cycles</string>
+    <string name="cycles">Cycles</string>
+    <string name="dont_know">dont know</string>
+    <string name="set_duration">Set duration</string>
+    <string name="time">Time</string>
+    <string name="none_hint">None</string>
+    <string name="_0_hint">0</string>
+    <string name="operating_mode">OPERATING MODE</string>
+    <string name="stop">STOP</string>
+    <string name="run">RUN</string>
+    <string name="start_up">START UP</string>
+    <string name="start">start</string>
+    <string name="pause">pause</string>
+    <string name="right">Right</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="step">step</string>
+    <string name="led">led</string>
+    <string name="change_mode">Change mode</string>
+    <string name="gripper">Gripper</string>
+    <string name="map">map</string>
+    <string name="social_media">SOCIAL MEDIA</string>
+    <string name="instagram_icon">Instagram_icon</string>
+    <string name="fb_icon">fb_icon</string>
+    <string name="pint_icon">pint_icon</string>
+    <string name="yt_icon">yt_icon</string>
+    <string name="auto">AUTO</string>
+    <string name="manual">MANUAL</string>
+    <string name="block">BLOCK</string>
+    <string-array name="start_point">
+        <item>Default</item>
+        <item>Step 2</item>
+        <item>Step 3</item>
+        <item>Step 4</item>
+        <item>Step 5</item>
+        <item>Step 6</item>
+        <item>Step 7</item>
+        <item>Step 8</item>
+    </string-array>
+    <string-array name="change_mode">
+        <item>Default</item>
+        <item>RUN</item>
+        <item>STOP</item>
+    </string-array>
 
 </resources>

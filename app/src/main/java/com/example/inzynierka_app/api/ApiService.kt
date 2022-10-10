@@ -14,7 +14,7 @@ interface ApiService {
     suspend fun readData(@Body request: ReadDataRequest): Response<ReadDataResponse>
 
     @POST(Constants.LOGIN_URL)
-    suspend fun write_data(@Body request: WriteDataRequest): Response<DataResponse>
+    suspend fun writeData(@Body request: WriteDataRequest): Response<DataResponse>
 
     @POST(Constants.LOGIN_URL)
     suspend fun readArray(@Body request: ReadArrayRequest): Response<ReadArrayResponse>

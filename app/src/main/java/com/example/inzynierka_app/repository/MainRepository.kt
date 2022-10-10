@@ -13,7 +13,7 @@ class MainRepository @Inject constructor(
 
     suspend fun readData(request: ReadDataRequest) = apiHelper.readData(request)
 
-    suspend fun write_data(request: WriteDataRequest) = apiHelper.write_data(request)
+    suspend fun writeData(request: WriteDataRequest) = apiHelper.writeData(request)
 
     suspend fun readArray(request: ReadArrayRequest) = apiHelper.readArray(request)
 

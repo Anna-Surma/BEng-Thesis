@@ -23,21 +23,19 @@ class LoginFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         val view = binding.root
 
         viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
 
-        binding.loginButton.setOnClickListener {
+        binding.btnLogin.setOnClickListener {
             viewModel.onSignInButtonClicked()
         }
 
         viewModel.logInEvent.observe(viewLifecycleOwner) {
             if (it.canLogIn && it.token != null) {
-                //whas this necessary???
-              //  sessionManager.saveAuthToken(it.token!!)
                 findNavController().navigate(R.id.action_loginFragment_to_autoFragment)
             }
         }

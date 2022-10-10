@@ -11,7 +11,7 @@ interface ApiHelper {
 
     suspend fun readData(@Body request: ReadDataRequest): Response<ReadDataResponse>
 
-    suspend fun write_data(@Body request: WriteDataRequest): Response<DataResponse>
+    suspend fun writeData(@Body request: WriteDataRequest): Response<DataResponse>
 
     suspend fun readArray(@Body request: ReadArrayRequest): Response<ReadArrayResponse>
 }

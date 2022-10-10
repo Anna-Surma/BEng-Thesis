@@ -3,27 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_gray"
     android:orientation="vertical"
-    tools:context=".fragment.SplashFragment"
-    android:background="@color/light_gray">
+    tools:context=".fragment.SplashFragment">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/gripper"
         android:layout_gravity="center"
-        android:layout_marginHorizontal="100dp">
-    </ImageView>
+        android:layout_marginHorizontal="100dp"
+        android:src="@drawable/gripper"
+        android:contentDescription="@string/gripper"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="100dp"
+        android:gravity="center"
         android:text="@string/gripper_control"
         android:textSize="30sp"
-        android:textStyle="bold"
-        android:layout_gravity="bottom|center"
-        android:gravity="center"
-        android:layout_marginBottom="100dp">
-    </TextView>
+        android:textStyle="bold"/>
 
 </FrameLayout>

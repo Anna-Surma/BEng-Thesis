@@ -55,7 +55,8 @@ object AppModule {
         authInterceptor: AuthInterceptor
     ): OkHttpClient {
         val logger: HttpLoggingInterceptor = HttpLoggingInterceptor().setLevel(
-            HttpLoggingInterceptor.Level.BODY)
+            HttpLoggingInterceptor.Level.BODY
+        )
         Log.i("LoginOkHttp", "OkHttp")
         return OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
@@ -68,11 +69,11 @@ object AppModule {
     fun provideRetrofit(
         okHttpClient: OkHttpClient
     ): Retrofit {
-            return Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(okHttpClient)
-                .build()
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
     }
 
     @Singleton

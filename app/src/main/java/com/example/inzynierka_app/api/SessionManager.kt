@@ -4,8 +4,7 @@ import javax.inject.Inject
 
 class SessionManager @Inject constructor(
     private val pref: AppSharedPreferences
-    ) {
-
+) {
     fun fetchAuthToken(): String? = pref.fetchAuthToken()
 
     fun saveAuthToken(token: String) {

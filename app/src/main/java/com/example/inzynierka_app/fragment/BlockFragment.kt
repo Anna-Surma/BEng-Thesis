@@ -10,7 +10,7 @@ import com.example.inzynierka_app.databinding.FragmentBlockBinding
 
 import com.example.inzynierka_app.model.Params
 import com.example.inzynierka_app.model.ReadDataRequest
-import com.example.inzynierka_app.viewmodel.BlockViewModel
+import com.example.inzynierka_app.viewmodel.GripperViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,19 +19,19 @@ class BlockFragment : Fragment() {
     private var _binding: FragmentBlockBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: BlockViewModel
+    private lateinit var viewModel: GripperViewModel
 
     private lateinit var array: ArrayList<ReadDataRequest>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentBlockBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        viewModel = ViewModelProvider(this).get(BlockViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(GripperViewModel::class.java)
 
         array = arrayListOf(
             ReadDataRequest(1, "2.0", "PlcProgram.Read", Params("\"Data\".app_KROK_1")),
@@ -43,8 +43,6 @@ class BlockFragment : Fragment() {
             ReadDataRequest(7, "2.0", "PlcProgram.Read", Params("\"Data\".app_KROK_7")),
             ReadDataRequest(8, "2.0", "PlcProgram.Read", Params("\"Data\".app_KROK_8"))
         )
-
-        viewModel.readData(array)
         return view
     }
 
