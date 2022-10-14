@@ -17,7 +17,7 @@ class AuthInterceptor @Inject constructor(
         sessionManager.fetchAuthToken()?.let {
             requestBuilder
                 .addHeader("X-Auth-Token", it)
-                .addHeader("Connection", "close")
+               // .addHeader("Connection", "close")
             Log.i("LoginAuth", "Bearer $it")
         }
         return chain.proceed(requestBuilder.build())

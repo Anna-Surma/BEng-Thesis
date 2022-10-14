@@ -41,10 +41,14 @@ class GripperViewModel @Inject constructor(
     private val _readDataArray = MutableLiveData<ArrayList<ReadDataRequest>>()
     val readDataArray: LiveData<ArrayList<ReadDataRequest>> = _readDataArray
 
+    private val _isRunning = MutableLiveData<Boolean>()
+    val isRunning: LiveData<Boolean> = _isRunning
+
     init {
         _controlActive.value = false
         _autoMode.value = false
         _manualMode.value = false
+        _isRunning.value = false
     }
 
     //What with onFailure???
@@ -69,7 +73,7 @@ class GripperViewModel @Inject constructor(
             mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", write_param))
         val responseBody = response.body()
         if (response.isSuccessful) {
-            Log.i("AutoViewModel", "RESULT= " + responseBody?.result.toString())
+            Log.i("AutoViewModel", "RESULT= " + responseBody?.result.toString()+ write_param.`var`+write_param.value)
             if (responseBody?.result != null) {
                 _writeData.value = responseBody.result
             }

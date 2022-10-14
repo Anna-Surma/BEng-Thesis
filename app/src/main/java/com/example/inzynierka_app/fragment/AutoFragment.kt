@@ -1,10 +1,13 @@
 package com.example.inzynierka_app.fragment
 
 import android.os.Bundle
+import android.os.SystemClock
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Chronometer
 import androidx.lifecycle.ViewModelProvider
 import com.example.inzynierka_app.databinding.FragmentAutoBinding
 import com.example.inzynierka_app.model.Params
@@ -20,6 +23,10 @@ class AutoFragment : Fragment() {
 
     private lateinit var viewModel: GripperViewModel
 
+    //TODO move to ViewModel
+    var running = false
+    var offset: Long = 0
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,19 +39,40 @@ class AutoFragment : Fragment() {
         // var start_point = binding.sStart.selectedItem.toString()
 
         binding.btnStartButton.setOnClickListener {
-            viewModel.startAuto()
+            if(viewModel.autoMode.value == false) {
+                viewModel.startAuto()
+            }
+
             viewModel.resetCycles()
             viewModel.readData(Params("\"Data\".licznik_cykli"))
+
+            if(!running){
+                setBaseTime()
+                binding.chStopWatch.start()
+                running = true
+            }
         }
 
         binding.btnStopButton.setOnClickListener {
             viewModel.stopAuto()
+            offset = 0
+            setBaseTime()
+        }
+
+        binding.btnPauseButton.setOnClickListener {
+         //   viewModel.pauseAuto()
+            if(running){
+                saveOffset()
+                binding.chStopWatch.stop()
+                running = false
+            }
         }
 
         viewModel.controlActive.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (viewModel.controlActive.value == true) {
                     viewModel.writeData(ParamsWriteVar("\"Data\".app_control", true))
+                    Log.i("Auto", "Auto control active")
                 } else {
                     viewModel.writeData(ParamsWriteVar("\"Data\".app_control", false))
                 }
@@ -59,7 +87,7 @@ class AutoFragment : Fragment() {
                     } else
                         viewModel.writeData(ParamsWriteVar("\"Data\".app_auto", false))
                 } else {
-                    viewModel.writeData(ParamsWriteVar("\"Data\".app_auto", false))
+                    Log.i("Auto", "control false")
                 }
             }
         }
@@ -83,6 +111,14 @@ class AutoFragment : Fragment() {
             }
         }
         return view
+    }
+
+    private fun saveOffset() {
+        offset = SystemClock.elapsedRealtime() - binding.chStopWatch.base
+    }
+
+    private fun setBaseTime() {
+        binding.chStopWatch.base = SystemClock.elapsedRealtime() - offset
     }
 
     override fun onDestroyView() {
