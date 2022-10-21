@@ -1,6 +1,5 @@
 package com.example.inzynierka_app.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.inzynierka_app.model.*
 import com.example.inzynierka_app.repository.GripperDataPullWorker
@@ -30,11 +29,8 @@ class GripperViewModel @Inject constructor(
     private val _autoMode = MutableLiveData<Boolean>()
     val autoMode: LiveData<Boolean> = _autoMode
 
-    private val _cyclesNumber = MutableLiveData<String>("value")
+    private val _cyclesNumber = MutableLiveData("0")
     val cyclesNumber: LiveData<String> = _cyclesNumber
-
-    private val _resetCycles = MutableLiveData<Boolean>()
-    val resetCycles: LiveData<Boolean> = _resetCycles
 
     private val _manualMode = MutableLiveData<Boolean>()
     val manualMode: LiveData<Boolean> = _manualMode
@@ -45,6 +41,9 @@ class GripperViewModel @Inject constructor(
     private val _isRunning = MutableLiveData<Boolean>()
     val isRunning: LiveData<Boolean> = _isRunning
 
+    private val _isPause = MutableLiveData<Boolean>()
+    val isPause: LiveData<Boolean> = _isPause
+
     var viewModelJob: Job? = null
 
     init {
@@ -52,7 +51,9 @@ class GripperViewModel @Inject constructor(
         _autoMode.value = false
         _manualMode.value = false
         _isRunning.value = false
+        _isPause.value = false
         _cyclesNumber.value = gripper.cycles.value
+        resetCycles()
     }
 
     fun stopReadCycles() {
@@ -65,7 +66,6 @@ class GripperViewModel @Inject constructor(
             gripper.synchronizing = true
             while (gripper.synchronizing) {
                 delay(100)
-                Log.i("GripperViewModel", _cyclesNumber.value.toString())
                 gripper.startReadCycles(read_param)
                 _cyclesNumber.value = gripper.cycles.value
             }
@@ -89,30 +89,39 @@ class GripperViewModel @Inject constructor(
 
     fun activeControl() {
         _controlActive.value = true
+        _isPause.value = false
     }
 
     fun deactivateControl() {
         _controlActive.value = false
+        _autoMode.value = false
+        _isPause.value = false
+        _isRunning.value = false
     }
 
     fun startAuto() {
         _autoMode.value = true
         _isRunning.value = true
+        _isPause.value = false
     }
 
     fun stopAuto() {
         _autoMode.value = false
         _isRunning.value = false
+        _isPause.value = false
     }
 
     fun resetCycles() {
-        _resetCycles.value = true
         _cyclesNumber.value = "0"
         gripper.cycles.value = "0"
+        writeData(ParamsWriteVar("\"Data\".app_reset_liczba_cykli", true))
+        writeData(ParamsWriteVar("\"Data\".app_reset_liczba_cykli", false))
     }
 
-    fun stopResetCycles() {
-        _resetCycles.value = false
+    fun pause(){
+        _autoMode.value = false
+        _isRunning.value = false
+        _isPause.value = true
     }
 
     fun startStep() {

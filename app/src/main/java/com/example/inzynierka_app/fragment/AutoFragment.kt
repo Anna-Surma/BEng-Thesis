@@ -1,13 +1,13 @@
 package com.example.inzynierka_app.fragment
 
 import android.os.Bundle
-import android.os.SystemClock
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import com.example.inzynierka_app.Timer
 import com.example.inzynierka_app.databinding.FragmentAutoBinding
 import com.example.inzynierka_app.model.Params
 import com.example.inzynierka_app.model.ParamsWriteVar
@@ -19,12 +19,9 @@ class AutoFragment : Fragment() {
 
     private var _binding: FragmentAutoBinding? = null
     private val binding get() = _binding!!
+    private var timer = Timer()
 
     private lateinit var viewModel: GripperViewModel
-
-    //TODO move to ViewModel
-    var running = false
-    var offset: Long = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,33 +37,33 @@ class AutoFragment : Fragment() {
         // var start_point = binding.sStart.selectedItem.toString()
 
         binding.btnStartButton.setOnClickListener {
-            if (viewModel.autoMode.value == false) {
-                viewModel.startAuto()
-            }
+            if(viewModel.controlActive.value == true){
+                if (viewModel.autoMode.value == false) {
+                    if (viewModel.isPause.value == false){
+                        viewModel.resetCycles()
+                    }
+                    viewModel.startAuto()
+                    viewModel.startReadCycles(Params("\"Data\".licznik_cykli"))
 
-            viewModel.resetCycles()
-            viewModel.startReadCycles(Params("\"Data\".licznik_cykli"))
-
-            if (!running) {
-                setBaseTime()
-                binding.chStopWatch.start()
-                running = true
+                    binding.chStopWatch.base = timer.setBaseTime()
+                    binding.chStopWatch.start()
+                }
             }
         }
 
         binding.btnStopButton.setOnClickListener {
             viewModel.stopAuto()
-            offset = 0
-            setBaseTime()
+            timer.offset = 0
+            binding.chStopWatch.base = timer.setBaseTime()
+            binding.chStopWatch.stop()
             viewModel.stopReadCycles()
         }
 
         binding.btnPauseButton.setOnClickListener {
-            //   viewModel.pauseAuto()
-            if (running) {
-                saveOffset()
+            if (viewModel.isRunning.value == true && viewModel.isPause.value == false) {
+                viewModel.pause()
+                timer.offset = timer.getElapsedRealtime() - binding.chStopWatch.base
                 binding.chStopWatch.stop()
-                running = false
             }
         }
 
@@ -76,7 +73,8 @@ class AutoFragment : Fragment() {
                     viewModel.writeData(ParamsWriteVar("\"Data\".app_control", true))
                     Log.i("Auto", "Auto control active")
                 } else {
-                    viewModel.writeData(ParamsWriteVar("\"Data\".app_control", false))
+                        viewModel.writeData(ParamsWriteVar("\"Data\".app_control", false))
+                        viewModel.writeData(ParamsWriteVar("\"Data\".app_auto", false))
                 }
             }
         }
@@ -89,18 +87,7 @@ class AutoFragment : Fragment() {
                     } else
                         viewModel.writeData(ParamsWriteVar("\"Data\".app_auto", false))
                 } else {
-                    Log.i("Auto", "control false")
-                }
-            }
-        }
-
-        viewModel.resetCycles.observe(viewLifecycleOwner) {
-            if (it != null) {
-                if (viewModel.resetCycles.value == true) {
-                    viewModel.writeData(ParamsWriteVar("\"Data\".app_reset_liczba_cykli", true))
-                    viewModel.stopResetCycles()
-                } else {
-                    viewModel.writeData(ParamsWriteVar("\"Data\".app_reset_liczba_cykli", false))
+                    viewModel.writeData(ParamsWriteVar("\"Data\".app_auto", false))
                 }
             }
         }
@@ -118,14 +105,6 @@ class AutoFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         viewModel.stopReadCycles()
-    }
-
-    private fun saveOffset() {
-        offset = SystemClock.elapsedRealtime() - binding.chStopWatch.base
-    }
-
-    private fun setBaseTime() {
-        binding.chStopWatch.base = SystemClock.elapsedRealtime() - offset
     }
 
     override fun onDestroyView() {

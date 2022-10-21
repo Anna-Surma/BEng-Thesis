@@ -32,7 +32,6 @@ class ModeFragment : Fragment() {
                 viewModel.activeControl()
             } else {
                 viewModel.deactivateControl()
-                viewModel.stopAuto()
             }
         }
 
