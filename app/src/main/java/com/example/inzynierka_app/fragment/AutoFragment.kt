@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Chronometer
 import androidx.lifecycle.ViewModelProvider
 import com.example.inzynierka_app.databinding.FragmentAutoBinding
 import com.example.inzynierka_app.model.Params
@@ -36,17 +35,19 @@ class AutoFragment : Fragment() {
 
         viewModel = ViewModelProvider(requireActivity()).get(GripperViewModel::class.java)
 
+        binding.gripperViewModel = viewModel
+        binding.lifecycleOwner = this
         // var start_point = binding.sStart.selectedItem.toString()
 
         binding.btnStartButton.setOnClickListener {
-            if(viewModel.autoMode.value == false) {
+            if (viewModel.autoMode.value == false) {
                 viewModel.startAuto()
             }
 
             viewModel.resetCycles()
-            viewModel.readData(Params("\"Data\".licznik_cykli"))
+            viewModel.startReadCycles(Params("\"Data\".licznik_cykli"))
 
-            if(!running){
+            if (!running) {
                 setBaseTime()
                 binding.chStopWatch.start()
                 running = true
@@ -57,11 +58,12 @@ class AutoFragment : Fragment() {
             viewModel.stopAuto()
             offset = 0
             setBaseTime()
+            viewModel.stopReadCycles()
         }
 
         binding.btnPauseButton.setOnClickListener {
-         //   viewModel.pauseAuto()
-            if(running){
+            //   viewModel.pauseAuto()
+            if (running) {
                 saveOffset()
                 binding.chStopWatch.stop()
                 running = false
@@ -111,6 +113,11 @@ class AutoFragment : Fragment() {
             }
         }
         return view
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.stopReadCycles()
     }
 
     private fun saveOffset() {

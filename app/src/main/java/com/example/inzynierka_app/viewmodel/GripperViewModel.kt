@@ -1,20 +1,21 @@
 package com.example.inzynierka_app.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.inzynierka_app.model.*
+import com.example.inzynierka_app.repository.GripperDataPullWorker
 import com.example.inzynierka_app.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class GripperViewModel @Inject constructor(
-    private val mainRepository: MainRepository
+    private val mainRepository: MainRepository,
+    private val gripper: GripperDataPullWorker,
+    //  loginUseCase: LoginUseCase //Clean Architecture // Aplication, domain, data(repo)
 ) : ViewModel() {
 
     private val _readData = MutableLiveData<String>()
@@ -29,8 +30,8 @@ class GripperViewModel @Inject constructor(
     private val _autoMode = MutableLiveData<Boolean>()
     val autoMode: LiveData<Boolean> = _autoMode
 
-    private val _cyclesNumber = MutableLiveData<Int>()
-    val cyclesNumber: LiveData<Int> = _cyclesNumber
+    private val _cyclesNumber = MutableLiveData<String>("value")
+    val cyclesNumber: LiveData<String> = _cyclesNumber
 
     private val _resetCycles = MutableLiveData<Boolean>()
     val resetCycles: LiveData<Boolean> = _resetCycles
@@ -44,54 +45,47 @@ class GripperViewModel @Inject constructor(
     private val _isRunning = MutableLiveData<Boolean>()
     val isRunning: LiveData<Boolean> = _isRunning
 
+    var viewModelJob: Job? = null
+
     init {
         _controlActive.value = false
         _autoMode.value = false
         _manualMode.value = false
         _isRunning.value = false
+        _cyclesNumber.value = gripper.cycles.value
     }
 
-    //What with onFailure???
-    fun readData(read_param: Params) = viewModelScope.launch {
-        //TODO Change while(true), should work only when is in Auto Fragment
-        while (true) {
-            delay(100)
-            val response =
-                mainRepository.readData(ReadDataRequest(1, "2.0", "PlcProgram.Read", read_param))
-            val responseBody = response.body()
-            if (response.isSuccessful) {
-                if (responseBody?.result != null) {
-                    _readData.value = responseBody.result.toString()
-                    Log.i("AutoViewModel", "READ" + responseBody.result.toString())
-                }
+    fun stopReadCycles() {
+        gripper.stopReadCycles()
+        viewModelJob?.cancel()
+    }
+
+    fun startReadCycles(read_param: Params) {
+        viewModelJob = viewModelScope.launch {
+            gripper.synchronizing = true
+            while (gripper.synchronizing) {
+                delay(100)
+                Log.i("GripperViewModel", _cyclesNumber.value.toString())
+                gripper.startReadCycles(read_param)
+                _cyclesNumber.value = gripper.cycles.value
             }
         }
     }
 
     fun writeData(write_param: ParamsWriteVar) = viewModelScope.launch {
+        // _writeData.value = mainRepository.sendCycles(123)
+        // CyclesResponse(value?, failure?)
+        // Maybe<Boolean>
+
         val response =
             mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", write_param))
         val responseBody = response.body()
         if (response.isSuccessful) {
-            Log.i("AutoViewModel", "RESULT= " + responseBody?.result.toString()+ write_param.`var`+write_param.value)
             if (responseBody?.result != null) {
                 _writeData.value = responseBody.result
             }
         }
     }
-
-//    fun readData(array: ArrayList<ReadDataRequest>) = viewModelScope.launch {
-//        val response = mainRepository.readArray(ReadArrayRequest(array))
-//        val responseBody = response.body()
-//        Log.i("BlockViewModel", responseBody?.arrayRes.toString())
-//        if (response.isSuccessful) {
-//            if (responseBody?.arrayRes != null) {
-//                _readDataArray.value = responseBody.arrayRes
-//                Log.i("BlockViewModel", responseBody.arrayRes.toString())
-//                //  readData(array)
-//            }
-//        }
-//    }
 
     fun activeControl() {
         _controlActive.value = true
@@ -103,14 +97,18 @@ class GripperViewModel @Inject constructor(
 
     fun startAuto() {
         _autoMode.value = true
+        _isRunning.value = true
     }
 
     fun stopAuto() {
         _autoMode.value = false
+        _isRunning.value = false
     }
 
     fun resetCycles() {
         _resetCycles.value = true
+        _cyclesNumber.value = "0"
+        gripper.cycles.value = "0"
     }
 
     fun stopResetCycles() {
