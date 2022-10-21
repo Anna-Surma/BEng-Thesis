@@ -1,243 +1,253 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".fragment.AutoFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:id="@+id/llAuto"
+    <data>
+        <variable
+            name="gripperViewModel"
+            type="com.example.inzynierka_app.viewmodel.GripperViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        tools:context=".fragment.AutoFragment">
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/llAuto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/param_margin_bottom"
-            android:background="@color/orange"
-            android:gravity="center"
-            android:padding="3dp"
-            android:text="@string/parameters"
-            android:textColor="@color/white"
-            android:textSize="@dimen/heading_text_size"
-            android:textStyle="bold" />
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:id="@+id/llFirst"
-                android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/llSecond"
-                app:layout_constraintStart_toStartOf="parent">
+                android:layout_marginBottom="@dimen/param_margin_bottom"
+                android:background="@color/orange"
+                android:gravity="center"
+                android:padding="3dp"
+                android:text="@string/parameters"
+                android:textColor="@color/white"
+                android:textSize="@dimen/heading_text_size"
+                android:textStyle="bold" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/param_margin_bottom"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tvStartPoint"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/set_start"
-                        android:textSize="@dimen/params_text_size" />
-
-                    <Spinner
-                        android:id="@+id/sStart"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/params_margin_start"
-                        android:entries="@array/start_point" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/param_margin_bottom"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tvCycles"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/set_cycles"
-                        android:textSize="@dimen/params_text_size" />
-
-                    <EditText
-                        android:id="@+id/etCycles"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/params_margin_start"
-                        android:hint="@string/none_hint"
-                        android:importantForAutofill="no"
-                        android:inputType="numberDecimal" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/param_margin_bottom"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tvCyclesParam"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/cycles"
-                        android:textSize="@dimen/params_text_size" />
-
-                    <TextView
-                        android:id="@+id/tvCyclesNumber"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/params_margin_start"
-                        android:hint="@string/_0_hint" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llSecond"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/llFirst"
-                app:layout_constraintTop_toTopOf="parent">
+                android:orientation="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/llFirst"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/param_margin_bottom"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/llSecond"
+                    app:layout_constraintStart_toStartOf="parent">
 
-                    <TextView
-                        android:id="@+id/tvDontKnow"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/dont_know"
-                        android:textSize="@dimen/params_text_size" />
+                        android:layout_marginBottom="@dimen/param_margin_bottom"
+                        android:orientation="horizontal">
 
-                    <Spinner
-                        android:id="@+id/sDontKnow"
+                        <TextView
+                            android:id="@+id/tvStartPoint"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/set_start"
+                            android:textSize="@dimen/params_text_size" />
+
+                        <Spinner
+                            android:id="@+id/sStart"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/params_margin_start"
+                            android:entries="@array/start_point" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/params_margin_start" />
+                        android:layout_marginBottom="@dimen/param_margin_bottom"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvCycles"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/set_cycles"
+                            android:textSize="@dimen/params_text_size" />
+
+                        <EditText
+                            android:id="@+id/etCycles"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/params_margin_start"
+                            android:hint="@string/none_hint"
+                            android:importantForAutofill="no"
+                            android:inputType="numberDecimal" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/param_margin_bottom"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvCyclesParam"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/cycles"
+                            android:textSize="@dimen/params_text_size" />
+
+                        <TextView
+                            android:id="@+id/tvCyclesNumber"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/params_margin_start"
+                            android:text="@{gripperViewModel.cyclesNumber}"
+                            android:hint="@string/_0_hint" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/llSecond"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/param_margin_bottom"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/llFirst"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/tvDuration"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/set_duration"
-                        android:textSize="@dimen/params_text_size"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:layout_marginBottom="@dimen/param_margin_bottom"
+                        android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/etDuration"
+                        <TextView
+                            android:id="@+id/tvDontKnow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/dont_know"
+                            android:textSize="@dimen/params_text_size" />
+
+                        <Spinner
+                            android:id="@+id/sDontKnow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/params_margin_start" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/params_margin_start"
-                        android:hint="@string/none_hint"
-                        android:importantForAutofill="no"
-                        android:inputType="time" />
+                        android:layout_marginBottom="@dimen/param_margin_bottom"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvDuration"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/set_duration"
+                            android:textSize="@dimen/params_text_size"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <EditText
+                            android:id="@+id/etDuration"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/params_margin_start"
+                            android:hint="@string/none_hint"
+                            android:importantForAutofill="no"
+                            android:inputType="time" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/param_margin_bottom"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvTimeParam"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/time"
+                            android:textSize="@dimen/params_text_size" />
+
+                        <Chronometer
+                            android:id="@+id/chStopWatch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/params_margin_start"
+                            android:textSize="@dimen/params_text_size" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <LinearLayout
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/param_margin_bottom"
+                android:background="@color/orange"
+                android:gravity="center"
+                android:padding="3dp"
+                android:text="@string/commands"
+                android:textColor="@color/white"
+                android:textSize="@dimen/heading_text_size"
+                android:textStyle="bold" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/btnStartButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/param_margin_bottom"
-                    android:orientation="horizontal">
+                    android:text="@string/start"
+                    app:layout_constraintEnd_toStartOf="@id/btnStopButton"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/tvTimeParam"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/time"
-                        android:textSize="@dimen/params_text_size" />
+                <Button
+                    android:id="@+id/btnStopButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/btnStartButton"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <Chronometer
-                        android:id="@+id/chStopWatch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/params_margin_start"
-                        android:textSize="@dimen/params_text_size" />
+                <Button
+                    android:id="@+id/btnPauseButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pause"
+                    app:layout_constraintStart_toStartOf="@+id/btnStartButton"
+                    app:layout_constraintTop_toBottomOf="@id/btnStartButton" />
 
-                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/param_margin_bottom"
-            android:background="@color/orange"
-            android:gravity="center"
-            android:padding="3dp"
-            android:text="@string/commands"
-            android:textColor="@color/white"
-            android:textSize="@dimen/heading_text_size"
-            android:textStyle="bold" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/btnStartButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/start"
-                app:layout_constraintEnd_toStartOf="@id/btnStopButton"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/btnStopButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/stop"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/btnStartButton"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/btnPauseButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/pause"
-                app:layout_constraintStart_toStartOf="@+id/btnStartButton"
-                app:layout_constraintTop_toBottomOf="@id/btnStartButton" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
