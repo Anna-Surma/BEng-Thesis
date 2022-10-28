@@ -1,5 +1,6 @@
 package com.example.inzynierka_app.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.inzynierka_app.model.*
 import com.example.inzynierka_app.repository.GripperDataPullWorker
@@ -44,6 +45,12 @@ class GripperViewModel @Inject constructor(
     private val _isPause = MutableLiveData<Boolean>()
     val isPause: LiveData<Boolean> = _isPause
 
+    private val _reachSetCycles = MutableLiveData<Boolean>()
+    val reachSetCycles: LiveData<Boolean> = _reachSetCycles
+
+    val setCycles = MutableLiveData<String>()
+      get() = field
+
     var viewModelJob: Job? = null
 
     init {
@@ -65,12 +72,27 @@ class GripperViewModel @Inject constructor(
         viewModelJob = viewModelScope.launch {
             gripper.synchronizing = true
             while (gripper.synchronizing) {
-                delay(100)
+                delay(1000)
                 gripper.startReadCycles(read_param)
                 _cyclesNumber.value = gripper.cycles.value
+                if(setCycles.value != "0"){
+                    if(_cyclesNumber.value == setCycles.value){
+                        reachSetCycles()
+                    }
+                }
+
             }
         }
     }
+
+    fun reachSetCycles(){
+        _reachSetCycles.value = true
+        stopReadCycles()
+        _isRunning.value = false
+        _autoMode.value = false
+        _manualMode.value = false
+    }
+
 
     fun writeData(write_param: ParamsWriteVar) = viewModelScope.launch {
         // _writeData.value = mainRepository.sendCycles(123)
@@ -103,6 +125,7 @@ class GripperViewModel @Inject constructor(
         _autoMode.value = true
         _isRunning.value = true
         _isPause.value = false
+        _reachSetCycles.value = false
     }
 
     fun stopAuto() {

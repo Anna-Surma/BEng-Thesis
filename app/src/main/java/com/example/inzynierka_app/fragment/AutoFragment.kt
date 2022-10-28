@@ -1,5 +1,7 @@
 package com.example.inzynierka_app.fragment
 
+import android.content.RestrictionEntry.TYPE_INTEGER
+import android.content.RestrictionEntry.TYPE_NULL
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -41,22 +43,27 @@ class AutoFragment : Fragment() {
                 if (viewModel.autoMode.value == false) {
                     if (viewModel.isPause.value == false){
                         viewModel.resetCycles()
+                        timer.offset = 0
+                        binding.chStopWatch.base = timer.setBaseTime()
                     }
                     viewModel.startAuto()
                     viewModel.startReadCycles(Params("\"Data\".licznik_cykli"))
 
                     binding.chStopWatch.base = timer.setBaseTime()
                     binding.chStopWatch.start()
+
+                    binding.etCycles.inputType = TYPE_NULL
                 }
             }
         }
 
         binding.btnStopButton.setOnClickListener {
             viewModel.stopAuto()
-            timer.offset = 0
-            binding.chStopWatch.base = timer.setBaseTime()
+
             binding.chStopWatch.stop()
             viewModel.stopReadCycles()
+
+            binding.etCycles.inputType = TYPE_INTEGER
         }
 
         binding.btnPauseButton.setOnClickListener {
@@ -64,6 +71,8 @@ class AutoFragment : Fragment() {
                 viewModel.pause()
                 timer.offset = timer.getElapsedRealtime() - binding.chStopWatch.base
                 binding.chStopWatch.stop()
+
+                binding.etCycles.inputType = TYPE_INTEGER
             }
         }
 
@@ -71,10 +80,10 @@ class AutoFragment : Fragment() {
             if (it != null) {
                 if (viewModel.controlActive.value == true) {
                     viewModel.writeData(ParamsWriteVar("\"Data\".app_control", true))
-                    Log.i("Auto", "Auto control active")
                 } else {
                         viewModel.writeData(ParamsWriteVar("\"Data\".app_control", false))
                         viewModel.writeData(ParamsWriteVar("\"Data\".app_auto", false))
+                    binding.etCycles.inputType = TYPE_INTEGER
                 }
             }
         }
@@ -99,6 +108,14 @@ class AutoFragment : Fragment() {
                 }
             }
         }
+
+        viewModel.reachSetCycles.observe(viewLifecycleOwner) {
+            if (it != null) {
+                if(it == true)
+                binding.chStopWatch.stop()
+            }
+        }
+
         return view
     }
 
