@@ -41,6 +41,7 @@
     <string name="block">BLOCK</string>
     <string-array name="start_point">
         <item>Default</item>
+        <item>Step 1</item>
         <item>Step 2</item>
         <item>Step 3</item>
         <item>Step 4</item>

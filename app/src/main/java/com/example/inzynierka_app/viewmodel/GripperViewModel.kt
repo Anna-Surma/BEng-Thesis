@@ -49,9 +49,9 @@ class GripperViewModel @Inject constructor(
     val reachSetCycles: LiveData<Boolean> = _reachSetCycles
 
     val setCycles = MutableLiveData<String>()
-      get() = field
+        get() = field
 
-    var viewModelJob: Job? = null
+    private var viewModelJob: Job? = null
 
     init {
         _controlActive.value = false
@@ -72,20 +72,19 @@ class GripperViewModel @Inject constructor(
         viewModelJob = viewModelScope.launch {
             gripper.synchronizing = true
             while (gripper.synchronizing) {
-                delay(1000)
+                delay(100)
                 gripper.startReadCycles(read_param)
                 _cyclesNumber.value = gripper.cycles.value
-                if(setCycles.value != "0"){
-                    if(_cyclesNumber.value == setCycles.value){
+                if (setCycles.value != "0") {
+                    if (_cyclesNumber.value == setCycles.value) {
                         reachSetCycles()
                     }
                 }
-
             }
         }
     }
 
-    fun reachSetCycles(){
+    private fun reachSetCycles() {
         _reachSetCycles.value = true
         stopReadCycles()
         _isRunning.value = false
@@ -98,14 +97,101 @@ class GripperViewModel @Inject constructor(
         // _writeData.value = mainRepository.sendCycles(123)
         // CyclesResponse(value?, failure?)
         // Maybe<Boolean>
-
-        val response =
+        try{
             mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", write_param))
-        val responseBody = response.body()
-        if (response.isSuccessful) {
-            if (responseBody?.result != null) {
-                _writeData.value = responseBody.result
+        } catch (exception: Exception){
+            Log.e("TAG", exception.message ?: "NULL")
+        }
+    }
+
+
+    fun writeDataParallel(step: String) = viewModelScope.launch {
+        try {
+            when (step) {
+                "Step 1" -> {
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_2", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_3", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_4", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_5", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_6", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_7", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_8", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_1", true)))
+                }
+                "Step 2" -> {
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_1", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_3", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_4", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_5", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_6", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_7", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_8", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_2", true)))
+                }
+                "Step 3" -> {
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_1", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_2", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_4", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_5", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_6", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_7", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_8", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_3", true)))
+                }
+                "Step 4" -> {
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_1", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_2", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_3", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_5", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_6", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_7", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_8", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_4", true)))
+                }
+                "Step 5" -> {
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_1", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_2", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_3", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_4", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_6", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_7", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_8", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_5", true)))
+                }
+                "Step 6" -> {
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_1", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_2", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_3", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_4", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_5", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_7", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_8", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_6", true)))
+                }
+                "Step 7" -> {
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_1", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_2", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_3", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_4", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_5", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_6", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_8", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_7", true)))
+                }
+                "Step 8" -> {
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_1", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_2", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_3", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_4", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_5", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_6", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_7", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".app_KROK_8", true)))
+                }
+                else -> Log.i("AUTO", "Step not recognized")
             }
+        } catch (exception: Exception){
+            Log.e("TAG", exception.message ?: "NULL")
         }
     }
 
@@ -141,7 +227,7 @@ class GripperViewModel @Inject constructor(
         writeData(ParamsWriteVar("\"Data\".app_reset_liczba_cykli", false))
     }
 
-    fun pause(){
+    fun pause() {
         _autoMode.value = false
         _isRunning.value = false
         _isPause.value = true

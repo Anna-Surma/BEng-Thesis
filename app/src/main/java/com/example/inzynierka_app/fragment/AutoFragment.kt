@@ -3,11 +3,11 @@ package com.example.inzynierka_app.fragment
 import android.content.RestrictionEntry.TYPE_INTEGER
 import android.content.RestrictionEntry.TYPE_NULL
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.lifecycle.ViewModelProvider
 import com.example.inzynierka_app.Timer
 import com.example.inzynierka_app.databinding.FragmentAutoBinding
@@ -38,10 +38,25 @@ class AutoFragment : Fragment() {
         binding.lifecycleOwner = this
         // var start_point = binding.sStart.selectedItem.toString()
 
+        binding.sStart.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val selectedItem = parent?.getItemAtPosition(position).toString()
+                viewModel.writeDataParallel(selectedItem)
+            }
+        }
+
         binding.btnStartButton.setOnClickListener {
-            if(viewModel.controlActive.value == true){
+            if (viewModel.controlActive.value == true) {
                 if (viewModel.autoMode.value == false) {
-                    if (viewModel.isPause.value == false){
+                    if (viewModel.isPause.value == false) {
                         viewModel.resetCycles()
                         timer.offset = 0
                         binding.chStopWatch.base = timer.setBaseTime()
@@ -81,8 +96,8 @@ class AutoFragment : Fragment() {
                 if (viewModel.controlActive.value == true) {
                     viewModel.writeData(ParamsWriteVar("\"Data\".app_control", true))
                 } else {
-                        viewModel.writeData(ParamsWriteVar("\"Data\".app_control", false))
-                        viewModel.writeData(ParamsWriteVar("\"Data\".app_auto", false))
+                    viewModel.writeData(ParamsWriteVar("\"Data\".app_control", false))
+                    viewModel.writeData(ParamsWriteVar("\"Data\".app_auto", false))
                     binding.etCycles.inputType = TYPE_INTEGER
                 }
             }
@@ -111,8 +126,8 @@ class AutoFragment : Fragment() {
 
         viewModel.reachSetCycles.observe(viewLifecycleOwner) {
             if (it != null) {
-                if(it == true)
-                binding.chStopWatch.stop()
+                if (it == true)
+                    binding.chStopWatch.stop()
             }
         }
 
