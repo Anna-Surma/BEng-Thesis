@@ -1,9 +1,12 @@
 package com.example.inzynierka_app.fragment
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -40,6 +43,35 @@ class LoginFragment : Fragment() {
             }
         }
 
+        viewModel.loginErrorMessage.observe(viewLifecycleOwner) {
+            if (it != null) {
+                binding.emailTextInputLayout.error = resources.getString(it)
+                binding.passwordTextInputLayout.error = resources.getString(it)
+            } else {
+                binding.emailTextInputLayout.error = null
+                binding.passwordTextInputLayout.error = null
+            }
+        }
+
+        viewModel.networkErrorMessageBox.observe(viewLifecycleOwner) {
+            if (it != null) {
+                val builder = AlertDialog.Builder(context)
+
+                with(builder)
+                {
+                    setTitle("Network failure")
+                    setMessage(it)
+                    setPositiveButton("OK", DialogInterface.OnClickListener{ dialog: DialogInterface, _: Int ->
+                        dialog.cancel()
+                    })
+                    show()
+                }
+            }
+            else {
+                binding.emailTextInputLayout.error = null
+                binding.passwordEditText.error = null
+            }
+        }
         return view
     }
 

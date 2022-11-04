@@ -55,5 +55,7 @@
         <item>RUN</item>
         <item>STOP</item>
     </string-array>
-
+    <string name="incorrectPasswordOrEmailError">Incorrect password or email.</string>
+    <string name="networkConnectionError">Please Check Your Internet Connection Or Try Again Later</string>
+    <string name="error_icon">Error Icon</string>
 </resources>
