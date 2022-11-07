@@ -165,16 +165,6 @@
                     app:layout_constraintStart_toEndOf="@+id/tvChangeMode"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/ivErrorIcon"
-                    android:layout_width="50dp"
-                    android:layout_height="40dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/sChangeMode"
-                    android:contentDescription="@string/error_icon"
-                    android:src="@drawable/error_orange"/>
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
