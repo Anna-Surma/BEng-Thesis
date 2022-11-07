@@ -40,7 +40,6 @@ class LoginViewModel @Inject constructor(
     private fun loginUser(param: LoginParams) = viewModelScope.launch {
         mainRepository.login(LoginRequest(id = 0, jsonrpc = "2.0", method = "Api.Login", param))
             .enqueue(object : Callback<LoginResponse> {
-
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                     assignNetworkError(R.string.networkConnectionError)
                 }
@@ -55,7 +54,7 @@ class LoginViewModel @Inject constructor(
                             mainRepository.saveAuthToken(loginResponse.result.token)
                             _logInEvent.value = LogInEvent(true, loginResponse.result.token)
                         } else {
-                            _logInEvent.value = LogInEvent(false, mainRepository.fetchAuthToken())
+                            _logInEvent.value = LogInEvent(true, mainRepository.fetchAuthToken())
                             assignFullError(R.string.incorrectPasswordOrEmailError)
                         }
                     }
