@@ -58,4 +58,9 @@
     <string name="incorrectPasswordOrEmailError">Incorrect password or email.</string>
     <string name="networkConnectionError">Please Check Your Internet Connection Or Try Again Later</string>
     <string name="error_icon">Error Icon</string>
+
+    <string name="date">Date: %s</string>
+    <string name="name">Name: %s</string>
+    <string name="desc">Desc: %s</string>
+    <string name="error_desc_icon">Error desc icon</string>
 </resources>

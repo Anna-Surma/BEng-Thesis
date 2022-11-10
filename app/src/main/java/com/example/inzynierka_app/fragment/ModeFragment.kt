@@ -35,11 +35,20 @@ class ModeFragment : Fragment() {
             }
         }
 
+        binding.btnTest.setOnClickListener {
+            saveErrorToDb()
+        }
+
         return view
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun saveErrorToDb() {
+        val gripperError = com.example.inzynierka_app.db.GripperError("00:26/08.11.2022", "RIGHT SENSOR", "No signal from the right sensor")
+        viewModel.insertRun(gripperError)
     }
 }

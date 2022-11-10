@@ -1,13 +1,17 @@
 package com.example.inzynierka_app.repository
 
+import androidx.lifecycle.LiveData
 import com.example.inzynierka_app.api.ApiHelper
 import com.example.inzynierka_app.api.SessionManager
+import com.example.inzynierka_app.db.ErrorHelper
+import com.example.inzynierka_app.db.GripperError
 import com.example.inzynierka_app.model.*
 import javax.inject.Inject
 
 class MainRepository @Inject constructor(
     private val apiHelper: ApiHelper,
-    private val sessionManager: SessionManager
+    private val sessionManager: SessionManager,
+    private val errorHelper: ErrorHelper
 ) {
     fun login(request: LoginRequest) = apiHelper.login(request)
 
@@ -20,4 +24,8 @@ class MainRepository @Inject constructor(
     fun saveAuthToken(token: String) = sessionManager.saveAuthToken(token)
 
     fun fetchAuthToken() = sessionManager.fetchAuthToken()
+
+    suspend fun insert(gripperError: GripperError) = errorHelper.insert(gripperError)
+
+    fun getAllErrorsSortedByDate(): LiveData<List<GripperError>>  = errorHelper.getAllRunsSortedByDate()
 }

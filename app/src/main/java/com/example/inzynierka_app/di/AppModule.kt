@@ -3,7 +3,11 @@ package com.example.inzynierka_app.di
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import androidx.room.Room
 import com.example.inzynierka_app.api.*
+import com.example.inzynierka_app.db.ErrorDatabase
+import com.example.inzynierka_app.db.ErrorHelper
+import com.example.inzynierka_app.db.ErrorHelperImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -84,4 +88,22 @@ object AppModule {
     @Singleton
     @Provides
     fun provideApiHelper(apiHelper: ApiHelperImpl): ApiHelper = apiHelper
+
+    @Singleton
+    @Provides
+    fun provideErrorDatabase(
+        @ApplicationContext app: Context
+    ) = Room.databaseBuilder(
+        app,
+        ErrorDatabase::class.java,
+        "error_database"
+    ).build()
+
+    @Singleton
+    @Provides
+    fun provideErrorDao (db: ErrorDatabase) = db.getErrorDao()
+
+    @Singleton
+    @Provides
+    fun provideErrorHelper(errorHelper: ErrorHelperImpl): ErrorHelper = errorHelper
 }

@@ -2,6 +2,7 @@ package com.example.inzynierka_app.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.*
+import com.example.inzynierka_app.db.GripperError
 import com.example.inzynierka_app.model.*
 import com.example.inzynierka_app.repository.GripperDataPullWorker
 import com.example.inzynierka_app.repository.MainRepository
@@ -240,4 +241,11 @@ class GripperViewModel @Inject constructor(
     fun stopStep() {
         _manualMode.value = false
     }
+
+    fun insertRun(gripperError: GripperError) = viewModelScope.launch {
+        mainRepository.insert(gripperError)
+    }
+
+    val errorsSortedByDate = mainRepository.getAllErrorsSortedByDate()
+
 }
