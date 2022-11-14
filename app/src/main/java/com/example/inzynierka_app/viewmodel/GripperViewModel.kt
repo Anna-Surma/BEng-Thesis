@@ -49,6 +49,12 @@ class GripperViewModel @Inject constructor(
     private val _reachSetCycles = MutableLiveData<Boolean>()
     val reachSetCycles: LiveData<Boolean> = _reachSetCycles
 
+    private val _readError = MutableLiveData<Int?>(null)
+    val readError: LiveData<Int?> = _readError
+
+    private val _gripperErrorMessageBox = MutableLiveData<Int?>(null)
+    val gripperErrorMessageBox: LiveData<Int?> = _gripperErrorMessageBox
+
     val setCycles = MutableLiveData<String>()
         get() = field
 
@@ -248,4 +254,7 @@ class GripperViewModel @Inject constructor(
 
     val errorsSortedByDate = mainRepository.getAllErrorsSortedByDate()
 
+    private fun assignGripperError(errorMessage: Int?) {
+        _gripperErrorMessageBox.value = errorMessage
+    }
 }

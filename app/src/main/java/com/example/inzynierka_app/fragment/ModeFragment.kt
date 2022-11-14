@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import com.example.inzynierka_app.ErrorDialog
+import com.example.inzynierka_app.R
 import com.example.inzynierka_app.databinding.FragmentModeBinding
 import com.example.inzynierka_app.viewmodel.GripperViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -15,6 +17,8 @@ class ModeFragment : Fragment() {
 
     private var _binding: FragmentModeBinding? = null
     private val binding get() = _binding!!
+
+    private val errorDialog = ErrorDialog()
 
     private lateinit var viewModel: GripperViewModel
     override fun onCreateView(
@@ -39,6 +43,9 @@ class ModeFragment : Fragment() {
             saveErrorToDb()
         }
 
+        binding.btnTest2.setOnClickListener {
+            errorDialog.createDialog(context, R.string.gripper_sensor_error_name, R.string.gripper_sensor_error_desc, R.drawable.error_red)
+        }
         return view
     }
 
@@ -48,7 +55,11 @@ class ModeFragment : Fragment() {
     }
 
     private fun saveErrorToDb() {
-        val gripperError = com.example.inzynierka_app.db.GripperError("00:26/08.11.2022", "RIGHT SENSOR", "No signal from the right sensor")
+        val gripperError = com.example.inzynierka_app.db.GripperError(
+            "00:26/08.11.2022",
+            "RIGHT SENSOR",
+            "No signal from the right sensor"
+        )
         viewModel.insertRun(gripperError)
     }
 }
