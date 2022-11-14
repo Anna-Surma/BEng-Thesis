@@ -1,11 +1,10 @@
 package com.example.inzynierka_app.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.inzynierka_app.R
+import com.example.inzynierka_app.ErrorType
 import com.example.inzynierka_app.model.*
 import com.example.inzynierka_app.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,7 +31,6 @@ class LoginViewModel @Inject constructor(
     private val _networkErrorMessageBox = MutableLiveData<Int?>(null)
     val networkErrorMessageBox: LiveData<Int?> = _networkErrorMessageBox
 
-
     fun onSignInButtonClicked() {
         loginUser(params)
     }
@@ -41,7 +39,7 @@ class LoginViewModel @Inject constructor(
         mainRepository.login(LoginRequest(id = 0, jsonrpc = "2.0", method = "Api.Login", param))
             .enqueue(object : Callback<LoginResponse> {
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                    assignNetworkError(R.string.networkConnectionError)
+                    assignNetworkError(ErrorType.NETWORK.errorDesc)
                 }
 
                 override fun onResponse(
@@ -55,7 +53,7 @@ class LoginViewModel @Inject constructor(
                             _logInEvent.value = LogInEvent(true, loginResponse.result.token)
                         } else {
                             _logInEvent.value = LogInEvent(true, mainRepository.fetchAuthToken())
-                            assignFullError(R.string.incorrectPasswordOrEmailError)
+                            assignFullError(ErrorType.LOGIN.errorDesc)
                         }
                     }
                 }

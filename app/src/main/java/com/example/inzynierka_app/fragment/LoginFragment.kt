@@ -1,15 +1,14 @@
 package com.example.inzynierka_app.fragment
 
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.inzynierka_app.ErrorDialog
+import com.example.inzynierka_app.ErrorType
 import com.example.inzynierka_app.R
 import com.example.inzynierka_app.databinding.FragmentLoginBinding
 import com.example.inzynierka_app.viewmodel.LoginViewModel
@@ -20,6 +19,8 @@ class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
+
+    private val errorDialog = ErrorDialog()
 
     private lateinit var viewModel: LoginViewModel
 
@@ -55,17 +56,7 @@ class LoginFragment : Fragment() {
 
         viewModel.networkErrorMessageBox.observe(viewLifecycleOwner) {
             if (it != null) {
-                val builder = AlertDialog.Builder(context)
-
-                with(builder)
-                {
-                    setTitle("Network failure")
-                    setMessage(it)
-                    setPositiveButton("OK", DialogInterface.OnClickListener{ dialog: DialogInterface, _: Int ->
-                        dialog.cancel()
-                    })
-                    show()
-                }
+                errorDialog.createDialog(context, ErrorType.NETWORK.errorName, it, R.drawable.error_icon_desc)
             }
             else {
                 binding.emailTextInputLayout.error = null
