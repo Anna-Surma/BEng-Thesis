@@ -9,17 +9,30 @@ class ErrorDialog {
         context: Context?,
         title: Int,
         message: Int,
-        icon: Int
+        icon: Int,
+        setBoth: Boolean,
     ) {
         val builder = AlertDialog.Builder(context)
         with(builder) {
             setTitle(title)
             setMessage(message)
             builder.setIcon(icon)
-            setPositiveButton("OK", DialogInterface.OnClickListener
-            { dialog: DialogInterface, _: Int ->
-                dialog.cancel()
-            })
+            if(setBoth){
+                setPositiveButton("Delete", DialogInterface.OnClickListener
+                { dialog: DialogInterface, _: Int ->
+                    dialog.cancel()
+                })
+                setNegativeButton("Cancel", DialogInterface.OnClickListener
+                { dialog: DialogInterface, _: Int ->
+                    dialog.cancel()
+                })
+            }
+            else{
+                setPositiveButton("OK", DialogInterface.OnClickListener
+                { dialog: DialogInterface, _: Int ->
+                    dialog.cancel()
+                })
+            }
             show()
         }
     }

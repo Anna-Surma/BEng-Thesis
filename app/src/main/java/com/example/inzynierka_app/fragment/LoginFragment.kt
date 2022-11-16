@@ -56,7 +56,7 @@ class LoginFragment : Fragment() {
 
         viewModel.networkErrorMessageBox.observe(viewLifecycleOwner) {
             if (it != null) {
-                errorDialog.createDialog(context, ErrorType.NETWORK.errorName, it, R.drawable.error_icon_desc)
+                errorDialog.createDialog(context, ErrorType.NETWORK.errorName, it, R.drawable.error_icon_desc, false)
             }
             else {
                 binding.emailTextInputLayout.error = null

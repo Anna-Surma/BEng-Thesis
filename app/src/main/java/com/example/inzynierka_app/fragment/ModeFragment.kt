@@ -11,6 +11,8 @@ import com.example.inzynierka_app.R
 import com.example.inzynierka_app.databinding.FragmentModeBinding
 import com.example.inzynierka_app.viewmodel.GripperViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @AndroidEntryPoint
 class ModeFragment : Fragment() {
@@ -44,7 +46,7 @@ class ModeFragment : Fragment() {
         }
 
         binding.btnTest2.setOnClickListener {
-            errorDialog.createDialog(context, R.string.gripper_sensor_error_name, R.string.gripper_sensor_error_desc, R.drawable.error_red)
+            errorDialog.createDialog(context, R.string.top_right_sensor_error_name, R.string.top_right_sensor_error_desc, R.drawable.error_red, false)
         }
         return view
     }
@@ -55,8 +57,9 @@ class ModeFragment : Fragment() {
     }
 
     private fun saveErrorToDb() {
+        val current = LocalDateTime.now()
         val gripperError = com.example.inzynierka_app.db.GripperError(
-            "00:26/08.11.2022",
+            current.format(DateTimeFormatter.ofPattern("HH:mm:ss/dd.MM.yy")),
             "RIGHT SENSOR",
             "No signal from the right sensor"
         )
