@@ -28,6 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/param_margin_bottom"
+                android:layout_marginTop="@dimen/margin_top"
                 android:background="@color/orange"
                 android:gravity="center"
                 android:padding="3dp"
@@ -61,6 +62,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/set_start"
+                            android:textColor="@color/black"
                             android:textSize="@dimen/params_text_size" />
 
                         <Spinner
@@ -68,14 +70,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/params_margin_start"
-                            android:entries="@array/start_point" />
+                            android:entries="@array/start_point"
+                            android:textSize="@dimen/params_text_size"/>
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/param_margin_bottom"
                         android:orientation="horizontal">
 
                         <TextView
@@ -83,6 +85,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/set_cycles"
+                            android:textColor="@color/black"
                             android:textSize="@dimen/params_text_size" />
 
                         <EditText
@@ -91,9 +94,63 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/params_margin_start"
                             android:hint="@string/none_hint"
+                            android:textSize="@dimen/params_text_size"
+                            android:textColor="@color/black"
                             android:text="@={gripperViewModel.setCycles}"
                             android:importantForAutofill="no"
                             android:inputType="numberDecimal"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/param_margin_bottom"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="-8dp">
+
+                        <TextView
+                            android:id="@+id/tvDuration"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/set_duration"
+                            android:textSize="@dimen/params_text_size"
+                            android:textColor="@color/black" />
+
+                        <EditText
+                            android:id="@+id/etDuration"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/params_margin_start"
+                            android:hint="@string/none_hint"
+                            android:textSize="@dimen/params_text_size"
+                            android:text="@={gripperViewModel.setCycles}"
+                            android:importantForAutofill="no"
+                            android:inputType="numberDecimal"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/param_margin_bottom"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="-5dp">
+
+                        <TextView
+                            android:id="@+id/tvCycleTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cycle Time"
+                            android:textSize="@dimen/params_text_size"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/tvCyclesTimeDisp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/params_margin_start"
+                            android:hint="@string/_0_hint"/>
 
                     </LinearLayout>
 
@@ -104,16 +161,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:layout_marginTop="3dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/llFirst"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginBottom="@dimen/param_margin_bottom">
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/param_margin_bottom"
+
                         android:orientation="horizontal">
 
                         <TextView
@@ -121,7 +177,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/time"
-                            android:textSize="@dimen/params_text_size" />
+                            android:textSize="@dimen/params_text_size"
+                            android:textColor="@color/black"/>
 
                         <Chronometer
                             android:id="@+id/chStopWatch"
@@ -135,7 +192,8 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/param_margin_bottom"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="13dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -143,7 +201,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/cycles"
-                            android:textSize="@dimen/params_text_size" />
+                            android:textSize="@dimen/params_text_size"
+                            android:textColor="@color/black"/>
 
                         <TextView
                             android:id="@+id/tvCyclesNumber"
@@ -152,6 +211,53 @@
                             android:layout_marginStart="@dimen/params_margin_start"
                             android:text="@{gripperViewModel.cyclesNumber}"
                             android:hint="@string/_0_hint" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="17dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvDurationParam"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/duration"
+                            android:textSize="@dimen/params_text_size"
+                            android:textColor="@color/black"/>
+
+                        <Chronometer
+                            android:id="@+id/chDurationWatch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/params_margin_start"
+                            android:textSize="@dimen/params_text_size" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/param_margin_bottom"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="-6dp">
+
+                        <TextView
+                            android:id="@+id/tvAvrCycleTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Avr Cycle Time"
+                            android:textSize="@dimen/params_text_size"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/tvAvrCyclesTimeDisp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/params_margin_start"
+                            android:hint="@string/_0_hint"/>
 
                     </LinearLayout>
 
@@ -164,7 +270,7 @@
                 android:layout_marginBottom="@dimen/param_margin_bottom"
                 android:background="@color/orange"
                 android:gravity="center"
-                android:padding="3dp"
+                android:padding="2dp"
                 android:text="@string/commands"
                 android:textColor="@color/white"
                 android:textSize="@dimen/heading_text_size"
@@ -198,7 +304,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/pause"
                     app:layout_constraintStart_toStartOf="@+id/btnStartButton"
-                    app:layout_constraintTop_toBottomOf="@id/btnStartButton" />
+                    app:layout_constraintTop_toBottomOf="@id/btnStartButton"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

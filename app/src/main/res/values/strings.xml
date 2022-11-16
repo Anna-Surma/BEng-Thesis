@@ -71,8 +71,16 @@
     <string name="network_connection_error_desc">Please Check Your Internet Connection Or Try Again Later</string>
     <string name="error_icon">Error Icon</string>
 
+    <string name="delete_history">Are you sure you want to delete history?</string>
+    <string name="delete_history_desc">You can\'\t undo this action.</string>
+
     <string name="date">Date: %s</string>
     <string name="name">Name: %s</string>
     <string name="desc">Desc: %s</string>
     <string name="error_desc_icon">Error desc icon</string>
+    <string name="hold">HOLD</string>
+    <string name="duration">Duration</string>
+    <string name="step_time">Step time</string>
+    <string name="unit_s">[s]</string>
+    <string name="average_step_time">Average step time</string>
 </resources>

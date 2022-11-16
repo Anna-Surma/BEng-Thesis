@@ -23,9 +23,10 @@
             android:text="@string/auto_mode"
             android:textSize="@dimen/mode_text_size"
             android:textStyle="bold"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -43,12 +44,11 @@
                 android:layout_width="50dp"
                 android:layout_height="40dp"
                 android:layout_gravity="bottom|end"
-                android:layout_marginEnd="@dimen/params_margin_start"
-                android:layout_marginBottom="@dimen/param_margin_bottom"
+                android:layout_marginEnd="30dp"
                 android:clickable="true"
                 android:contentDescription="@string/error_icon"
                 android:focusable="true"
-                android:src="@drawable/error_orange" />
+                android:src="@drawable/error_red" />
         </FrameLayout>
 
         <androidx.fragment.app.FragmentContainerView
