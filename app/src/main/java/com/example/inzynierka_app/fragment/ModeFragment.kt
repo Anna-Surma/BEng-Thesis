@@ -1,12 +1,13 @@
 package com.example.inzynierka_app.fragment
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.inzynierka_app.ErrorDialog
 import com.example.inzynierka_app.R
 import com.example.inzynierka_app.databinding.FragmentModeBinding
 import com.example.inzynierka_app.viewmodel.GripperViewModel
@@ -19,8 +20,6 @@ class ModeFragment : Fragment() {
 
     private var _binding: FragmentModeBinding? = null
     private val binding get() = _binding!!
-
-    private val errorDialog = ErrorDialog()
 
     private lateinit var viewModel: GripperViewModel
     override fun onCreateView(
@@ -46,7 +45,7 @@ class ModeFragment : Fragment() {
         }
 
         binding.btnTest2.setOnClickListener {
-            errorDialog.createDialog(context, R.string.top_right_sensor_error_name, R.string.top_right_sensor_error_desc, R.drawable.error_red, false)
+
         }
         return view
     }
