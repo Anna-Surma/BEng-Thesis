@@ -5,7 +5,10 @@ import com.example.inzynierka_app.api.ApiHelper
 import com.example.inzynierka_app.api.SessionManager
 import com.example.inzynierka_app.db.ErrorHelper
 import com.example.inzynierka_app.db.GripperError
-import com.example.inzynierka_app.model.*
+import com.example.inzynierka_app.model.LoginRequest
+import com.example.inzynierka_app.model.ReadArrayRequest
+import com.example.inzynierka_app.model.ReadDataRequest
+import com.example.inzynierka_app.model.WriteDataRequest
 import javax.inject.Inject
 
 class MainRepository @Inject constructor(
@@ -27,5 +30,8 @@ class MainRepository @Inject constructor(
 
     suspend fun insert(gripperError: GripperError) = errorHelper.insert(gripperError)
 
-    fun getAllErrorsSortedByDate(): LiveData<List<GripperError>>  = errorHelper.getAllRunsSortedByDate()
+    fun getAllErrorsSortedByDate(): LiveData<List<GripperError>> =
+        errorHelper.getAllRunsSortedByDate()
+
+    suspend fun delete() = errorHelper.delete()
 }
