@@ -50,6 +50,7 @@ class ModeFragment : Fragment() {
                 setTitle(R.string.top_right_sensor_error_name)
                 setMessage(R.string.top_right_sensor_error_desc)
                 setIcon(R.drawable.error_red)
+                setPositiveButton("OK"){dialog: DialogInterface,_ -> dialog.cancel()}
                 show()
             }
         }
