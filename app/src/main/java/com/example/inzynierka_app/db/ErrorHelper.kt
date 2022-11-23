@@ -7,4 +7,7 @@ interface ErrorHelper {
     suspend fun insert(gripperError: GripperError)
 
     fun getAllRunsSortedByDate(): LiveData<List<GripperError>>
+
+    suspend fun delete()
+
 }
