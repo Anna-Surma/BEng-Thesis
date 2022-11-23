@@ -45,7 +45,13 @@ class ModeFragment : Fragment() {
         }
 
         binding.btnTest2.setOnClickListener {
-
+            val builder = AlertDialog.Builder(context)
+            with(builder) {
+                setTitle(R.string.top_right_sensor_error_name)
+                setMessage(R.string.top_right_sensor_error_desc)
+                setIcon(R.drawable.error_red)
+                show()
+            }
         }
         return view
     }
