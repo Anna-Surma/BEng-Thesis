@@ -56,7 +56,6 @@ class GripperViewModel @Inject constructor(
     val gripperErrorMessageBox: LiveData<Int?> = _gripperErrorMessageBox
 
     val setCycles = MutableLiveData<String>()
-        get() = field
 
     private var viewModelJob: Job? = null
 
@@ -253,6 +252,12 @@ class GripperViewModel @Inject constructor(
     }
 
     val errorsSortedByDate = mainRepository.getAllErrorsSortedByDate()
+
+    fun deleteRun() {
+        viewModelScope.launch {
+            mainRepository.delete()
+        }
+    }
 
     private fun assignGripperError(errorMessage: Int?) {
         _gripperErrorMessageBox.value = errorMessage
