@@ -68,7 +68,7 @@ class ErrorFragment : Fragment() {
             setTitle(R.string.delete_history)
             setMessage(R.string.delete_history_desc)
             builder.setIcon(android.R.drawable.ic_menu_delete)
-            setPositiveButton("Delete"){dialog: DialogInterface,_ -> viewModel.deleteRun()}
+            setPositiveButton("Delete"){dialog: DialogInterface,_ -> viewModel.deleteErrors()}
             setNegativeButton("Cancel"){dialog: DialogInterface,_ -> dialog.cancel()}
             show()
         }

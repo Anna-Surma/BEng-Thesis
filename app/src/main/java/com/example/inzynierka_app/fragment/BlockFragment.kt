@@ -34,14 +34,14 @@ class BlockFragment : Fragment() {
         viewModel = ViewModelProvider(requireActivity()).get(GripperViewModel::class.java)
 
         array = arrayListOf(
-            ReadDataRequest(1, "2.0", "PlcProgram.Read", Params("\"Data\".app_KROK_1")),
-            ReadDataRequest(2, "2.0", "PlcProgram.Read", Params("\"Data\".app_KROK_2")),
-            ReadDataRequest(3, "2.0", "PlcProgram.Read", Params("\"Data\".app_KROK_3")),
-            ReadDataRequest(4, "2.0", "PlcProgram.Read", Params("\"Data\".app_KROK_4")),
-            ReadDataRequest(5, "2.0", "PlcProgram.Read", Params("\"Data\".app_KROK_5")),
-            ReadDataRequest(6, "2.0", "PlcProgram.Read", Params("\"Data\".app_KROK_6")),
-            ReadDataRequest(7, "2.0", "PlcProgram.Read", Params("\"Data\".app_KROK_7")),
-            ReadDataRequest(8, "2.0", "PlcProgram.Read", Params("\"Data\".app_KROK_8"))
+            ReadDataRequest(1, "2.0", "PlcProgram.Read", Params("\"Data\".mb_step_1")),
+            ReadDataRequest(2, "2.0", "PlcProgram.Read", Params("\"Data\".mb_step_2")),
+            ReadDataRequest(3, "2.0", "PlcProgram.Read", Params("\"Data\".mb_step_3")),
+            ReadDataRequest(4, "2.0", "PlcProgram.Read", Params("\"Data\".mb_step_4")),
+            ReadDataRequest(5, "2.0", "PlcProgram.Read", Params("\"Data\".mb_step_5")),
+            ReadDataRequest(6, "2.0", "PlcProgram.Read", Params("\"Data\".mb_step_6")),
+            ReadDataRequest(7, "2.0", "PlcProgram.Read", Params("\"Data\".mb_step_7")),
+            ReadDataRequest(8, "2.0", "PlcProgram.Read", Params("\"Data\".mb_step_8"))
         )
         return view
     }

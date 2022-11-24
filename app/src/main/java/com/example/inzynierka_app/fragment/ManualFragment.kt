@@ -37,12 +37,12 @@ class ManualFragment : Fragment() {
             if (it != null) {
                 if (viewModel.controlActive.value == true) {
                     if (viewModel.manualMode.value == true) {
-                        viewModel.writeData(ParamsWriteVar("\"Data\".app_krok", true))
+                        viewModel.writeData(ParamsWriteVar("\"Data\".mb_app_step", true))
                         viewModel.stopStep()
                     } else
-                        viewModel.writeData(ParamsWriteVar("\"Data\".app_krok", false))
+                        viewModel.writeData(ParamsWriteVar("\"Data\".mb_app_step", false))
                 } else
-                    viewModel.writeData(ParamsWriteVar("\"Data\".app_krok", false))
+                    viewModel.writeData(ParamsWriteVar("\"Data\".mb_app_step", false))
             }
         }
 

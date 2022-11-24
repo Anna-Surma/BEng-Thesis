@@ -62,7 +62,7 @@ class AutoFragment : Fragment() {
                         binding.chStopWatch.base = timer.setBaseTime()
                     }
                     viewModel.startAuto()
-                    viewModel.startReadCycles(Params("\"Data\".licznik_cykli"))
+                    viewModel.startReadCycles(Params("\"Data\".mw_cycles"))
 
                     binding.chStopWatch.base = timer.setBaseTime()
                     binding.chStopWatch.start()
@@ -94,10 +94,10 @@ class AutoFragment : Fragment() {
         viewModel.controlActive.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (viewModel.controlActive.value == true) {
-                    viewModel.writeData(ParamsWriteVar("\"Data\".app_control", true))
+                    viewModel.writeData(ParamsWriteVar("\"Data\".mb_app_control", true))
                 } else {
-                    viewModel.writeData(ParamsWriteVar("\"Data\".app_control", false))
-                    viewModel.writeData(ParamsWriteVar("\"Data\".app_auto", false))
+                    viewModel.writeData(ParamsWriteVar("\"Data\".mb_app_control", false))
+                    viewModel.writeData(ParamsWriteVar("\"Data\".mb_app_auto", false))
                     binding.etCycles.inputType = TYPE_INTEGER
                 }
             }
@@ -107,11 +107,11 @@ class AutoFragment : Fragment() {
             if (it != null) {
                 if (viewModel.controlActive.value == true) {
                     if (viewModel.autoMode.value == true) {
-                        viewModel.writeData(ParamsWriteVar("\"Data\".app_auto", true))
+                        viewModel.writeData(ParamsWriteVar("\"Data\".mb_app_auto", true))
                     } else
-                        viewModel.writeData(ParamsWriteVar("\"Data\".app_auto", false))
+                        viewModel.writeData(ParamsWriteVar("\"Data\".mb_app_auto", false))
                 } else {
-                    viewModel.writeData(ParamsWriteVar("\"Data\".app_auto", false))
+                    viewModel.writeData(ParamsWriteVar("\"Data\".mb_app_auto", false))
                 }
             }
         }
