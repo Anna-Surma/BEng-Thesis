@@ -2,6 +2,8 @@ package com.example.inzynierka_app.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.example.inzynierka_app.ArrayRequestItem
+import com.example.inzynierka_app.ArrayResponseItem
 import com.example.inzynierka_app.model.Params
 import com.example.inzynierka_app.model.ReadDataRequest
 import javax.inject.Inject
@@ -12,6 +14,9 @@ class GripperDataPullWorker @Inject constructor(
 ) {
     var synchronizing = false
     var cycles = MutableLiveData("null")
+
+    private var arrayResponse = ArrayList<ArrayResponseItem>()
+    var arrayResponseLiveData = MutableLiveData<ArrayList<ArrayResponseItem>>()
 
     suspend fun startReadCycles(read_param: Params) {
         Log.i("GripperViewModelData", cycles.value.toString())
@@ -34,5 +39,22 @@ class GripperDataPullWorker @Inject constructor(
         synchronizing = false
     }
 
-
+    suspend fun readErrors(read_array_item: ArrayList<ArrayRequestItem>) {
+        try {
+            arrayResponse.clear()
+            val response =
+                mainRepository.readArray(read_array_item)
+            val responseBody = response.body()
+            if (response.isSuccessful) {
+                if (responseBody != null) {
+                    for (arrayResponseItem in responseBody) {
+                        arrayResponse.add(arrayResponseItem)
+                        arrayResponseLiveData.value = arrayResponse
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            //Catch error
+        }
+    }
 }

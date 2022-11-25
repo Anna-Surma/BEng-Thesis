@@ -3,13 +3,15 @@ package com.example.inzynierka_app.fragment
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.inzynierka_app.R
+import com.example.inzynierka_app.*
 import com.example.inzynierka_app.databinding.FragmentModeBinding
+import com.example.inzynierka_app.model.ParamsWriteVar
 import com.example.inzynierka_app.viewmodel.GripperViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
@@ -21,6 +23,15 @@ class ModeFragment : Fragment() {
     private var _binding: FragmentModeBinding? = null
     private val binding get() = _binding!!
 
+    private var arrayErrorRequest = arrayListOf(
+        ArrayRequestItem(1, "2.0", "PlcProgram.Read", ArrayParams("\"Data\".mb_error_HOR_left")),
+        ArrayRequestItem(2, "2.0", "PlcProgram.Read", ArrayParams("\"Data\".mb_error_HOR_right")),
+        ArrayRequestItem(3, "2.0", "PlcProgram.Read", ArrayParams("\"Data\".mb_error_VTK_up")),
+        ArrayRequestItem(4, "2.0", "PlcProgram.Read", ArrayParams("\"Data\".mb_error_VTK_down")),
+        ArrayRequestItem(5, "2.0", "PlcProgram.Read", ArrayParams("\"Data\".mb_error_GRP_open")),
+        ArrayRequestItem(6, "2.0", "PlcProgram.Read", ArrayParams("\"Data\".mb_catch_error"))
+    )
+
     private lateinit var viewModel: GripperViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,10 +42,12 @@ class ModeFragment : Fragment() {
         val view = binding.root
 
         viewModel = ViewModelProvider(requireActivity()).get(GripperViewModel::class.java)
+        binding.lifecycleOwner = this
 
         binding.tbActive.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 viewModel.activeControl()
+                viewModel.readErrors(arrayErrorRequest)
             } else {
                 viewModel.deactivateControl()
             }
@@ -44,14 +57,38 @@ class ModeFragment : Fragment() {
             saveErrorToDb()
         }
 
-        binding.btnTest2.setOnClickListener {
-            val builder = AlertDialog.Builder(context)
-            with(builder) {
-                setTitle(R.string.top_right_sensor_error_name)
-                setMessage(R.string.top_right_sensor_error_desc)
-                setIcon(R.drawable.error_red)
-                setPositiveButton("OK"){dialog: DialogInterface,_ -> dialog.cancel()}
-                show()
+        viewModel.arrayResponse.observe(viewLifecycleOwner) {
+            if (it != null) {
+                for (nr in it) {
+                    if (nr.result) {
+                        val errorType = when (nr.id) {
+                            1 -> ErrorType.HOR_LEFT
+                            2 -> ErrorType.HOR_RIGHT
+                            3 -> ErrorType.VTK_TOP
+                            4 -> ErrorType.VTK_DOWN
+                            5 -> ErrorType.GRIPPER
+                            6 -> ErrorType.PUT
+                            else -> ErrorType.NETWORK
+                        }
+                        val builder = AlertDialog.Builder(context)
+                        with(builder) {
+                            setTitle(errorType.errorName)
+                            setMessage(errorType.errorDesc)
+                            setIcon(R.drawable.error_red)
+                            setPositiveButton("OK") { dialog: DialogInterface, _ ->
+                                dialog.cancel()
+                                viewModel.writeData(ParamsWriteVar("\"Data\".mb_app_btn_error", true))
+                                viewModel.readErrors(arrayErrorRequest)
+                                viewModel.writeData(ParamsWriteVar("\"Data\".mb_app_btn_error", false))
+                            }
+                            show()
+                        }
+                        if(!builder.create().isShowing){
+                            viewModel.writeData(ParamsWriteVar("\"Data\".mb_app_btn_error", false))
+                        }
+                        viewModel.stopReadErrors()
+                    }
+                }
             }
         }
         return view

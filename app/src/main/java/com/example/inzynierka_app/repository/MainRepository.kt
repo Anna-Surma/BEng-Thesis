@@ -1,12 +1,12 @@
 package com.example.inzynierka_app.repository
 
 import androidx.lifecycle.LiveData
+import com.example.inzynierka_app.ArrayRequestItem
 import com.example.inzynierka_app.api.ApiHelper
 import com.example.inzynierka_app.api.SessionManager
 import com.example.inzynierka_app.db.ErrorHelper
 import com.example.inzynierka_app.db.GripperError
 import com.example.inzynierka_app.model.LoginRequest
-import com.example.inzynierka_app.model.ReadArrayRequest
 import com.example.inzynierka_app.model.ReadDataRequest
 import com.example.inzynierka_app.model.WriteDataRequest
 import javax.inject.Inject
@@ -22,7 +22,7 @@ class MainRepository @Inject constructor(
 
     suspend fun writeData(request: WriteDataRequest) = apiHelper.writeData(request)
 
-    suspend fun readArray(request: ReadArrayRequest) = apiHelper.readArray(request)
+    suspend fun readArray(request: ArrayList<ArrayRequestItem>) = apiHelper.readArray(request)
 
     fun saveAuthToken(token: String) = sessionManager.saveAuthToken(token)
 

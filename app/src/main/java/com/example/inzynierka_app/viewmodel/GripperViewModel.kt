@@ -2,6 +2,8 @@ package com.example.inzynierka_app.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.*
+import com.example.inzynierka_app.ArrayRequestItem
+import com.example.inzynierka_app.ArrayResponseItem
 import com.example.inzynierka_app.db.GripperError
 import com.example.inzynierka_app.model.*
 import com.example.inzynierka_app.repository.GripperDataPullWorker
@@ -22,9 +24,6 @@ class GripperViewModel @Inject constructor(
     private val _readData = MutableLiveData<String>()
     val readData: LiveData<String> = _readData
 
-    private val _writeData = MutableLiveData<Boolean>()
-    val writeData: LiveData<Boolean> = _writeData
-
     private val _controlActive = MutableLiveData<Boolean>()
     val controlActive: LiveData<Boolean> = _controlActive
 
@@ -37,9 +36,6 @@ class GripperViewModel @Inject constructor(
     private val _manualMode = MutableLiveData<Boolean>()
     val manualMode: LiveData<Boolean> = _manualMode
 
-    private val _readDataArray = MutableLiveData<ArrayList<ReadDataRequest>>()
-    val readDataArray: LiveData<ArrayList<ReadDataRequest>> = _readDataArray
-
     private val _isRunning = MutableLiveData<Boolean>()
     val isRunning: LiveData<Boolean> = _isRunning
 
@@ -49,15 +45,14 @@ class GripperViewModel @Inject constructor(
     private val _reachSetCycles = MutableLiveData<Boolean>()
     val reachSetCycles: LiveData<Boolean> = _reachSetCycles
 
-    private val _readError = MutableLiveData<Int?>(null)
-    val readError: LiveData<Int?> = _readError
-
-    private val _gripperErrorMessageBox = MutableLiveData<Int?>(null)
-    val gripperErrorMessageBox: LiveData<Int?> = _gripperErrorMessageBox
-
     val setCycles = MutableLiveData<String>()
 
+    private val _arrayResponse = MutableLiveData<ArrayList<ArrayResponseItem>>()
+    val arrayResponse: LiveData<ArrayList<ArrayResponseItem>> = _arrayResponse
+
     private var viewModelJob: Job? = null
+
+    private var viewModelErrorJob: Job? = null
 
     init {
         _controlActive.value = false
@@ -90,6 +85,20 @@ class GripperViewModel @Inject constructor(
         }
     }
 
+    fun readErrors(read_array_item: ArrayList<ArrayRequestItem>) {
+        viewModelErrorJob = viewModelScope.launch {
+            while (true) {
+                delay(100)
+                gripper.readErrors(read_array_item)
+                _arrayResponse.value = gripper.arrayResponseLiveData.value
+            }
+        }
+    }
+
+    fun stopReadErrors() {
+        viewModelErrorJob?.cancel()
+    }
+
     private fun reachSetCycles() {
         _reachSetCycles.value = true
         stopReadCycles()
@@ -98,18 +107,16 @@ class GripperViewModel @Inject constructor(
         _manualMode.value = false
     }
 
-
     fun writeData(write_param: ParamsWriteVar) = viewModelScope.launch {
         // _writeData.value = mainRepository.sendCycles(123)
         // CyclesResponse(value?, failure?)
         // Maybe<Boolean>
-        try{
+        try {
             mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", write_param))
-        } catch (exception: Exception){
+        } catch (exception: Exception) {
             Log.e("TAG", exception.message ?: "NULL")
         }
     }
-
 
     fun writeDataParallel(step: String) = viewModelScope.launch {
         try {
@@ -196,7 +203,7 @@ class GripperViewModel @Inject constructor(
                 }
                 else -> Log.i("AUTO", "Step not recognized")
             }
-        } catch (exception: Exception){
+        } catch (exception: Exception) {
             Log.e("TAG", exception.message ?: "NULL")
         }
     }
@@ -257,9 +264,5 @@ class GripperViewModel @Inject constructor(
         viewModelScope.launch {
             mainRepository.delete()
         }
-    }
-
-    private fun assignGripperError(errorMessage: Int?) {
-        _gripperErrorMessageBox.value = errorMessage
     }
 }
