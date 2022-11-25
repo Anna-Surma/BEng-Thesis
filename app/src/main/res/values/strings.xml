@@ -65,6 +65,8 @@
     <string name="hor_left_sensor_error_desc">Incorrect signal from the hor left sensor.</string>
     <string name="gripper_sensor_error_name">GRIPPER SENSOR</string>
     <string name="gripper_sensor_error_desc">Incorrect signal from the gripper sensor.</string>
+    <string name="put_error_name">PUT DOWN</string>
+    <string name="put_error_desc">item can not be put down.</string>
 
     <string name="incorrect_password_or_email_error">Incorrect password or email.</string>
     <string name="network_connection_error_name">Network failure</string>
