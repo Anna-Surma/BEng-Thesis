@@ -1,5 +1,7 @@
 package com.example.inzynierka_app.api
 
+import com.example.inzynierka_app.ArrayRequestItem
+import com.example.inzynierka_app.ArrayResponse
 import com.example.inzynierka_app.model.*
 import retrofit2.Call
 import retrofit2.Response
@@ -13,5 +15,5 @@ interface ApiHelper {
 
     suspend fun writeData(@Body request: WriteDataRequest): Response<DataResponse>
 
-    suspend fun readArray(@Body request: ReadArrayRequest): Response<ReadArrayResponse>
+    suspend fun readArray(@Body request: ArrayList<ArrayRequestItem>): Response<ArrayResponse>
 }
