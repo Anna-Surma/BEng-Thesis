@@ -13,21 +13,22 @@ class GripperDataPullWorker @Inject constructor(
     private val mainRepository: MainRepository
 ) {
     var synchronizing = false
-    var cycles = MutableLiveData("null")
+    var cycles = MutableLiveData<String>()
 
     private var arrayResponse = ArrayList<ArrayResponseItem>()
     var arrayResponseLiveData = MutableLiveData<ArrayList<ArrayResponseItem>>()
 
     suspend fun startReadCycles(read_param: Params) {
-        Log.i("GripperViewModelData", cycles.value.toString())
         try {
             val response =
                 mainRepository.readData(ReadDataRequest(1, "2.0", "PlcProgram.Read", read_param))
             val responseBody = response.body()
             if (response.isSuccessful) {
                 if (responseBody?.result != null) {
-                    if (cycles.value != responseBody.result.toString())
-                        cycles.value = responseBody.result.toString()
+                    if (cycles.value != responseBody.result)
+                    {
+                        cycles.value = responseBody.result.toString().dropLast(2)
+                    }
                 }
             }
         } catch (e: Exception) {
