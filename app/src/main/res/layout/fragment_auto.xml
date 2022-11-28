@@ -141,7 +141,7 @@
                             android:id="@+id/tvCycleTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Cycle Time"
+                            android:text="@string/cycle_time"
                             android:textSize="@dimen/params_text_size"
                             android:textColor="@color/black" />
 
@@ -150,6 +150,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/params_margin_start"
+                            android:text="@{gripperViewModel.cyclesTime}"
                             android:hint="@string/_0_hint"/>
 
                     </LinearLayout>
@@ -248,7 +249,7 @@
                             android:id="@+id/tvAvrCycleTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Avr Cycle Time"
+                            android:text="@string/avr_cycle_time"
                             android:textSize="@dimen/params_text_size"
                             android:textColor="@color/black" />
 
@@ -257,6 +258,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/params_margin_start"
+                            android:text="@{gripperViewModel.avrCyclesTime}"
                             android:hint="@string/_0_hint"/>
 
                     </LinearLayout>

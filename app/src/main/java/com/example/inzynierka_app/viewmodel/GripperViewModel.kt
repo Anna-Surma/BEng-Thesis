@@ -33,6 +33,9 @@ class GripperViewModel @Inject constructor(
     private val _cyclesNumber = MutableLiveData("0")
     val cyclesNumber: LiveData<String> = _cyclesNumber
 
+    private val _cyclesTime = MutableLiveData("0")
+    val cyclesTime: LiveData<String> = _cyclesTime
+
     private val _manualMode = MutableLiveData<Boolean>()
     val manualMode: LiveData<Boolean> = _manualMode
 
@@ -49,6 +52,9 @@ class GripperViewModel @Inject constructor(
 
     private val _arrayResponse = MutableLiveData<ArrayList<ArrayResponseItem>>()
     val arrayResponse: LiveData<ArrayList<ArrayResponseItem>> = _arrayResponse
+
+    private val _avrCyclesTime = MutableLiveData<String>()
+    val avrCyclesTime: LiveData<String> = _avrCyclesTime
 
     private var viewModelJob: Job? = null
 
@@ -70,12 +76,24 @@ class GripperViewModel @Inject constructor(
     }
 
     fun startReadCycles(read_param: Params) {
+        var sum = 0
+        val cycles = arrayListOf<Int>()
+        var averageTime = 0
         viewModelJob = viewModelScope.launch {
             gripper.synchronizing = true
             while (gripper.synchronizing) {
                 delay(100)
                 gripper.startReadCycles(read_param)
+                gripper.startReadCyclesTime(Params("\"Data\".mw_cycle_time"))
                 _cyclesNumber.value = gripper.cycles.value
+                _cyclesTime.value = gripper.cyclesTime.value
+                cycles.add(_cyclesTime.value!!.toInt())
+                if(sum==0 || (_cyclesTime.value != gripper.cyclesTime.value)){
+                    sum = sum+_cyclesTime.value!!.toInt()
+                    averageTime = sum/cycles.size
+                    _avrCyclesTime.value = averageTime.toString()
+                }
+
                 if (setCycles.value != "0") {
                     if (_cyclesNumber.value == setCycles.value) {
                         reachSetCycles()

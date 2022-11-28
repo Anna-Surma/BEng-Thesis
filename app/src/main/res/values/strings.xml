@@ -85,4 +85,6 @@
     <string name="step_time">Step time</string>
     <string name="unit_s">[s]</string>
     <string name="average_step_time">Average step time</string>
+    <string name="cycle_time">Cycle time</string>
+    <string name="avr_cycle_time">Avr cycle time</string>
 </resources>

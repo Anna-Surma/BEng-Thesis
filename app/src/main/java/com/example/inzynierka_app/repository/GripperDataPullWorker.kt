@@ -15,6 +15,8 @@ class GripperDataPullWorker @Inject constructor(
     var synchronizing = false
     var cycles = MutableLiveData<String>()
 
+    var cyclesTime = MutableLiveData<String>()
+
     private var arrayResponse = ArrayList<ArrayResponseItem>()
     var arrayResponseLiveData = MutableLiveData<ArrayList<ArrayResponseItem>>()
 
@@ -38,6 +40,24 @@ class GripperDataPullWorker @Inject constructor(
 
     fun stopReadCycles() {
         synchronizing = false
+    }
+
+    suspend fun startReadCyclesTime(read_param: Params) {
+        try {
+            val response =
+                mainRepository.readData(ReadDataRequest(1, "2.0", "PlcProgram.Read", read_param))
+            val responseBody = response.body()
+            if (response.isSuccessful) {
+                if (responseBody?.result != null) {
+                    if (cyclesTime.value != responseBody.result)
+                    {
+                        cyclesTime.value = responseBody.result.toString().dropLast(2)
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            synchronizing = false
+        }
     }
 
     suspend fun readErrors(read_array_item: ArrayList<ArrayRequestItem>) {
