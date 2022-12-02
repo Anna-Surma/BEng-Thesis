@@ -3,7 +3,6 @@ package com.example.inzynierka_app.fragment
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,10 +52,6 @@ class ModeFragment : Fragment() {
             }
         }
 
-        binding.btnTest.setOnClickListener {
-            saveErrorToDb()
-        }
-
         viewModel.arrayResponse.observe(viewLifecycleOwner) {
             if (it != null) {
                 for (nr in it) {
@@ -84,6 +79,7 @@ class ModeFragment : Fragment() {
                             show()
                         }
                         if(!builder.create().isShowing){
+                            saveErrorToDb(errorType.errorName, errorType.errorDesc)
                             viewModel.writeData(ParamsWriteVar("\"Data\".mb_app_btn_error", false))
                         }
                         viewModel.stopReadErrors()
@@ -99,12 +95,12 @@ class ModeFragment : Fragment() {
         _binding = null
     }
 
-    private fun saveErrorToDb() {
+    private fun saveErrorToDb(name: Int, description: Int) {
         val current = LocalDateTime.now()
         val gripperError = com.example.inzynierka_app.db.GripperError(
             current.format(DateTimeFormatter.ofPattern("HH:mm:ss/dd.MM.yy")),
-            "RIGHT SENSOR",
-            "No signal from the right sensor"
+            resources.getString(name),
+            resources.getString(description)
         )
         viewModel.insertRun(gripperError)
     }
