@@ -77,8 +77,9 @@ class GripperViewModel @Inject constructor(
 
     fun startReadCycles(read_param: Params) {
         var sum = 0
+        var cycle_change_hold: String? = "0"
         val cycles = arrayListOf<Int>()
-        var averageTime = 0
+        var averageTime: Int
         viewModelJob = viewModelScope.launch {
             gripper.synchronizing = true
             while (gripper.synchronizing) {
@@ -87,11 +88,12 @@ class GripperViewModel @Inject constructor(
                 gripper.startReadCyclesTime(Params("\"Data\".mw_cycle_time"))
                 _cyclesNumber.value = gripper.cycles.value
                 _cyclesTime.value = gripper.cyclesTime.value
-                cycles.add(_cyclesTime.value!!.toInt())
-                if(sum==0 || (_cyclesTime.value != gripper.cyclesTime.value)){
+                if(sum==0 || (cycle_change_hold != _cyclesNumber.value)){
+                    cycles.add(_cyclesTime.value!!.toInt())
                     sum = sum+_cyclesTime.value!!.toInt()
                     averageTime = sum/cycles.size
                     _avrCyclesTime.value = averageTime.toString()
+                    cycle_change_hold = _cyclesNumber.value
                 }
 
                 if (setCycles.value != "0") {

@@ -38,6 +38,7 @@
                 android:textStyle="bold" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clFirst"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -97,7 +98,6 @@
                             android:textSize="@dimen/params_text_size"
                             android:textColor="@color/black"
                             android:text="@={gripperViewModel.setCycles}"
-                            android:importantForAutofill="no"
                             android:inputType="numberDecimal"/>
 
                     </LinearLayout>
@@ -125,33 +125,7 @@
                             android:hint="@string/none_hint"
                             android:textSize="@dimen/params_text_size"
                             android:text="@={gripperViewModel.setCycles}"
-                            android:importantForAutofill="no"
                             android:inputType="numberDecimal"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/param_margin_bottom"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="-5dp">
-
-                        <TextView
-                            android:id="@+id/tvCycleTime"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/cycle_time"
-                            android:textSize="@dimen/params_text_size"
-                            android:textColor="@color/black" />
-
-                        <TextView
-                            android:id="@+id/tvCyclesTimeDisp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/params_margin_start"
-                            android:text="@{gripperViewModel.cyclesTime}"
-                            android:hint="@string/_0_hint"/>
 
                     </LinearLayout>
 
@@ -238,33 +212,69 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/param_margin_bottom"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="-6dp">
-
-                        <TextView
-                            android:id="@+id/tvAvrCycleTime"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/avr_cycle_time"
-                            android:textSize="@dimen/params_text_size"
-                            android:textColor="@color/black" />
-
-                        <TextView
-                            android:id="@+id/tvAvrCyclesTimeDisp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/params_margin_start"
-                            android:text="@{gripperViewModel.avrCyclesTime}"
-                            android:hint="@string/_0_hint"/>
-
-                    </LinearLayout>
-
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/llSecond2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="3dp"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/clFirst">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvCycleTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cycle_time"
+                        android:textSize="@dimen/params_text_size"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/tvCyclesTimeDisp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/params_margin_start"
+                        android:text="@{gripperViewModel.cyclesTime}"
+                        android:hint="@string/_0_hint"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginEnd="@dimen/params_margin_start">
+
+                    <TextView
+                        android:id="@+id/tvAvrCycleTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/avr_cycle_time"
+                        android:textSize="@dimen/params_text_size"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/tvAvrCyclesTimeDisp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/params_margin_start"
+                        android:text="@{gripperViewModel.avrCyclesTime}"
+                        android:hint="@string/_0_hint"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
 
             <TextView
                 android:layout_width="match_parent"
