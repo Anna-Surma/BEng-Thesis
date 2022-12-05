@@ -56,9 +56,14 @@ class GripperViewModel @Inject constructor(
     private val _avrCyclesTime = MutableLiveData<String>()
     val avrCyclesTime: LiveData<String> = _avrCyclesTime
 
+    private val _stepsArrayResponse = MutableLiveData<ArrayList<ArrayResponseItem>>()
+    val stepsArrayResponse: LiveData<ArrayList<ArrayResponseItem>> = _stepsArrayResponse
+
     private var viewModelJob: Job? = null
 
     private var viewModelErrorJob: Job? = null
+
+    private var viewModelStepsJob: Job? = null
 
     init {
         _controlActive.value = false
@@ -108,9 +113,18 @@ class GripperViewModel @Inject constructor(
     fun readErrors(read_array_item: ArrayList<ArrayRequestItem>) {
         viewModelErrorJob = viewModelScope.launch {
             while (true) {
-                delay(100)
+                delay(30)
                 gripper.readErrors(read_array_item)
                 _arrayResponse.value = gripper.arrayResponseLiveData.value
+            }
+        }
+    }
+
+    fun readSteps(read_array_item: ArrayList<ArrayRequestItem>) {
+        viewModelStepsJob = viewModelScope.launch {
+            while (true) {
+                gripper.readSteps(read_array_item)
+                _stepsArrayResponse.value = gripper.stepsArrayResponseLiveData.value
             }
         }
     }
@@ -118,6 +132,10 @@ class GripperViewModel @Inject constructor(
     fun stopReadErrors() {
         viewModelErrorJob?.cancel()
     }
+
+//    fun stopReadSteps() {
+//        viewModelStepsJob?.cancel()
+//    }
 
     private fun reachSetCycles() {
         _reachSetCycles.value = true

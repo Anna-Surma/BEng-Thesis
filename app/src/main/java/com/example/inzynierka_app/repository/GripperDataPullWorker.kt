@@ -20,6 +20,9 @@ class GripperDataPullWorker @Inject constructor(
     private var arrayResponse = ArrayList<ArrayResponseItem>()
     var arrayResponseLiveData = MutableLiveData<ArrayList<ArrayResponseItem>>()
 
+    private var stepsArrayResponse = ArrayList<ArrayResponseItem>()
+    var stepsArrayResponseLiveData = MutableLiveData<ArrayList<ArrayResponseItem>>()
+
     suspend fun startReadCycles(read_param: Params) {
         try {
             val response =
@@ -71,6 +74,25 @@ class GripperDataPullWorker @Inject constructor(
                     for (arrayResponseItem in responseBody) {
                         arrayResponse.add(arrayResponseItem)
                         arrayResponseLiveData.value = arrayResponse
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            //Catch error
+        }
+    }
+
+    suspend fun readSteps(read_array_item: ArrayList<ArrayRequestItem>) {
+        try {
+            stepsArrayResponse.clear()
+            val response =
+                mainRepository.readArray(read_array_item)
+            val responseBody = response.body()
+            if (response.isSuccessful) {
+                if (responseBody != null) {
+                    for (stepsArrayResponseItem in responseBody) {
+                        stepsArrayResponse.add(stepsArrayResponseItem)
+                        stepsArrayResponseLiveData.value = stepsArrayResponse
                     }
                 }
             }

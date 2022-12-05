@@ -31,6 +31,17 @@ class ModeFragment : Fragment() {
         ArrayRequestItem(6, "2.0", "PlcProgram.Read", ArrayParams("\"Data\".mb_catch_error"))
     )
 
+    private var arrayStepsRequest = arrayListOf(
+        ArrayRequestItem(1, "2.0", "PlcProgram.Read", ArrayParams("\"Data\".mb_step_1")),
+        ArrayRequestItem(2, "2.0", "PlcProgram.Read", ArrayParams("\"Data\".mb_step_2")),
+        ArrayRequestItem(3, "2.0", "PlcProgram.Read", ArrayParams("\"Data\".mb_step_3")),
+        ArrayRequestItem(4, "2.0", "PlcProgram.Read", ArrayParams("\"Data\".mb_step_4")),
+        ArrayRequestItem(5, "2.0", "PlcProgram.Read", ArrayParams("\"Data\".mb_step_5")),
+        ArrayRequestItem(6, "2.0", "PlcProgram.Read", ArrayParams("\"Data\".mb_step_6")),
+        ArrayRequestItem(7, "2.0", "PlcProgram.Read", ArrayParams("\"Data\".mb_step_7")),
+        ArrayRequestItem(8, "2.0", "PlcProgram.Read", ArrayParams("\"Data\".mb_step_8"))
+    )
+
     private lateinit var viewModel: GripperViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +58,7 @@ class ModeFragment : Fragment() {
             if (isChecked) {
                 viewModel.activeControl()
                 viewModel.readErrors(arrayErrorRequest)
+                viewModel.readSteps(arrayStepsRequest)
             } else {
                 viewModel.deactivateControl()
             }
