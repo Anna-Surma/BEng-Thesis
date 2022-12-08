@@ -1,5 +1,6 @@
 package com.example.inzynierka_app.viewmodel
 
+import android.os.CountDownTimer
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.inzynierka_app.ArrayRequestItem
@@ -59,6 +60,11 @@ class GripperViewModel @Inject constructor(
     private val _stepsArrayResponse = MutableLiveData<ArrayList<ArrayResponseItem>>()
     val stepsArrayResponse: LiveData<ArrayList<ArrayResponseItem>> = _stepsArrayResponse
 
+    private val _durationCounter = MutableLiveData<String>()
+    val durationCounter: LiveData<String> = _durationCounter
+
+    val setDuration = MutableLiveData<String>()
+
     private var viewModelJob: Job? = null
 
     private var viewModelErrorJob: Job? = null
@@ -100,11 +106,13 @@ class GripperViewModel @Inject constructor(
                     _avrCyclesTime.value = averageTime.toString()
                     cycle_change_hold = _cyclesNumber.value
                 }
-
                 if (setCycles.value != "0") {
                     if (_cyclesNumber.value == setCycles.value) {
                         reachSetCycles()
                     }
+                }
+                if (_durationCounter.value == "0" && (setCycles.value == "0" || setCycles.value == null || setCycles.value == "")) {
+                    reachSetDuration()
                 }
             }
         }
@@ -140,6 +148,13 @@ class GripperViewModel @Inject constructor(
     private fun reachSetCycles() {
         _reachSetCycles.value = true
         stopReadCycles()
+        _isRunning.value = false
+        _autoMode.value = false
+        _manualMode.value = false
+    }
+
+    private fun reachSetDuration() {
+        _reachSetCycles.value = true
         _isRunning.value = false
         _autoMode.value = false
         _manualMode.value = false
@@ -302,5 +317,36 @@ class GripperViewModel @Inject constructor(
         viewModelScope.launch {
             mainRepository.delete()
         }
+    }
+
+    fun startCountDown(isPause: Boolean, remainingTime: String): CountDownTimer?{
+        if(setCycles.value == null || setCycles.value == "" || setCycles.value == "0") {
+            if (setDuration.value != null) {
+                val setDurationLong = setDuration.value?.toLong()
+                if ((setDurationLong != null && setDurationLong != 0L)) {
+                    val durationMs = setDurationLong * 1000L
+                    if(isPause){
+                        val durationPauseMs = remainingTime.toLong() * 1000L
+                        return (object : CountDownTimer(durationPauseMs, 1000) {
+                            override fun onTick(millisUntilFinished: Long) {
+                                _durationCounter.value = (millisUntilFinished / 1000).toString()
+                            }
+                            override fun onFinish() {
+                            }
+                        })
+                    }
+                    else{
+                        return (object : CountDownTimer(durationMs, 1000) {
+                            override fun onTick(millisUntilFinished: Long) {
+                                _durationCounter.value = (millisUntilFinished / 1000).toString()
+                            }
+                            override fun onFinish() {
+                            }
+                        })
+                    }
+                }
+            }
+        }
+        return null
     }
 }

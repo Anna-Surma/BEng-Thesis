@@ -3,6 +3,7 @@ package com.example.inzynierka_app.fragment
 import android.content.RestrictionEntry.TYPE_INTEGER
 import android.content.RestrictionEntry.TYPE_NULL
 import android.os.Bundle
+import android.os.CountDownTimer
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,7 @@ class AutoFragment : Fragment() {
     private var _binding: FragmentAutoBinding? = null
     private val binding get() = _binding!!
     private var timer = Timer()
+    private var counter: CountDownTimer? = null
 
     private lateinit var viewModel: GripperViewModel
 
@@ -36,12 +38,10 @@ class AutoFragment : Fragment() {
 
         binding.gripperViewModel = viewModel
         binding.lifecycleOwner = this
-        // var start_point = binding.sStart.selectedItem.toString()
 
         binding.sStart.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
-
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -60,6 +60,12 @@ class AutoFragment : Fragment() {
                         viewModel.resetCycles()
                         timer.offset = 0
                         binding.chStopWatch.base = timer.setBaseTime()
+                        counter = viewModel.startCountDown(false, "")
+                        counter?.start()
+                    }
+                    else {
+                        counter = viewModel.startCountDown(true, binding.tvDurationWatch.text.toString())
+                            counter?.start()
                     }
                     viewModel.startAuto()
                     viewModel.startReadCycles(Params("\"Data\".mw_cycles"))
@@ -68,6 +74,7 @@ class AutoFragment : Fragment() {
                     binding.chStopWatch.start()
 
                     binding.etCycles.inputType = TYPE_NULL
+                    binding.etDuration.inputType = TYPE_NULL
                 }
             }
         }
@@ -77,8 +84,9 @@ class AutoFragment : Fragment() {
 
             binding.chStopWatch.stop()
             viewModel.stopReadCycles()
-
+            counter?.cancel()
             binding.etCycles.inputType = TYPE_INTEGER
+            binding.etDuration.inputType = TYPE_INTEGER
         }
 
         binding.btnPauseButton.setOnClickListener {
@@ -86,8 +94,7 @@ class AutoFragment : Fragment() {
                 viewModel.pause()
                 timer.offset = timer.getElapsedRealtime() - binding.chStopWatch.base
                 binding.chStopWatch.stop()
-
-                binding.etCycles.inputType = TYPE_INTEGER
+                counter?.cancel()
             }
         }
 
@@ -99,6 +106,7 @@ class AutoFragment : Fragment() {
                     viewModel.writeData(ParamsWriteVar("\"Data\".mb_app_control", false))
                     viewModel.writeData(ParamsWriteVar("\"Data\".mb_app_auto", false))
                     binding.etCycles.inputType = TYPE_INTEGER
+                    binding.etDuration.inputType = TYPE_INTEGER
                 }
             }
         }

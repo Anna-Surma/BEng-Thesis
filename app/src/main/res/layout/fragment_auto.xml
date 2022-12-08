@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="gripperViewModel"
             type="com.example.inzynierka_app.viewmodel.GripperViewModel" />
@@ -27,8 +28,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/param_margin_bottom"
                 android:layout_marginTop="@dimen/margin_top"
+                android:layout_marginBottom="@dimen/param_margin_bottom"
                 android:background="@color/orange"
                 android:gravity="center"
                 android:padding="3dp"
@@ -48,10 +49,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/llSecond"
-                    app:layout_constraintStart_toStartOf="parent">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -72,7 +73,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/params_margin_start"
                             android:entries="@array/start_point"
-                            android:textSize="@dimen/params_text_size"/>
+                            android:textSize="@dimen/params_text_size" />
 
                     </LinearLayout>
 
@@ -95,27 +96,27 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/params_margin_start"
                             android:hint="@string/none_hint"
-                            android:textSize="@dimen/params_text_size"
-                            android:textColor="@color/black"
+                            android:inputType="numberDecimal"
                             android:text="@={gripperViewModel.setCycles}"
-                            android:inputType="numberDecimal"/>
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/params_text_size" />
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="-8dp"
                         android:layout_marginBottom="@dimen/param_margin_bottom"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="-8dp">
+                        android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/tvDuration"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/set_duration"
-                            android:textSize="@dimen/params_text_size"
-                            android:textColor="@color/black" />
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/params_text_size" />
 
                         <EditText
                             android:id="@+id/etDuration"
@@ -123,9 +124,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/params_margin_start"
                             android:hint="@string/none_hint"
-                            android:textSize="@dimen/params_text_size"
-                            android:text="@={gripperViewModel.setCycles}"
-                            android:inputType="numberDecimal"/>
+                            android:inputType="numberDecimal"
+                            android:text="@={gripperViewModel.setDuration}"
+                            android:textSize="@dimen/params_text_size" />
 
                     </LinearLayout>
 
@@ -135,8 +136,8 @@
                     android:id="@+id/llSecond"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_marginTop="3dp"
+                    android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/llFirst"
                     app:layout_constraintTop_toTopOf="parent">
@@ -152,8 +153,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/time"
-                            android:textSize="@dimen/params_text_size"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/params_text_size" />
 
                         <Chronometer
                             android:id="@+id/chStopWatch"
@@ -176,16 +177,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/cycles"
-                            android:textSize="@dimen/params_text_size"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/params_text_size" />
 
                         <TextView
                             android:id="@+id/tvCyclesNumber"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/params_margin_start"
-                            android:text="@{gripperViewModel.cyclesNumber}"
-                            android:hint="@string/_0_hint" />
+                            android:hint="@string/_0_hint"
+                            android:text="@{gripperViewModel.cyclesNumber}" />
 
                     </LinearLayout>
 
@@ -200,14 +201,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/duration"
-                            android:textSize="@dimen/params_text_size"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/params_text_size" />
 
-                        <Chronometer
-                            android:id="@+id/chDurationWatch"
+                        <TextView
+                            android:id="@+id/tvDurationWatch"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/params_margin_start"
+                            android:hint="@string/_0_hint"
+                            android:text="@{gripperViewModel.durationCounter}"
                             android:textSize="@dimen/params_text_size" />
 
                     </LinearLayout>
@@ -219,9 +222,9 @@
                 android:id="@+id/llSecond2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginTop="3dp"
                 android:gravity="center"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/clFirst">
@@ -236,40 +239,40 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/cycle_time"
-                        android:textSize="@dimen/params_text_size"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/params_text_size" />
 
                     <TextView
                         android:id="@+id/tvCyclesTimeDisp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/params_margin_start"
-                        android:text="@{gripperViewModel.cyclesTime}"
-                        android:hint="@string/_0_hint"/>
+                        android:hint="@string/_0_hint"
+                        android:text="@{gripperViewModel.cyclesTime}" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginEnd="@dimen/params_margin_start">
+                    android:layout_marginEnd="@dimen/params_margin_start"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/tvAvrCycleTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/avr_cycle_time"
-                        android:textSize="@dimen/params_text_size"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/params_text_size" />
 
                     <TextView
                         android:id="@+id/tvAvrCyclesTimeDisp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/params_margin_start"
-                        android:text="@{gripperViewModel.avrCyclesTime}"
-                        android:hint="@string/_0_hint"/>
+                        android:hint="@string/_0_hint"
+                        android:text="@{gripperViewModel.avrCyclesTime}" />
 
                 </LinearLayout>
 
@@ -315,9 +318,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/pause"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/btnStartButton"
-                    app:layout_constraintTop_toBottomOf="@id/btnStartButton"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toBottomOf="@id/btnStartButton" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
