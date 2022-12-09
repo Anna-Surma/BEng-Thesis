@@ -96,11 +96,12 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/params_margin_start"
                             android:hint="@string/none_hint"
-                            android:inputType="numberDecimal"
                             android:text="@={gripperViewModel.setCycles}"
+                            android:inputType="numberDecimal"
+                            android:enabled="@{gripperViewModel.isTimeSet == true? false : true}"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/params_text_size" />
-
+                            android:textSize="@dimen/params_text_size"
+                            android:onClickListener="@{() -> gripperViewModel.cycleOrTimeCheck()}" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -111,22 +112,24 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/tvDuration"
+                            android:id="@+id/tvSetTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/set_duration"
+                            android:text="@string/set_time"
                             android:textColor="@color/black"
                             android:textSize="@dimen/params_text_size" />
 
                         <EditText
-                            android:id="@+id/etDuration"
+                            android:id="@+id/etTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/params_margin_start"
                             android:hint="@string/none_hint"
                             android:inputType="numberDecimal"
-                            android:text="@={gripperViewModel.setDuration}"
-                            android:textSize="@dimen/params_text_size" />
+                            android:text="@={gripperViewModel.setTime}"
+                            android:enabled="@{gripperViewModel.isCycleSet == true ? false : true }"
+                            android:textSize="@dimen/params_text_size"
+                            android:onClickListener="@{() -> gripperViewModel.cycleOrTimeCheck()}"/>
 
                     </LinearLayout>
 
@@ -149,10 +152,10 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/tvTimeParam"
+                            android:id="@+id/tvDuration"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/time"
+                            android:text="@string/duration"
                             android:textColor="@color/black"
                             android:textSize="@dimen/params_text_size" />
 
@@ -197,15 +200,15 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/tvDurationParam"
+                            android:id="@+id/tvTimeParam"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/duration"
+                            android:text="@string/time"
                             android:textColor="@color/black"
                             android:textSize="@dimen/params_text_size" />
 
                         <TextView
-                            android:id="@+id/tvDurationWatch"
+                            android:id="@+id/tvTimeWatch"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/params_margin_start"
@@ -218,21 +221,23 @@
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/llSecond2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
                 android:gravity="center"
-                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/clFirst">
 
                 <LinearLayout
+                    android:id="@+id/llSetAvrCycleTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/llAvrCycleTime"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
                         android:id="@+id/tvCycleTime"
@@ -253,10 +258,14 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/llAvrCycleTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/params_margin_start"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/llSetAvrCycleTime"
+                    app:layout_constraintEnd_toEndOf="parent">
 
                     <TextView
                         android:id="@+id/tvAvrCycleTime"
@@ -276,7 +285,7 @@
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             <TextView

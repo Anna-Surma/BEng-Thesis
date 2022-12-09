@@ -51,8 +51,8 @@ class GripperViewModel @Inject constructor(
 
     val setCycles = MutableLiveData<String>()
 
-    private val _arrayResponse = MutableLiveData<ArrayList<ArrayResponseItem>>()
-    val arrayResponse: LiveData<ArrayList<ArrayResponseItem>> = _arrayResponse
+    private val _arrayErrorResponse = MutableLiveData<ArrayList<ArrayResponseItem>>()
+    val arrayErrorResponse: LiveData<ArrayList<ArrayResponseItem>> = _arrayErrorResponse
 
     private val _avrCyclesTime = MutableLiveData<String>()
     val avrCyclesTime: LiveData<String> = _avrCyclesTime
@@ -60,16 +60,27 @@ class GripperViewModel @Inject constructor(
     private val _stepsArrayResponse = MutableLiveData<ArrayList<ArrayResponseItem>>()
     val stepsArrayResponse: LiveData<ArrayList<ArrayResponseItem>> = _stepsArrayResponse
 
+    private val _isCycleSet = MutableLiveData<Boolean>()
+    val isCycleSet: LiveData<Boolean> = _isCycleSet
+
+    private val _isTimeSet = MutableLiveData<Boolean>()
+    val isTimeSet: LiveData<Boolean> = _isTimeSet
+
     private val _durationCounter = MutableLiveData<String>()
     val durationCounter: LiveData<String> = _durationCounter
 
-    val setDuration = MutableLiveData<String>()
+    private val _CPUmode = MutableLiveData<String>()
+    val CPUmode: LiveData<String> = _CPUmode
+
+    val setTime = MutableLiveData<String>()
 
     private var viewModelJob: Job? = null
 
     private var viewModelErrorJob: Job? = null
 
     private var viewModelStepsJob: Job? = null
+
+    private var viewModelModeJob: Job? = null
 
     init {
         _controlActive.value = false
@@ -79,6 +90,8 @@ class GripperViewModel @Inject constructor(
         _isPause.value = false
         _cyclesNumber.value = gripper.cycles.value
         resetCycles()
+        _isCycleSet.value = false
+        _isTimeSet.value = false
     }
 
     fun stopReadCycles() {
@@ -118,12 +131,23 @@ class GripperViewModel @Inject constructor(
         }
     }
 
+    fun cycleOrTimeCheck(){
+        when {
+            (setTime.value != "" && setTime.value != null && setTime.value != "0") -> {_isTimeSet.value = true
+                _isCycleSet.value = false }
+            (setCycles.value != "" && setCycles.value != null && setCycles.value != "0") -> {_isCycleSet.value = true
+                _isTimeSet.value = false }
+            else -> {_isCycleSet.value = false
+                _isTimeSet.value = false}
+        }
+    }
+
     fun readErrors(read_array_item: ArrayList<ArrayRequestItem>) {
         viewModelErrorJob = viewModelScope.launch {
             while (true) {
                 delay(30)
                 gripper.readErrors(read_array_item)
-                _arrayResponse.value = gripper.arrayResponseLiveData.value
+                _arrayErrorResponse.value = gripper.arrayErrorResponseLiveData.value
             }
         }
     }
@@ -133,6 +157,16 @@ class GripperViewModel @Inject constructor(
             while (true) {
                 gripper.readSteps(read_array_item)
                 _stepsArrayResponse.value = gripper.stepsArrayResponseLiveData.value
+            }
+        }
+    }
+
+    fun readMode(read_param: Params) {
+        viewModelModeJob = viewModelScope.launch {
+            while (true) {
+                delay(30)
+                gripper.readMode(read_param)
+                _CPUmode.value = gripper.CPUmode.value
             }
         }
     }
@@ -320,29 +354,32 @@ class GripperViewModel @Inject constructor(
     }
 
     fun startCountDown(isPause: Boolean, remainingTime: String): CountDownTimer?{
-        if(setCycles.value == null || setCycles.value == "" || setCycles.value == "0") {
-            if (setDuration.value != null) {
-                val setDurationLong = setDuration.value?.toLong()
-                if ((setDurationLong != null && setDurationLong != 0L)) {
-                    val durationMs = setDurationLong * 1000L
-                    if(isPause){
-                        val durationPauseMs = remainingTime.toLong() * 1000L
-                        return (object : CountDownTimer(durationPauseMs, 1000) {
-                            override fun onTick(millisUntilFinished: Long) {
-                                _durationCounter.value = (millisUntilFinished / 1000).toString()
-                            }
-                            override fun onFinish() {
-                            }
-                        })
-                    }
-                    else{
-                        return (object : CountDownTimer(durationMs, 1000) {
-                            override fun onTick(millisUntilFinished: Long) {
-                                _durationCounter.value = (millisUntilFinished / 1000).toString()
-                            }
-                            override fun onFinish() {
-                            }
-                        })
+        if(setTime.value != null && setTime.value != "" && setTime.value == "0") {
+            if (setCycles.value == null || setCycles.value == "" || setCycles.value == "0") {
+                if (setTime.value != null) {
+                    val setDurationLong = setTime.value?.toLong()?.plus(1)
+                    if ((setDurationLong != null && setDurationLong != 0L)) {
+                        val durationMs = setDurationLong * 1000L
+                        if (isPause) {
+                            val durationPauseMs = remainingTime.toLong() * 1000L
+                            return (object : CountDownTimer(durationPauseMs, 1000) {
+                                override fun onTick(millisUntilFinished: Long) {
+                                    _durationCounter.value = (millisUntilFinished / 1000).toString()
+                                }
+
+                                override fun onFinish() {
+                                }
+                            })
+                        } else {
+                            return (object : CountDownTimer(durationMs, 1000) {
+                                override fun onTick(millisUntilFinished: Long) {
+                                    _durationCounter.value = (millisUntilFinished / 1000).toString()
+                                }
+
+                                override fun onFinish() {
+                                }
+                            })
+                        }
                     }
                 }
             }

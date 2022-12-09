@@ -11,6 +11,7 @@
     <string name="commands">COMMANDS</string>
     <string name="set_start">Set start</string>
     <string name="set_cycles">Set cycles</string>
+    <string name="set_time">Set time</string>
     <string name="cycles">Cycles</string>
     <string name="dont_know">dont know</string>
     <string name="set_duration">Set duration</string>

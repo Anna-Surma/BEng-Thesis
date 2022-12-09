@@ -1,6 +1,5 @@
 package com.example.inzynierka_app.repository
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.inzynierka_app.ArrayRequestItem
 import com.example.inzynierka_app.ArrayResponseItem
@@ -17,11 +16,13 @@ class GripperDataPullWorker @Inject constructor(
 
     var cyclesTime = MutableLiveData<String>()
 
-    private var arrayResponse = ArrayList<ArrayResponseItem>()
-    var arrayResponseLiveData = MutableLiveData<ArrayList<ArrayResponseItem>>()
+    private var arrayErrorResponse = ArrayList<ArrayResponseItem>()
+    var arrayErrorResponseLiveData = MutableLiveData<ArrayList<ArrayResponseItem>>()
 
     private var stepsArrayResponse = ArrayList<ArrayResponseItem>()
     var stepsArrayResponseLiveData = MutableLiveData<ArrayList<ArrayResponseItem>>()
+
+    var CPUmode = MutableLiveData<String>()
 
     suspend fun startReadCycles(read_param: Params) {
         try {
@@ -65,15 +66,15 @@ class GripperDataPullWorker @Inject constructor(
 
     suspend fun readErrors(read_array_item: ArrayList<ArrayRequestItem>) {
         try {
-            arrayResponse.clear()
+            arrayErrorResponse.clear()
             val response =
                 mainRepository.readArray(read_array_item)
             val responseBody = response.body()
             if (response.isSuccessful) {
                 if (responseBody != null) {
                     for (arrayResponseItem in responseBody) {
-                        arrayResponse.add(arrayResponseItem)
-                        arrayResponseLiveData.value = arrayResponse
+                        arrayErrorResponse.add(arrayResponseItem)
+                        arrayErrorResponseLiveData.value = arrayErrorResponse
                     }
                 }
             }
@@ -93,6 +94,24 @@ class GripperDataPullWorker @Inject constructor(
                     for (stepsArrayResponseItem in responseBody) {
                         stepsArrayResponse.add(stepsArrayResponseItem)
                         stepsArrayResponseLiveData.value = stepsArrayResponse
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            //Catch error
+        }
+    }
+
+    suspend fun readMode(read_param: Params) {
+        try {
+            val response =
+                mainRepository.readData(ReadDataRequest(1, "2.0", "PlcProgram.Read", read_param))
+            val responseBody = response.body()
+            if (response.isSuccessful) {
+                if (responseBody?.result != null) {
+                    if (CPUmode.value != responseBody.result)
+                    {
+                        CPUmode.value = responseBody.result.toString()
                     }
                 }
             }
