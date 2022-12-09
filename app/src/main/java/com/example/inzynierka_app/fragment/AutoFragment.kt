@@ -13,8 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.inzynierka_app.Timer
 import com.example.inzynierka_app.databinding.FragmentAutoBinding
-import com.example.inzynierka_app.model.Params
-import com.example.inzynierka_app.model.ParamsWriteVar
+import com.example.inzynierka_app.model.ParamsRead
+import com.example.inzynierka_app.model.ParamsWrite
 import com.example.inzynierka_app.viewmodel.GripperViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -51,9 +51,10 @@ class AutoFragment : Fragment() {
         binding.gripperViewModel = viewModel
         binding.lifecycleOwner = this
 
-        binding.sStart.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.sStartPoint.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
+
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -74,13 +75,13 @@ class AutoFragment : Fragment() {
                         binding.chStopWatch.base = timer.setBaseTime()
                         counter = viewModel.startCountDown(false, "")
                         counter?.start()
-                    }
-                    else {
-                        counter = viewModel.startCountDown(true, binding.tvTimeWatch.text.toString())
-                            counter?.start()
+                    } else {
+                        counter =
+                            viewModel.startCountDown(true, binding.tvTimeWatch.text.toString())
+                        counter?.start()
                     }
                     viewModel.startAuto()
-                    viewModel.startReadCycles(Params("\"Data\".mw_cycles"))
+                    viewModel.startReadCycles(ParamsRead("\"Data\".mw_cycles"))
 
                     binding.chStopWatch.base = timer.setBaseTime()
                     binding.chStopWatch.start()
@@ -113,10 +114,10 @@ class AutoFragment : Fragment() {
         viewModel.controlActive.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (viewModel.controlActive.value == true) {
-                    viewModel.writeData(ParamsWriteVar("\"Data\".mb_app_control", true))
+                    viewModel.writeData(ParamsWrite("\"Data\".mb_app_control", true))
                 } else {
-                    viewModel.writeData(ParamsWriteVar("\"Data\".mb_app_control", false))
-                    viewModel.writeData(ParamsWriteVar("\"Data\".mb_app_auto", false))
+                    viewModel.writeData(ParamsWrite("\"Data\".mb_app_control", false))
+                    viewModel.writeData(ParamsWrite("\"Data\".mb_app_auto", false))
                     binding.etCycles.inputType = TYPE_INTEGER
                     binding.etTime.inputType = TYPE_INTEGER
                 }
@@ -126,11 +127,11 @@ class AutoFragment : Fragment() {
             if (it != null) {
                 if (viewModel.controlActive.value == true) {
                     if (viewModel.autoMode.value == true) {
-                        viewModel.writeData(ParamsWriteVar("\"Data\".mb_app_auto", true))
+                        viewModel.writeData(ParamsWrite("\"Data\".mb_app_auto", true))
                     } else
-                        viewModel.writeData(ParamsWriteVar("\"Data\".mb_app_auto", false))
+                        viewModel.writeData(ParamsWrite("\"Data\".mb_app_auto", false))
                 } else {
-                    viewModel.writeData(ParamsWriteVar("\"Data\".mb_app_auto", false))
+                    viewModel.writeData(ParamsWrite("\"Data\".mb_app_auto", false))
                 }
             }
         }

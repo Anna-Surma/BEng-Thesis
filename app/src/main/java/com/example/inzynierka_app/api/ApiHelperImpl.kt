@@ -1,7 +1,6 @@
 package com.example.inzynierka_app.api
 
-import com.example.inzynierka_app.ArrayRequestItem
-import com.example.inzynierka_app.ArrayResponse
+import com.example.inzynierka_app.ReadArrayRequestItem
 import com.example.inzynierka_app.model.*
 import retrofit2.Call
 import retrofit2.Response
@@ -9,18 +8,18 @@ import javax.inject.Inject
 
 class ApiHelperImpl @Inject constructor(
     private val apiService: ApiService,
-    ) : ApiHelper {
+) : ApiHelper {
     override fun login(request: LoginRequest): Call<LoginResponse> = apiService.login(request)
 
-    override suspend fun readData(request: ReadDataRequest): Response<ReadDataResponse> =
+    override suspend fun readData(request: ReadDataRequest): Response<DataResponse> =
         apiService.readData(request)
 
     override suspend fun writeData(request: WriteDataRequest): Response<DataResponse> =
         apiService.writeData(request)
 
-    override suspend fun readArray(request: ArrayList<ArrayRequestItem>): Response<ArrayResponse> =
+    override suspend fun readArray(request: ArrayList<ReadArrayRequestItem>): Response<ArrayResponse> =
         apiService.readArray(request)
 
-    override suspend fun readCPUMode(request: CPUModeRequest): Response<ReadDataResponse> =
+    override suspend fun readCPUMode(request: CPUModeRequest): Response<DataResponse> =
         apiService.readCPUMode(request)
 }

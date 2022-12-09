@@ -1,10 +1,10 @@
 package com.example.inzynierka_app.repository
 
 import androidx.lifecycle.MutableLiveData
-import com.example.inzynierka_app.ArrayRequestItem
-import com.example.inzynierka_app.ArrayResponseItem
+import com.example.inzynierka_app.ReadArrayRequestItem
+import com.example.inzynierka_app.model.ArrayResponseItem
 import com.example.inzynierka_app.model.CPUModeRequest
-import com.example.inzynierka_app.model.Params
+import com.example.inzynierka_app.model.ParamsRead
 import com.example.inzynierka_app.model.ReadDataRequest
 import javax.inject.Inject
 
@@ -25,15 +25,14 @@ class GripperDataPullWorker @Inject constructor(
 
     var CPUmode = MutableLiveData<String>()
 
-    suspend fun startReadCycles(read_param: Params) {
+    suspend fun startReadCycles(read_param: ParamsRead) {
         try {
             val response =
                 mainRepository.readData(ReadDataRequest(1, "2.0", "PlcProgram.Read", read_param))
             val responseBody = response.body()
             if (response.isSuccessful) {
                 if (responseBody?.result != null) {
-                    if (cycles.value != responseBody.result)
-                    {
+                    if (cycles.value != responseBody.result) {
                         cycles.value = responseBody.result.toString().dropLast(2)
                     }
                 }
@@ -47,15 +46,14 @@ class GripperDataPullWorker @Inject constructor(
         synchronizing = false
     }
 
-    suspend fun startReadCyclesTime(read_param: Params) {
+    suspend fun startReadCyclesTime(read_param: ParamsRead) {
         try {
             val response =
                 mainRepository.readData(ReadDataRequest(1, "2.0", "PlcProgram.Read", read_param))
             val responseBody = response.body()
             if (response.isSuccessful) {
                 if (responseBody?.result != null) {
-                    if (cyclesTime.value != responseBody.result)
-                    {
+                    if (cyclesTime.value != responseBody.result) {
                         cyclesTime.value = responseBody.result.toString().dropLast(2)
                     }
                 }
@@ -65,7 +63,7 @@ class GripperDataPullWorker @Inject constructor(
         }
     }
 
-    suspend fun readErrors(read_array_item: ArrayList<ArrayRequestItem>) {
+    suspend fun readErrors(read_array_item: ArrayList<ReadArrayRequestItem>) {
         try {
             arrayErrorResponse.clear()
             val response =
@@ -84,7 +82,7 @@ class GripperDataPullWorker @Inject constructor(
         }
     }
 
-    suspend fun readSteps(read_array_item: ArrayList<ArrayRequestItem>) {
+    suspend fun readSteps(read_array_item: ArrayList<ReadArrayRequestItem>) {
         try {
             stepsArrayResponse.clear()
             val response =
@@ -110,8 +108,7 @@ class GripperDataPullWorker @Inject constructor(
             val responseBody = response.body()
             if (response.isSuccessful) {
                 if (responseBody?.result != null) {
-                    if (CPUmode.value != responseBody.result)
-                    {
+                    if (CPUmode.value != responseBody.result) {
                         CPUmode.value = responseBody.result.toString()
                     }
                 }

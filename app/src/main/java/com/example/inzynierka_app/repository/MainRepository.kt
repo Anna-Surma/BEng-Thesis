@@ -1,7 +1,7 @@
 package com.example.inzynierka_app.repository
 
 import androidx.lifecycle.LiveData
-import com.example.inzynierka_app.ArrayRequestItem
+import com.example.inzynierka_app.ReadArrayRequestItem
 import com.example.inzynierka_app.api.ApiHelper
 import com.example.inzynierka_app.api.SessionManager
 import com.example.inzynierka_app.db.ErrorHelper
@@ -20,7 +20,7 @@ class MainRepository @Inject constructor(
 
     suspend fun writeData(request: WriteDataRequest) = apiHelper.writeData(request)
 
-    suspend fun readArray(request: ArrayList<ArrayRequestItem>) = apiHelper.readArray(request)
+    suspend fun readArray(request: ArrayList<ReadArrayRequestItem>) = apiHelper.readArray(request)
 
     suspend fun readCPUMode(request: CPUModeRequest) = apiHelper.readCPUMode(request)
 

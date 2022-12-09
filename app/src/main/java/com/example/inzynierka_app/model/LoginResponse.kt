@@ -6,4 +6,6 @@ data class LoginResponse(
     var result: Result
 )
 
-data class Result(var token: String)
+data class Result(
+    var token: String
+)

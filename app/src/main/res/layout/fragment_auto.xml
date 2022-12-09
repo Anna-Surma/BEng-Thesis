@@ -68,7 +68,7 @@
                             android:textSize="@dimen/params_text_size" />
 
                         <Spinner
-                            android:id="@+id/sStart"
+                            android:id="@+id/sStartPoint"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/params_margin_start"

@@ -1,8 +1,7 @@
 package com.example.inzynierka_app.model
 
-data class ReadDataRequest(
+data class ArrayResponseItem(
     val id: Int,
     val jsonrpc: String,
-    val method: String,
-    val params: ParamsRead
+    val result: Boolean
 )

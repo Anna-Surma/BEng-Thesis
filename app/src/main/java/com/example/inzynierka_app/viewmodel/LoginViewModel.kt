@@ -19,7 +19,7 @@ class LoginViewModel @Inject constructor(
     private val mainRepository: MainRepository
 ) : ViewModel() {
 
-    private var params: LoginParams = LoginParams("json", "json")
+    private var params: ParamsLogin = ParamsLogin("json", "json")
 
     private val _logInEvent = MutableLiveData(LogInEvent(false, null))
     val logInEvent: LiveData<LogInEvent>
@@ -35,7 +35,7 @@ class LoginViewModel @Inject constructor(
         loginUser(params)
     }
 
-    private fun loginUser(param: LoginParams) = viewModelScope.launch {
+    private fun loginUser(param: ParamsLogin) = viewModelScope.launch {
         mainRepository.login(LoginRequest(id = 0, jsonrpc = "2.0", method = "Api.Login", param))
             .enqueue(object : Callback<LoginResponse> {
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {

@@ -4,10 +4,10 @@ data class LoginRequest(
     var id: Int,
     var jsonrpc: String,
     var method: String,
-    var params: LoginParams
+    var params: ParamsLogin
 )
 
-data class LoginParams(
+data class ParamsLogin(
     var user: String,
     var password: String
 )

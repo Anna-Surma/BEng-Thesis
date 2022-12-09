@@ -1,9 +1,3 @@
-package com.example.inzynierka_app
+package com.example.inzynierka_app.model
 
 class ArrayResponse : ArrayList<ArrayResponseItem>()
-
-data class ArrayResponseItem(
-    val id: Int,
-    val jsonrpc: String,
-    val result: Boolean
-)

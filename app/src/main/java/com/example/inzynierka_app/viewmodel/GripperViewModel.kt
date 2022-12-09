@@ -3,8 +3,7 @@ package com.example.inzynierka_app.viewmodel
 import android.os.CountDownTimer
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.inzynierka_app.ArrayRequestItem
-import com.example.inzynierka_app.ArrayResponseItem
+import com.example.inzynierka_app.ReadArrayRequestItem
 import com.example.inzynierka_app.db.GripperError
 import com.example.inzynierka_app.model.*
 import com.example.inzynierka_app.repository.GripperDataPullWorker
@@ -99,7 +98,7 @@ class GripperViewModel @Inject constructor(
         viewModelJob?.cancel()
     }
 
-    fun startReadCycles(read_param: Params) {
+    fun startReadCycles(read_param: ParamsRead) {
         var sum = 0
         var cycle_change_hold: String? = "0"
         val cycles = arrayListOf<Int>()
@@ -109,7 +108,7 @@ class GripperViewModel @Inject constructor(
             while (gripper.synchronizing) {
                 delay(100)
                 gripper.startReadCycles(read_param)
-                gripper.startReadCyclesTime(Params("\"Data\".mw_cycle_time"))
+                gripper.startReadCyclesTime(ParamsRead("\"Data\".mw_cycle_time"))
                 _cyclesNumber.value = gripper.cycles.value
                 _cyclesTime.value = gripper.cyclesTime.value
                 if(sum==0 || (cycle_change_hold != _cyclesNumber.value)){
@@ -142,7 +141,7 @@ class GripperViewModel @Inject constructor(
         }
     }
 
-    fun readErrors(read_array_item: ArrayList<ArrayRequestItem>) {
+    fun readErrors(read_array_item: ArrayList<ReadArrayRequestItem>) {
         viewModelErrorJob = viewModelScope.launch {
             while (true) {
                 delay(30)
@@ -152,7 +151,7 @@ class GripperViewModel @Inject constructor(
         }
     }
 
-    fun readSteps(read_array_item: ArrayList<ArrayRequestItem>) {
+    fun readSteps(read_array_item: ArrayList<ReadArrayRequestItem>) {
         viewModelStepsJob = viewModelScope.launch {
             while (true) {
                 gripper.readSteps(read_array_item)
@@ -200,7 +199,7 @@ class GripperViewModel @Inject constructor(
         _manualMode.value = false
     }
 
-    fun writeData(write_param: ParamsWriteVar) = viewModelScope.launch {
+    fun writeData(write_param: ParamsWrite) = viewModelScope.launch {
         // _writeData.value = mainRepository.sendCycles(123)
         // CyclesResponse(value?, failure?)
         // Maybe<Boolean>
@@ -215,84 +214,84 @@ class GripperViewModel @Inject constructor(
         try {
             when (step) {
                 "Step 1" -> {
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_2", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_3", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_4", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_5", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_6", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_7", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_8", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_1", true)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_2", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_3", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_4", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_5", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_6", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_7", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_8", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_1", true)))
                 }
                 "Step 2" -> {
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_1", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_3", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_4", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_5", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_6", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_7", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_8", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_2", true)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_1", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_3", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_4", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_5", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_6", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_7", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_8", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_2", true)))
                 }
                 "Step 3" -> {
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_1", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_2", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_4", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_5", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_6", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_7", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_8", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_3", true)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_1", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_2", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_4", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_5", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_6", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_7", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_8", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_3", true)))
                 }
                 "Step 4" -> {
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_1", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_2", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_3", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_5", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_6", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_7", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_8", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_4", true)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_1", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_2", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_3", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_5", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_6", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_7", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_8", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_4", true)))
                 }
                 "Step 5" -> {
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_1", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_2", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_3", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_4", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_6", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_7", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_8", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_5", true)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_1", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_2", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_3", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_4", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_6", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_7", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_8", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_5", true)))
                 }
                 "Step 6" -> {
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_1", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_2", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_3", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_4", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_5", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_7", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_8", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_6", true)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_1", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_2", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_3", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_4", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_5", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_7", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_8", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_6", true)))
                 }
                 "Step 7" -> {
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_1", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_2", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_3", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_4", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_5", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_6", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_8", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_7", true)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_1", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_2", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_3", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_4", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_5", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_6", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_8", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_7", true)))
                 }
                 "Step 8" -> {
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_1", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_2", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_3", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_4", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_5", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_6", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_7", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWriteVar("\"Data\".mb_step_8", true)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_1", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_2", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_3", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_4", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_5", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_6", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_7", false)))
+                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_8", true)))
                 }
                 else -> Log.i("AUTO", "Step not recognized")
             }
@@ -329,8 +328,8 @@ class GripperViewModel @Inject constructor(
     fun resetCycles() {
         _cyclesNumber.value = "0"
         gripper.cycles.value = "0"
-        writeData(ParamsWriteVar("\"Data\".mb_delete_cycles", true))
-        writeData(ParamsWriteVar("\"Data\".mb_delete_cycles", false))
+        writeData(ParamsWrite("\"Data\".mb_delete_cycles", true))
+        writeData(ParamsWrite("\"Data\".mb_delete_cycles", false))
     }
 
     fun pause() {
