@@ -80,7 +80,7 @@ class GripperViewModel @Inject constructor(
 
     private var viewModelStepsJob: Job? = null
 
-    private var viewModelModeJob: Job? = null
+    private var viewModelCPUModeJob: Job? = null
 
     init {
         _controlActive.value = false
@@ -161,11 +161,11 @@ class GripperViewModel @Inject constructor(
         }
     }
 
-    fun readMode(read_param: Params) {
-        viewModelModeJob = viewModelScope.launch {
+    fun readCPUMode() {
+        viewModelCPUModeJob = viewModelScope.launch {
             while (true) {
                 delay(30)
-                gripper.readMode(read_param)
+                gripper.readCPUMode()
                 _CPUmode.value = gripper.CPUmode.value
             }
         }
@@ -173,6 +173,12 @@ class GripperViewModel @Inject constructor(
 
     fun stopReadErrors() {
         viewModelErrorJob?.cancel()
+    }
+
+    fun stopReadCPUMode() {
+        viewModelCPUModeJob?.cancel()
+        _CPUmode.value = "none"
+
     }
 
 //    fun stopReadSteps() {

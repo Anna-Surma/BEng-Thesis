@@ -20,4 +20,7 @@ interface ApiService {
 
     @POST(Constants.LOGIN_URL)
     suspend fun readArray(@Body request: ArrayList<ArrayRequestItem>): Response<ArrayResponse>
+
+    @POST(Constants.LOGIN_URL)
+    suspend fun readCPUMode(@Body request: CPUModeRequest): Response<ReadDataResponse>
 }

@@ -6,9 +6,7 @@ import com.example.inzynierka_app.api.ApiHelper
 import com.example.inzynierka_app.api.SessionManager
 import com.example.inzynierka_app.db.ErrorHelper
 import com.example.inzynierka_app.db.GripperError
-import com.example.inzynierka_app.model.LoginRequest
-import com.example.inzynierka_app.model.ReadDataRequest
-import com.example.inzynierka_app.model.WriteDataRequest
+import com.example.inzynierka_app.model.*
 import javax.inject.Inject
 
 class MainRepository @Inject constructor(
@@ -23,6 +21,8 @@ class MainRepository @Inject constructor(
     suspend fun writeData(request: WriteDataRequest) = apiHelper.writeData(request)
 
     suspend fun readArray(request: ArrayList<ArrayRequestItem>) = apiHelper.readArray(request)
+
+    suspend fun readCPUMode(request: CPUModeRequest) = apiHelper.readCPUMode(request)
 
     fun saveAuthToken(token: String) = sessionManager.saveAuthToken(token)
 

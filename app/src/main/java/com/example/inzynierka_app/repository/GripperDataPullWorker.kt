@@ -3,6 +3,7 @@ package com.example.inzynierka_app.repository
 import androidx.lifecycle.MutableLiveData
 import com.example.inzynierka_app.ArrayRequestItem
 import com.example.inzynierka_app.ArrayResponseItem
+import com.example.inzynierka_app.model.CPUModeRequest
 import com.example.inzynierka_app.model.Params
 import com.example.inzynierka_app.model.ReadDataRequest
 import javax.inject.Inject
@@ -102,10 +103,10 @@ class GripperDataPullWorker @Inject constructor(
         }
     }
 
-    suspend fun readMode(read_param: Params) {
+    suspend fun readCPUMode() {
         try {
             val response =
-                mainRepository.readData(ReadDataRequest(1, "2.0", "PlcProgram.Read", read_param))
+                mainRepository.readCPUMode(CPUModeRequest(1, "2.0", "Plc.ReadOperatingMode"))
             val responseBody = response.body()
             if (response.isSuccessful) {
                 if (responseBody?.result != null) {

@@ -3,6 +3,7 @@ package com.example.inzynierka_app.fragment
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,6 +53,7 @@ class ModeFragment : Fragment() {
         val view = binding.root
 
         viewModel = ViewModelProvider(requireActivity()).get(GripperViewModel::class.java)
+        binding.gripperViewModel = viewModel
         binding.lifecycleOwner = this
 
         binding.tbActive.setOnCheckedChangeListener { _, isChecked ->
@@ -59,12 +61,14 @@ class ModeFragment : Fragment() {
                 viewModel.activeControl()
                 viewModel.readErrors(arrayErrorRequest)
                 viewModel.readSteps(arrayStepsRequest)
+                viewModel.readCPUMode()
             } else {
                 viewModel.deactivateControl()
+                viewModel.stopReadCPUMode()
             }
         }
 
-        viewModel.arrayResponse.observe(viewLifecycleOwner) {
+        viewModel.arrayErrorResponse.observe(viewLifecycleOwner) {
             if (it != null) {
                 for (nr in it) {
                     if (nr.result) {

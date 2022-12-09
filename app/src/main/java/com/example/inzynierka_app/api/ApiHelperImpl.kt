@@ -20,4 +20,7 @@ class ApiHelperImpl @Inject constructor(
 
     override suspend fun readArray(request: ArrayList<ArrayRequestItem>): Response<ArrayResponse> =
         apiService.readArray(request)
+
+    override suspend fun readCPUMode(request: CPUModeRequest): Response<ReadDataResponse> =
+        apiService.readCPUMode(request)
 }

@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="gripperViewModel"
+            type="com.example.inzynierka_app.viewmodel.GripperViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,78 +64,13 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:id="@+id/ivLedStop"
-                            android:layout_width="@dimen/led_dimen"
-                            android:layout_height="@dimen/led_dimen"
-                            android:layout_gravity="center"
-                            android:contentDescription="@string/led"
-                            android:src="@drawable/led_square"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/tvStop"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/params_margin_start"
-                            android:text="@string/stop"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/params_text_size"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/ivLedStop"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/params_margin_start"
-                        android:layout_marginBottom="@dimen/param_margin_bottom"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/ivLedStartUp"
-                            android:layout_width="@dimen/led_dimen"
-                            android:layout_height="@dimen/led_dimen"
-                            android:layout_gravity="center"
-                            android:contentDescription="@string/led"
-                            android:src="@drawable/led_square"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/tvStartUp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/params_margin_start"
-                            android:text="@string/start_up"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/params_text_size"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/ivLedStartUp"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/params_margin_start"
-                        android:layout_marginBottom="@dimen/param_margin_bottom"
-                        android:orientation="horizontal">
-
-                        <ImageView
                             android:id="@+id/ivLedRun"
                             android:layout_width="@dimen/led_dimen"
                             android:layout_height="@dimen/led_dimen"
                             android:layout_gravity="center"
                             android:contentDescription="@string/led"
-                            android:src="@drawable/led_square"
+                            tools:src="@drawable/led_gray"
+                            android:src = '@{gripperViewModel.CPUmode.equals("run") ? @drawable/led_green : @drawable/led_gray }'
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -157,12 +98,47 @@
                         android:orientation="horizontal">
 
                         <ImageView
+                            android:id="@+id/ivLedStartUp"
+                            android:layout_width="@dimen/led_dimen"
+                            android:layout_height="@dimen/led_dimen"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/led"
+                            tools:src="@drawable/led_gray"
+                            android:src = '@{gripperViewModel.CPUmode.equals("startup") ? @drawable/led_yellow : @drawable/led_gray }'
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvStartUp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/params_margin_start"
+                            android:text="@string/start_up"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/params_text_size"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/ivLedStartUp"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/params_margin_start"
+                        android:layout_marginBottom="@dimen/param_margin_bottom"
+                        android:orientation="horizontal">
+
+                        <ImageView
                             android:id="@+id/ivLedHold"
                             android:layout_width="@dimen/led_dimen"
                             android:layout_height="@dimen/led_dimen"
                             android:layout_gravity="center"
                             android:contentDescription="@string/led"
-                            android:src="@drawable/led_square"
+                            tools:src="@drawable/led_gray"
+                            android:src = '@{gripperViewModel.CPUmode.equals("hold") ? @drawable/led_yellow : @drawable/led_gray }'
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -181,6 +157,41 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/params_margin_start"
+                        android:layout_marginBottom="@dimen/param_margin_bottom"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/ivLedStop"
+                            android:layout_width="@dimen/led_dimen"
+                            android:layout_height="@dimen/led_dimen"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/led"
+                            tools:src="@drawable/led_gray"
+                            android:src = '@{gripperViewModel.CPUmode.equals("stop") ? @drawable/led_red : @drawable/led_gray }'
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvStop"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/params_margin_start"
+                            android:text="@string/stop"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/params_text_size"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/ivLedStop"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
                 </LinearLayout>
 
                 <ToggleButton
