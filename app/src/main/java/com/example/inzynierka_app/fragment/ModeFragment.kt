@@ -61,18 +61,6 @@ class ModeFragment : Fragment() {
         binding.gripperViewModel = viewModel
         binding.lifecycleOwner = this
 
-        binding.tbActive.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                viewModel.activeControl()
-                viewModel.readErrors(arrayErrorRequest)
-                viewModel.readSteps(arrayStepsRequest)
-                viewModel.readCPUMode()
-            } else {
-                viewModel.deactivateControl()
-                viewModel.stopReadCPUMode()
-            }
-        }
-
         viewModel.arrayErrorResponse.observe(viewLifecycleOwner) {
             if (it != null) {
                 for (nr in it) {
@@ -123,6 +111,6 @@ class ModeFragment : Fragment() {
             resources.getString(name),
             resources.getString(description)
         )
-        viewModel.insertRun(gripperError)
+        viewModel.insertError(gripperError)
     }
 }

@@ -73,7 +73,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/params_margin_start"
                             android:entries="@array/start_point"
-                            android:textSize="@dimen/params_text_size" />
+                            android:textSize="@dimen/params_text_size"
+                            android:onItemSelected="@{(parent,view,pos,id)-> gripperViewModel.writeDataParallel(parent.getItemAtPosition(pos).toString())}"/>
 
                     </LinearLayout>
 
@@ -98,10 +99,8 @@
                             android:hint="@string/none_hint"
                             android:text="@={gripperViewModel.setCycles}"
                             android:inputType="numberDecimal"
-                            android:enabled="@{gripperViewModel.isTimeSet == true? false : true}"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/params_text_size"
-                            android:onClickListener="@{() -> gripperViewModel.cycleOrTimeCheck()}" />
+                            android:textSize="@dimen/params_text_size" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -127,9 +126,7 @@
                             android:hint="@string/none_hint"
                             android:inputType="numberDecimal"
                             android:text="@={gripperViewModel.setTime}"
-                            android:enabled="@{gripperViewModel.isCycleSet == true ? false : true }"
-                            android:textSize="@dimen/params_text_size"
-                            android:onClickListener="@{() -> gripperViewModel.cycleOrTimeCheck()}"/>
+                            android:textSize="@dimen/params_text_size" />
 
                     </LinearLayout>
 
@@ -219,6 +216,7 @@
                     </LinearLayout>
 
                 </LinearLayout>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -311,7 +309,8 @@
                     android:text="@string/start"
                     app:layout_constraintEnd_toStartOf="@id/btnStopButton"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:onClickListener="@{() -> gripperViewModel.onStartBtnClicked()}"/>
 
                 <Button
                     android:id="@+id/btnStopButton"
@@ -320,7 +319,8 @@
                     android:text="@string/stop"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/btnStartButton"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:onClickListener="@{()-> gripperViewModel.onStopBtnClicked()}"/>
 
                 <Button
                     android:id="@+id/btnPauseButton"
@@ -329,7 +329,8 @@
                     android:text="@string/pause"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/btnStartButton"
-                    app:layout_constraintTop_toBottomOf="@id/btnStartButton" />
+                    app:layout_constraintTop_toBottomOf="@id/btnStartButton"
+                    android:onClickListener="@{() -> gripperViewModel.onPauseBtnClicked()}"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
