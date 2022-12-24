@@ -1,6 +1,5 @@
 package com.example.inzynierka_app.api
 
-import com.example.inzynierka_app.ReadArrayRequestItem
 import com.example.inzynierka_app.model.*
 import retrofit2.Call
 import retrofit2.Response
@@ -18,7 +17,10 @@ interface ApiService {
     suspend fun writeData(@Body request: WriteDataRequest): Response<DataResponse>
 
     @POST(Constants.LOGIN_URL)
-    suspend fun readArray(@Body request: ArrayList<ReadArrayRequestItem>): Response<ArrayResponse>
+    suspend fun readArray(@Body request: ArrayList<ReadDataRequest>): Response<ArrayResponse>
+
+    @POST(Constants.LOGIN_URL)
+    suspend fun writeArray(@Body request: ArrayList<WriteDataRequest>): Response<ArrayResponse>
 
     @POST(Constants.LOGIN_URL)
     suspend fun readCPUMode(@Body request: CPUModeRequest): Response<DataResponse>

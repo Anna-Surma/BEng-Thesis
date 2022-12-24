@@ -1,6 +1,5 @@
 package com.example.inzynierka_app.api
 
-import com.example.inzynierka_app.ReadArrayRequestItem
 import com.example.inzynierka_app.model.*
 import retrofit2.Call
 import retrofit2.Response
@@ -17,8 +16,11 @@ class ApiHelperImpl @Inject constructor(
     override suspend fun writeData(request: WriteDataRequest): Response<DataResponse> =
         apiService.writeData(request)
 
-    override suspend fun readArray(request: ArrayList<ReadArrayRequestItem>): Response<ArrayResponse> =
+    override suspend fun readArray(request: ArrayList<ReadDataRequest>): Response<ArrayResponse> =
         apiService.readArray(request)
+
+    override suspend fun writeArray(request: ArrayList<WriteDataRequest>): Response<ArrayResponse> =
+        apiService.writeArray(request)
 
     override suspend fun readCPUMode(request: CPUModeRequest): Response<DataResponse> =
         apiService.readCPUMode(request)
