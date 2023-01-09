@@ -3,30 +3,23 @@ package com.example.inzynierka_app.viewmodel
 import android.os.CountDownTimer
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.inzynierka_app.ReadArrayRequestItem
-import com.example.inzynierka_app.Timer
+import com.example.inzynierka_app.*
 import com.example.inzynierka_app.db.GripperError
 import com.example.inzynierka_app.model.*
-import com.example.inzynierka_app.repository.GripperDataPullWorker
 import com.example.inzynierka_app.repository.MainRepository
+import com.example.inzynierka_app.use_case.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 @HiltViewModel
 class GripperViewModel @Inject constructor(
     private val mainRepository: MainRepository,
-    private val gripper: GripperDataPullWorker,
-    //  loginUseCase: LoginUseCase //Clean Architecture // Aplication, domain, data(repo)
+    private val CPUDataUseCases: CPUDataUseCaces
 ) : ViewModel() {
 
     private val _controlActive = MutableLiveData<Boolean>(false)
     val controlActive: LiveData<Boolean> = _controlActive
-
-    private val _isWriteSuccessful = MutableLiveData(false)
-    val isWriteSuccessful: LiveData<Boolean> = _isWriteSuccessful
 
     private val _autoMode = MutableLiveData(false)
     val autoMode: LiveData<Boolean> = _autoMode
@@ -56,28 +49,22 @@ class GripperViewModel @Inject constructor(
 
     val setTime = MutableLiveData<String>()
 
-    private val _arrayErrorResponse = MutableLiveData<ArrayList<ArrayResponseItem>>()
-    val arrayErrorResponse: LiveData<ArrayList<ArrayResponseItem>> = _arrayErrorResponse
+    private val _errorResponse = MutableLiveData<ErrorType?>()
+    val errorResponse: LiveData<ErrorType?> = _errorResponse
+
+    private val _stepsResponse = MutableLiveData<Steps?>(Steps.STEP1) //to zmienić!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    val stepsResponse: LiveData<Steps?> = _stepsResponse
 
     private val _avrCyclesTime = MutableLiveData<String>()
     val avrCyclesTime: LiveData<String> = _avrCyclesTime
 
-    private val _stepsArrayResponse = MutableLiveData<ArrayList<ArrayResponseItem>>()
-    val stepsArrayResponse: LiveData<ArrayList<ArrayResponseItem>> = _stepsArrayResponse
-
-    private val _isCycleSet = MutableLiveData<Boolean>()
-    val isCycleSet: LiveData<Boolean> = _isCycleSet
-
-    private val _isTimeSet = MutableLiveData<Boolean>()
-    val isTimeSet: LiveData<Boolean> = _isTimeSet
-
     private val _durationCounter = MutableLiveData<String>()
     val durationCounter: LiveData<String> = _durationCounter
 
-    private val _CPUmode = MutableLiveData<String>()
-    val CPUmode: LiveData<String> = _CPUmode
+    private val _CPUmode = MutableLiveData<String?>()
+    val CPUmode: LiveData<String?> = _CPUmode
 
-    private var viewModelJob: Job? = null
+    private var cycleViewModelJob: Job? = null
 
     private var viewModelErrorJob: Job? = null
 
@@ -86,81 +73,92 @@ class GripperViewModel @Inject constructor(
     private var viewModelCPUModeJob: Job? = null
 
     init {
-        _cyclesNumber.value = gripper.cycles.value
         resetCycles()
-        _isCycleSet.value = false
-        _isTimeSet.value = false
+        _cyclesNumber.value = "0"
     }
 
-    fun onControlTbCheckedChanged(checked: Boolean) { //LEGIT
+    fun onControlTbCheckedChanged(checked: Boolean) {
         if (checked) {
-            readCPUMode() //LEGIT
-            enableAppControl() //LEGIT
-            _isPause = false // LEGIT
-            //   viewModel.readErrors(arrayErrorRequest)
-            //   viewModel.readSteps(arrayStepsRequest)
+            readCPUMode()
+            enableAppControl()
+            readSteps(RequestArrays.STEPS.array)
+            readErrors(RequestArrays.ERRORS.array)
+            _isPause = false
 
         } else {
-            stopReadCPUMode() //LEGIT
-            _CPUmode.value = "none" //LEGIT
-            disableAppControl() //LEGIT
-            stopAuto() //LEGIT
-            stopTimer() // LEGIT
-            _isPause = false //LEGIT
+            stopReadCPUMode()
+            _CPUmode.value = "none"
+           disableAppControl()
+            stopAuto()
+            stopTimer()
+            stopReadSteps()
+            stopReadErrors()
+            _isPause = false
         }
     }
 
     fun enableAppControl() { //LEGIT
-        writeData(ParamsWrite("\"Data\".mb_app_control", true))
+        viewModelScope.launch {
+            writeData(ParamsWrite("\"DB100\".mb_app_control", true))
+        }
         _controlActive.value = true
     }
 
     fun disableAppControl() { //LEGIT
-        writeData(ParamsWrite("\"Data\".mb_app_control", false))
+        viewModelScope.launch {
+            writeData(ParamsWrite("\"DB100\".mb_app_control", false))
+        }
         _controlActive.value = false
     }
 
     fun readCPUMode() {
         viewModelCPUModeJob = viewModelScope.launch {
-            while (true) {
+            while (isActive) {
                 delay(30)
-                gripper.readCPUMode()
-                _CPUmode.value = gripper.CPUmode.value
+                val readModeResult = CPUDataUseCases.readCPUMode()
+                when (readModeResult.status) {
+                    Status.SUCCESS -> {_CPUmode.postValue(readModeResult.data) }
+                    else -> Log.i("GripperViewModel", "Read cycle time ERROR")
+                }
             }
         }
     }
 
     fun stopReadCPUMode() {
-        viewModelCPUModeJob?.cancel()
+        viewModelScope.launch {
+            viewModelCPUModeJob?.cancel()
+        }
     }
 
     fun onStartBtnClicked() {
         if (controlActive.value == true && autoMode.value == false) {
-            if (_isPause == false) { // LEGIT
-                resetCycles()
-                timer.offset = 0 // LEGIT
-                counter = startCountDown(false, "") // PRAWIE LEGIT
-            } else {
-                counter =
-                    startCountDown(true, _durationCounter.value)
-            }
-            startAuto() // LEGIT
-
-//                    binding.etCycles.inputType = RestrictionEntry.TYPE_NULL
-//                    binding.etTime.inputType = RestrictionEntry.TYPE_NULL
+                if (!_isPause) {
+                   // resetCycles()
+                    _cyclesNumber.value = "0"
+                    setStartPoint(_stepsResponse.value!!.id)
+                    timer.offset = 0 // LEGIT
+                    counter = startCountDown(false, "") // PRAWIE LEGIT
+                } else {
+                    counter =
+                        startCountDown(true, _durationCounter.value)
+                }
+                startAuto() // LEGIT
         }
     }
 
-    fun startAuto() {
-        if (controlActive.value == true && autoMode.value == false) {// LEGIT
-            writeData(ParamsWrite("\"Data\".mb_app_auto", true))
-            _isPause = false
-            if (isWriteSuccessful.value == true) { // LEGIT
+    private fun startAuto() {
+        if (controlActive.value == true && autoMode.value == false) {
+            viewModelScope.launch {
+                writeData(ParamsWrite("\"DB100\".mb_app_auto", true))
                 _autoMode.value = true
+                _isPause = false
+                counter?.start()
+                startTimer() // LEGIT
+                startReadCyclesAndTime()
             }
-            counter?.start()
-            startTimer() // LEGIT
-            startReadCyclesNrAndTime(ParamsRead("\"Data\".mw_cycles"))
+            viewModelScope.launch {
+                writeData(ParamsWrite("\"DB100\".mb_delete_cycles", false))
+            }
         }
     }
 
@@ -170,25 +168,24 @@ class GripperViewModel @Inject constructor(
     }
 
     fun onStopBtnClicked() {
-        stopAuto()
-        stopTimer()
-        stopReadCyclesNrAndTime()
-        counter?.cancel()
-//            binding.etCycles.inputType = TYPE_INTEGER
-//            binding.etTime.inputType = TYPE_INTEGER
+        if (autoMode.value == true) {
+            stopAuto()
+        }
     }
 
     fun stopAuto() {
-        if (autoMode.value == true) {
-            writeData(ParamsWrite("\"Data\".mb_app_auto", false)) //LEGIT
-            if (isWriteSuccessful.value == true) { // LEGIT
-                _autoMode.value = false
-            }
+        viewModelScope.launch {
+            writeData(ParamsWrite("\"DB100\".mb_app_auto", false))
         }
+        stopTimer()
+        stopReadCyclesNrAndTime()
+        counter?.cancel()
+        _autoMode.value = false
         _isPause = false
+        resetCycles()
     }
 
-    fun stopTimer() {
+    private fun stopTimer() {
         _isTimerRunning.value = false
     }
 
@@ -196,13 +193,17 @@ class GripperViewModel @Inject constructor(
         if (autoMode.value == true && _isPause == false) {
             pauseAuto()
             pauseTimer()
-            counter?.cancel()
         }
     }
 
     fun pauseAuto() {
-        stopAuto()
         _isPause = true
+        viewModelScope.launch {
+            writeData(ParamsWrite("\"DB100\".mb_app_auto", false))
+        }
+        stopReadCyclesNrAndTime()
+        counter?.cancel()
+        _autoMode.value = false
     }
 
     fun pauseTimer() {
@@ -210,41 +211,61 @@ class GripperViewModel @Inject constructor(
         _isTimerRunning.value = false
     }
 
-    fun startReadCyclesNrAndTime(read_param: ParamsRead) {
+    fun startReadCyclesAndTime() {
         var sum = 0
-        var cycle_change_hold: String? = "0"
-        val cycles = arrayListOf<Int>()
-        var averageTime: Int
+        cycleViewModelJob = viewModelScope.launch {
+            while (isActive) {
+                delay(30)
+                val readCycleResult = CPUDataUseCases.readCPUValue(ParamsRead("\"DB100\".mw_cycles"))
+                if(_cyclesNumber.value != readCycleResult.data?.dropLast(2)){
+                    when(readCycleResult.status){
+                        Status.SUCCESS -> _cyclesNumber.postValue(readCycleResult.data?.dropLast(2))
+                        else -> Log.i("GripperViewModel", "Read cycle ERROR")
+                    }
+                }
 
-        viewModelJob = viewModelScope.launch {
-            gripper.synchronizing = true
-            while (gripper.synchronizing) {
-                gripper.startReadCycles(read_param)
-                gripper.startReadCyclesTime(ParamsRead("\"Data\".mw_cycle_time"))
-                _cyclesNumber.value = gripper.cycles.value
-                _cyclesTime.value = gripper.cyclesTime.value
-                if (sum == 0 || (cycle_change_hold != _cyclesNumber.value)) {
-                    cycles.add(_cyclesTime.value!!.toInt())
-                    sum = sum + _cyclesTime.value!!.toInt()
-                    averageTime = sum / cycles.size
-                    _avrCyclesTime.value = averageTime.toString()
-                    cycle_change_hold = _cyclesNumber.value
+                val readCycleTimeResult = CPUDataUseCases.readCPUValue(ParamsRead("\"DB100\".mw_cycle_time"))
+                if(_cyclesTime.value != readCycleTimeResult.data?.dropLast(2)) {
+                    when (readCycleTimeResult.status) {
+                        Status.SUCCESS -> {
+                            if (readCycleTimeResult.data == "null") {
+                                _cyclesTime.postValue("0")
+                            }
+                            else{
+                                _cyclesTime.postValue(readCycleTimeResult.data?.dropLast(2))
+                                sum = countAvrTime(
+                                    sum,
+                                    _cyclesTime.value!!.toInt(),
+                                    _cyclesNumber.value!!.toInt()
+                                )
+                            }
+                        }
+                        else -> Log.i("GripperViewModel", "Read cycle time ERROR")
+                    }
                 }
                 if (setCycles.value != "0") {
                     if (_cyclesNumber.value == setCycles.value) {
                         reachSetValue()
                     }
                 }
-                if (_durationCounter.value == "0" && (setCycles.value == "0" || setCycles.value == null || setCycles.value == "")) {
+                if (_durationCounter.value == "0" && (setTime.value != null && setTime.value != "" && setTime.value != "0")) {
                     reachSetValue()
                 }
             }
         }
     }
 
+    fun countAvrTime(sum: Int, cycleTime: Int, nrOfCycle: Int): Int{
+        try {
+            _avrCyclesTime.value = ((sum + cycleTime) / nrOfCycle).toString()
+        } catch (e : Exception){
+            Log.i("GripperViewModel", "Divided by zero")
+        }
+        return (sum + cycleTime)
+    }
+
     fun stopReadCyclesNrAndTime() {
-        gripper.stopReadCycles()
-        viewModelJob?.cancel()
+        cycleViewModelJob?.cancel()
     }
 
     fun reachSetValue() {
@@ -255,14 +276,12 @@ class GripperViewModel @Inject constructor(
     }
 
     fun resetCycles() {
-        _cyclesNumber.value = "0"
-        gripper.cycles.value = "0"
-        writeData(ParamsWrite("\"Data\".mb_delete_cycles", true))
-        writeData(ParamsWrite("\"Data\".mb_delete_cycles", false))
+        viewModelScope.launch {
+            writeData(ParamsWrite("\"DB100\".mb_delete_cycles", true))
+        }
     }
 
     fun startCountDown(isPause: Boolean, remainingTime: String?): CountDownTimer? {
-        Log.i("DUUm setTime.value", setTime.value.toString())
         if (setTime.value != null && setTime.value != "" && setTime.value != "0") {
             val setDurationLong = setTime.value?.toLong()?.plus(1)
 
@@ -293,37 +312,40 @@ class GripperViewModel @Inject constructor(
         return null
     }
 
-    fun cycleOrTimeCheck(){
-        when {
-            (setTime.value != "" && setTime.value != null && setTime.value != "0") -> {_isTimeSet.value = true
-                _isCycleSet.value = false }
-            (setCycles.value != "" && setCycles.value != null && setCycles.value != "0") -> {_isCycleSet.value = true
-                _isTimeSet.value = false }
-            else -> {_isCycleSet.value = false
-                _isTimeSet.value = false}
-        }
-    }
-
-    fun readSteps(read_array_item: ArrayList<ReadArrayRequestItem>) {
+    fun readSteps(read_array_item: ArrayList<ReadDataRequest>) {
         viewModelStepsJob = viewModelScope.launch {
-            while (true) {
-                gripper.readSteps(read_array_item)
-                _stepsArrayResponse.value = gripper.stepsArrayResponseLiveData.value
+            while (isActive) {
+                delay(30)
+                val readStepResult = CPUDataUseCases.readCPUStep(read_array_item)
+                when (readStepResult.status) {
+                    Status.SUCCESS -> {_stepsResponse.postValue(readStepResult.data) }
+                    else -> Log.i("GripperViewModel", "Read cycle time ERROR")
+                }
             }
         }
     }
-
 
     fun stopReadSteps() {
         viewModelStepsJob?.cancel()
     }
 
-    fun readErrors(read_array_item: ArrayList<ReadArrayRequestItem>) {
+    fun setStartPoint(startPoint: Int) {
+        viewModelScope.launch{
+            writeData(ParamsWrite("\"DB100\".mb_app_step_set", startPoint))
+        }
+    }
+
+    fun readErrors(read_array_item: ArrayList<ReadDataRequest>) {
         viewModelErrorJob = viewModelScope.launch {
-            while (true) {
+            while (isActive) {
                 delay(30)
-                gripper.readErrors(read_array_item)
-                _arrayErrorResponse.value = gripper.arrayErrorResponseLiveData.value
+                val readErrorResult = CPUDataUseCases.readCPUError(read_array_item)
+                when (readErrorResult.status) {
+                    Status.SUCCESS -> {
+                            _errorResponse.postValue(readErrorResult.data)
+                    }
+                    else -> Log.i("COS", "ERROR")
+                }
             }
         }
     }
@@ -344,118 +366,25 @@ class GripperViewModel @Inject constructor(
         }
     }
 
-    fun writeData(write_param: ParamsWrite) = viewModelScope.launch {
-        // _writeData.value = mainRepository.sendCycles(123)
-        // CyclesResponse(value?, failure?)
-        // Maybe<Boolean>
-        try {
-            val response =
-                mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", write_param))
-            val responseBody = response.body()
-            if (response.isSuccessful) {
-                if (responseBody?.result != null) {
-                    if (responseBody.result == true) {
-                        _isWriteSuccessful.value = true
-                    }
-                }
-            }
-            else {
-                _isWriteSuccessful.value = false
-            }
-        } catch (exception: Exception) {
-            Log.e("TAG", exception.message ?: "NULL")
-            _isWriteSuccessful.value = false
+    suspend fun writeData(write_param: ParamsWrite) {
+                val writaValueResult = CPUDataUseCases.writeCPUValue(write_param)
+    }
+
+    fun writeData2(write_param: ParamsWrite) {
+        viewModelScope.launch {
+            val writaValueResult = CPUDataUseCases.writeCPUValue(write_param)
+        }
+    }
+    fun quitErrors(){
+        viewModelScope.launch {
+            writeData(ParamsWrite("\"DB100\".mb_app_btn_error", true))
+          //  writeData(ParamsWrite("\"DB100\".mb_app_btn_error", false))
+            readErrors(RequestArrays.ERRORS.array)
         }
     }
 
-    fun writeDataParallel(step: String) = viewModelScope.launch {
-        try {
-            when (step) {
-                "Step 1" -> {
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_2", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_3", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_4", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_5", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_6", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_7", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_8", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_1", true)))
-                }
-                "Step 2" -> {
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_1", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_3", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_4", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_5", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_6", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_7", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_8", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_2", true)))
-                }
-                "Step 3" -> {
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_1", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_2", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_4", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_5", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_6", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_7", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_8", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_3", true)))
-                }
-                "Step 4" -> {
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_1", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_2", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_3", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_5", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_6", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_7", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_8", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_4", true)))
-                }
-                "Step 5" -> {
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_1", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_2", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_3", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_4", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_6", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_7", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_8", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_5", true)))
-                }
-                "Step 6" -> {
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_1", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_2", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_3", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_4", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_5", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_7", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_8", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_6", true)))
-                }
-                "Step 7" -> {
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_1", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_2", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_3", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_4", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_5", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_6", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_8", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_7", true)))
-                }
-                "Step 8" -> {
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_1", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_2", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_3", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_4", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_5", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_6", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_7", false)))
-                    mainRepository.writeData(WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"Data\".mb_step_8", true)))
-                }
-                else -> Log.i("AUTO", "Step not recognized")
-            }
-        } catch (exception: Exception) {
-            Log.e("TAG", exception.message ?: "NULL")
-        }
+    fun writeStartPoint(step: String) = viewModelScope.launch {
+        CPUDataUseCases.writeCPUStartPoint(step)
     }
 
     fun startStep() {

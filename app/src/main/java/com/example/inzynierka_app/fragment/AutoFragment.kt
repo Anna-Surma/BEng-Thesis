@@ -27,6 +27,9 @@ class AutoFragment : Fragment() {
 
         viewModel = ViewModelProvider(requireActivity()).get(GripperViewModel::class.java)
 
+        binding.gripperViewModel = viewModel
+        binding.lifecycleOwner = this
+
         viewModel.timerBaseTime.observe(viewLifecycleOwner) {
             if (it != null) {
                 binding.chStopWatch.base = it
@@ -42,22 +45,6 @@ class AutoFragment : Fragment() {
                     binding.chStopWatch.stop()
             }
         }
-
-//        binding.etCycles.onFocusChangeListener = OnFocusChangeListener { v, hasFocus ->
-//            if (hasFocus) {
-//                viewModel.cycleOrTimeCheck()
-//            }
-//        }
-//        binding.etTime.onFocusChangeListener = OnFocusChangeListener { v, hasFocus ->
-//            if (hasFocus) {
-//                viewModel.cycleOrTimeCheck()
-//            }
-//        }
-
-        binding.gripperViewModel = viewModel
-        binding.lifecycleOwner = this
-
-  //      binding.etTime.inputType = TYPE_INTEGER
 
         return view
     }

@@ -74,7 +74,7 @@
                             android:layout_marginStart="@dimen/params_margin_start"
                             android:entries="@array/start_point"
                             android:textSize="@dimen/params_text_size"
-                            android:onItemSelected="@{(parent,view,pos,id)-> gripperViewModel.writeDataParallel(parent.getItemAtPosition(pos).toString())}"/>
+                            android:onItemSelected="@{(parent,view,pos,id)-> gripperViewModel.writeStartPoint(parent.getItemAtPosition(pos).toString())}"/>
 
                     </LinearLayout>
 

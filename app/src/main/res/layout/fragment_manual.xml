@@ -29,16 +29,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/step_1"
+                tools:text="@string/step_1"
+                android:text="@{context.getString(gripperViewModel.stepsResponse.text)}"
+                android:textColor="@color/orange"
                 android:textSize="@dimen/mode_text_size"
-                android:textStyle="bold"
-                android:textColor="@color/orange" />
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/ivStepImage"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:src="@drawable/left_down_close"
+                tools:src="@drawable/left_down_close"
+                app:imageResource="@{gripperViewModel.stepsResponse.drawable}"
                 android:layout_marginHorizontal="50dp">
             </ImageView>
 
