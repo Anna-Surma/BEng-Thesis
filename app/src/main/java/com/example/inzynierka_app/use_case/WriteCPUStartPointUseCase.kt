@@ -14,25 +14,25 @@ class WriteCPUStartPointUseCase @Inject constructor(
                 mainRepository.writeArray(Steps.STEP1.request)
             }
             "Step 2" -> {
-                mainRepository.writeArray(Steps.STEP1.request)
+                mainRepository.writeArray(Steps.STEP2.request)
             }
             "Step 3" -> {
-                mainRepository.writeArray(Steps.STEP1.request)
+                mainRepository.writeArray(Steps.STEP3.request)
             }
             "Step 4" -> {
-                mainRepository.writeArray(Steps.STEP1.request)
+                mainRepository.writeArray(Steps.STEP4.request)
             }
             "Step 5" -> {
-                mainRepository.writeArray(Steps.STEP1.request)
+                mainRepository.writeArray(Steps.STEP5.request)
             }
             "Step 6" -> {
-                mainRepository.writeArray(Steps.STEP1.request)
+                mainRepository.writeArray(Steps.STEP6.request)
             }
             "Step 7" -> {
-                mainRepository.writeArray(Steps.STEP1.request)
+                mainRepository.writeArray(Steps.STEP7.request)
             }
             "Step 8" -> {
-                mainRepository.writeArray(Steps.STEP1.request)
+                mainRepository.writeArray(Steps.STEP8.request)
             }
             else -> Log.i("AUTO", "Step not recognized")
         }

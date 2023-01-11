@@ -84,6 +84,10 @@ class GripperViewModel @Inject constructor(
             readSteps(RequestArrays.STEPS.array)
             readErrors(RequestArrays.ERRORS.array)
             _isPause = false
+            viewModelScope.launch {
+                writeData(ParamsWrite("\"DB100\".mb_app_pause", false))
+            }
+
 
         } else {
             stopReadCPUMode()
@@ -94,6 +98,9 @@ class GripperViewModel @Inject constructor(
             stopReadSteps()
             stopReadErrors()
             _isPause = false
+            viewModelScope.launch {
+                writeData(ParamsWrite("\"DB100\".mb_app_pause", false))
+            }
         }
     }
 
@@ -150,11 +157,14 @@ class GripperViewModel @Inject constructor(
         if (controlActive.value == true && autoMode.value == false) {
             viewModelScope.launch {
                 writeData(ParamsWrite("\"DB100\".mb_app_auto", true))
+                if(!_isPause){
+                    startReadCyclesAndTime()
+                }
                 _autoMode.value = true
                 _isPause = false
+                writeData(ParamsWrite("\"DB100\".mb_app_pause", false))
                 counter?.start()
                 startTimer() // LEGIT
-                startReadCyclesAndTime()
             }
             viewModelScope.launch {
                 writeData(ParamsWrite("\"DB100\".mb_delete_cycles", false))
@@ -176,6 +186,7 @@ class GripperViewModel @Inject constructor(
     fun stopAuto() {
         viewModelScope.launch {
             writeData(ParamsWrite("\"DB100\".mb_app_auto", false))
+            writeData(ParamsWrite("\"DB100\".mb_app_pause", false))
         }
         stopTimer()
         stopReadCyclesNrAndTime()
@@ -200,8 +211,9 @@ class GripperViewModel @Inject constructor(
         _isPause = true
         viewModelScope.launch {
             writeData(ParamsWrite("\"DB100\".mb_app_auto", false))
+            writeData(ParamsWrite("\"DB100\".mb_app_pause", true))
         }
-        stopReadCyclesNrAndTime()
+       // stopReadCyclesNrAndTime()
         counter?.cancel()
         _autoMode.value = false
     }
@@ -213,9 +225,10 @@ class GripperViewModel @Inject constructor(
 
     fun startReadCyclesAndTime() {
         var sum = 0
+        var cycleNrTemp = 0
         cycleViewModelJob = viewModelScope.launch {
             while (isActive) {
-                delay(30)
+                delay(100)
                 val readCycleResult = CPUDataUseCases.readCPUValue(ParamsRead("\"DB100\".mw_cycles"))
                 if(_cyclesNumber.value != readCycleResult.data?.dropLast(2)){
                     when(readCycleResult.status){
@@ -225,7 +238,7 @@ class GripperViewModel @Inject constructor(
                 }
 
                 val readCycleTimeResult = CPUDataUseCases.readCPUValue(ParamsRead("\"DB100\".mw_cycle_time"))
-                if(_cyclesTime.value != readCycleTimeResult.data?.dropLast(2)) {
+                if(_cyclesNumber.value!!.toInt() != cycleNrTemp) {
                     when (readCycleTimeResult.status) {
                         Status.SUCCESS -> {
                             if (readCycleTimeResult.data == "null") {
@@ -239,6 +252,7 @@ class GripperViewModel @Inject constructor(
                                     _cyclesNumber.value!!.toInt()
                                 )
                             }
+                            cycleNrTemp = _cyclesNumber.value!!.toInt()
                         }
                         else -> Log.i("GripperViewModel", "Read cycle time ERROR")
                     }
@@ -378,13 +392,15 @@ class GripperViewModel @Inject constructor(
     fun quitErrors(){
         viewModelScope.launch {
             writeData(ParamsWrite("\"DB100\".mb_app_btn_error", true))
-          //  writeData(ParamsWrite("\"DB100\".mb_app_btn_error", false))
+            writeData(ParamsWrite("\"DB100\".mb_app_btn_error", false))
             readErrors(RequestArrays.ERRORS.array)
         }
     }
 
-    fun writeStartPoint(step: String) = viewModelScope.launch {
-        CPUDataUseCases.writeCPUStartPoint(step)
+    fun writeStartPoint(step: String) {
+        viewModelScope.launch {
+            CPUDataUseCases.writeCPUStartPoint(step)
+        }
     }
 
     fun startStep() {
