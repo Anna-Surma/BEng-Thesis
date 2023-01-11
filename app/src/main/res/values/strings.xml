@@ -6,7 +6,6 @@
     <string name="gripper_control">GRIPPER\nCONTROL</string>
     <string name="auto_mode">AUTO MODE</string>
     <string name="manual_mode">MANUAL MODE</string>
-    <string name="block_mode">BLOCK MODE</string>
     <string name="parameters">PARAMETERS</string>
     <string name="commands">COMMANDS</string>
     <string name="set_start">Set start</string>
@@ -39,7 +38,6 @@
     <string name="yt_icon">yt_icon</string>
     <string name="auto">AUTO</string>
     <string name="manual">MANUAL</string>
-    <string name="block">BLOCK</string>
     <string-array name="start_point">
         <item>Default</item>
         <item>Step 1</item>
