@@ -56,12 +56,51 @@
                 android:textSize="@dimen/heading_text_size"
                 android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/btnStep"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clFirst"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/step"
-                android:layout_gravity="center"/>
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/llspin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toTopOf="@+id/btnStep"
+                    app:layout_constraintBottom_toBottomOf="@+id/btnStep"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btnStep">
+
+                    <TextView
+                        android:id="@+id/tvStartPoint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/go_to"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/params_text_size" />
+
+                    <Spinner
+                        android:id="@+id/sStartPoint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/params_margin_start"
+                        android:entries="@array/start_point"
+                        android:textSize="@dimen/params_text_size"
+                        android:onItemSelected="@{(parent,view,pos,id)-> gripperViewModel.writeStartPoint(parent.getItemAtPosition(pos).toString())}"/>
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnStep"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/step"
+                    android:layout_gravity="center"
+                    app:layout_constraintStart_toEndOf="@+id/llspin"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 
