@@ -65,7 +65,7 @@ class LoginFragment : Fragment() {
                 }
             } else {
                 binding.emailTextInputLayout.error = null
-                binding.passwordEditText.error = null
+                binding.passwordTextInputLayout.error = null
             }
         }
         return view

@@ -30,11 +30,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_top"
                 android:layout_marginBottom="@dimen/param_margin_bottom"
-                android:background="@color/orange"
                 android:gravity="center"
                 android:padding="3dp"
                 android:text="@string/parameters"
-                android:textColor="@color/white"
                 android:textSize="@dimen/heading_text_size"
                 android:textStyle="bold" />
 
@@ -64,7 +62,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/set_start"
-                            android:textColor="@color/black"
                             android:textSize="@dimen/params_text_size" />
 
                         <Spinner
@@ -88,7 +85,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/set_cycles"
-                            android:textColor="@color/black"
                             android:textSize="@dimen/params_text_size" />
 
                         <EditText
@@ -99,7 +95,6 @@
                             android:hint="@string/none_hint"
                             android:text="@={gripperViewModel.setCycles}"
                             android:inputType="numberDecimal"
-                            android:textColor="@color/black"
                             android:textSize="@dimen/params_text_size" />
                     </LinearLayout>
 
@@ -115,7 +110,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/set_time"
-                            android:textColor="@color/black"
                             android:textSize="@dimen/params_text_size" />
 
                         <EditText
@@ -153,7 +147,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/duration"
-                            android:textColor="@color/black"
                             android:textSize="@dimen/params_text_size" />
 
                         <Chronometer
@@ -177,7 +170,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/cycles"
-                            android:textColor="@color/black"
                             android:textSize="@dimen/params_text_size" />
 
                         <TextView
@@ -201,7 +193,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/time"
-                            android:textColor="@color/black"
                             android:textSize="@dimen/params_text_size" />
 
                         <TextView
@@ -242,7 +233,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/cycle_time"
-                        android:textColor="@color/black"
                         android:textSize="@dimen/params_text_size" />
 
                     <TextView
@@ -270,7 +260,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/avr_cycle_time"
-                        android:textColor="@color/black"
                         android:textSize="@dimen/params_text_size" />
 
                     <TextView
@@ -290,11 +279,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/param_margin_bottom"
-                android:background="@color/orange"
                 android:gravity="center"
                 android:padding="2dp"
                 android:text="@string/commands"
-                android:textColor="@color/white"
                 android:textSize="@dimen/heading_text_size"
                 android:textStyle="bold" />
 

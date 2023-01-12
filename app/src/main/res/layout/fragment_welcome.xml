@@ -13,6 +13,7 @@
         android:contentDescription="@string/map"
         android:src="@drawable/blum_map_cut_logo"
         app:layout_constraintBottom_toTopOf="@+id/llDesc"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -22,7 +23,6 @@
         android:id="@+id/llDesc"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@drawable/company_desc_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivBlumMap"
         app:layout_constraintVertical_weight="2">
@@ -36,23 +36,47 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tvDesc"
-                    android:layout_width="wrap_content"
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card"
+                    style="?attr/materialCardViewElevatedStyle"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/company_desc"
-                    android:textSize="18sp"
-                    app:layout_constraintTop_toBottomOf="@+id/ivBlumMap" />
+                    android:layout_margin="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="About company"
+                        android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                    <TextView
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:id="@+id/tvDesc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/company_desc"
+                        app:layout_constraintTop_toBottomOf="@+id/ivBlumMap" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
 
                 <Button
                     android:id="@+id/btnStartButton"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"
-                    android:paddingVertical="10dp"
-                    android:text="@string/start" />
+                    android:layout_margin="8dp"
+                    android:text="@string/start_now" />
 
             </LinearLayout>
 

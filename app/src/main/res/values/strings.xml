@@ -2,7 +2,6 @@
     <string name="app_name">Inzynierka_app</string>
     <string name="company_desc">Our goal is high-quality furniture fittings that make living more comfortable. We produce lift systems, hinges and drawers as well as pocket solutions for furniture, and our offer is complemented by services and assembly aids.</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="gripper_control">GRIPPER\nCONTROL</string>
     <string name="auto_mode">AUTO MODE</string>
     <string name="manual_mode">MANUAL MODE</string>
@@ -21,12 +20,14 @@
     <string name="stop">STOP</string>
     <string name="run">RUN</string>
     <string name="start_up">START UP</string>
-    <string name="start">start</string>
-    <string name="pause">pause</string>
+    <string name="start_now">Start now</string>
+    <string name="start">Start</string>
+    <string name="pause">Pause</string>
+    <string name="stop_btn">Stop</string>
     <string name="right">Right</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
-    <string name="step">step</string>
+    <string name="step">Step</string>
     <string name="led">led</string>
     <string name="change_mode">Change mode</string>
     <string name="gripper">Gripper</string>
@@ -98,4 +99,6 @@
     <string name="default_step">Default</string>
 
     <string name="go_to">Go to</string>
+    <string name="login_icon">Login icon</string>
+    <string name="lock_icon">Lock icon</string>
 </resources>
