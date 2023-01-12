@@ -67,6 +67,8 @@
     <string name="gripper_sensor_error_desc">Incorrect signal from the gripper sensor.</string>
     <string name="put_error_name">PUT DOWN</string>
     <string name="put_error_desc">item can not be put down.</string>
+    <string name="not_halt_error_name">SAFETY SWITCH </string>
+    <string name="not_hat_error_desc">Emergency stop switch on</string>
 
     <string name="incorrect_password_or_email_error">Incorrect password or email.</string>
     <string name="network_connection_error_name">Network failure</string>

@@ -8,5 +8,6 @@ enum class ErrorType (val errorName: Int, val errorDesc: Int){
     VTK_TOP(R.string.vtk_top_sensor_error_name, R.string.vtk_top_sensor_error_desc),
     VTK_DOWN(R.string.vtk_down_sensor_error_name, R.string.vtk_down_sensor_error_desc),
     GRIPPER(R.string.gripper_sensor_error_name, R.string.gripper_sensor_error_desc),
-    PUT(R.string.put_error_name, R.string.put_error_desc)
+    PUT(R.string.put_error_name, R.string.put_error_desc),
+    NOT_HALT(R.string.not_halt_error_name, R.string.not_hat_error_desc)
 }

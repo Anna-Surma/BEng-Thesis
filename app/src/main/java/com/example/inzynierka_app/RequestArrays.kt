@@ -20,6 +20,7 @@ enum class RequestArrays (val array: ArrayList<ReadDataRequest>){
         ReadDataRequest(3, "2.0", "PlcProgram.Read", ParamsRead("\"DB10\".mb_error_VTK_up")),
         ReadDataRequest(4, "2.0", "PlcProgram.Read", ParamsRead("\"DB10\".mb_error_VTK_down")),
         ReadDataRequest(5, "2.0", "PlcProgram.Read", ParamsRead("\"DB10\".mb_error_GRP_open")),
-        ReadDataRequest(6, "2.0", "PlcProgram.Read", ParamsRead("\"DB10\".mb_catch_error"))
+        ReadDataRequest(6, "2.0", "PlcProgram.Read", ParamsRead("\"DB10\".mb_catch_error")),
+        ReadDataRequest(7, "2.0", "PlcProgram.Read", ParamsRead("\"DB10\".mb_not_halt"))
     ))
 }

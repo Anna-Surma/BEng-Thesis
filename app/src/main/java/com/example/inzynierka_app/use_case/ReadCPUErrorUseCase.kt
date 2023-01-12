@@ -36,6 +36,9 @@ class ReadCPUErrorUseCase @Inject constructor(
                                 6 -> {
                                     return Resource.success(ErrorType.PUT)
                                 }
+                                7 -> {
+                                    return Resource.success(ErrorType.NOT_HALT)
+                                }
                                 else -> {
                                     return Resource.success(ErrorType.NETWORK)
                                 }
