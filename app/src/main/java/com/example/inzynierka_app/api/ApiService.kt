@@ -24,4 +24,7 @@ interface ApiService {
 
     @POST(Constants.LOGIN_URL)
     suspend fun readCPUMode(@Body request: CPUModeRequest): Response<DataResponse>
+
+    @POST(Constants.LOGIN_URL)
+    suspend fun writeCPUMode(@Body request: WriteCPUModeRequest): Response<DataResponse>
 }

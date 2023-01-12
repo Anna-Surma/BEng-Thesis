@@ -398,8 +398,18 @@ class GripperViewModel @Inject constructor(
     }
 
     fun writeStartPoint(step: String) {
-        viewModelScope.launch {
-            CPUDataUseCases.writeCPUStartPoint(step)
+        if(_controlActive.value == true){
+            viewModelScope.launch {
+                CPUDataUseCases.writeCPUStartPoint(step)
+            }
+        }
+    }
+
+    fun writeCPUMode(mode: String) {
+        if(_controlActive.value == true) {
+            viewModelScope.launch {
+                CPUDataUseCases.writeCPUMode(mode)
+            }
         }
     }
 

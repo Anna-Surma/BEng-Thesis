@@ -25,6 +25,8 @@ class MainRepository @Inject constructor(
 
     suspend fun readCPUMode(request: CPUModeRequest) = apiHelper.readCPUMode(request)
 
+    suspend fun writeCPUMode(request: WriteCPUModeRequest) = apiHelper.writeCPUMode(request)
+
     fun saveAuthToken(token: String) = sessionManager.saveAuthToken(token)
 
     fun fetchAuthToken() = sessionManager.fetchAuthToken()

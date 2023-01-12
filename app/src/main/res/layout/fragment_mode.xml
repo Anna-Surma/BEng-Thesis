@@ -227,7 +227,9 @@
                     android:entries="@array/change_mode"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/tvChangeMode"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:onItemSelected="@{(parent,view,pos,id)-> gripperViewModel.writeCPUMode(parent.getItemAtPosition(pos).toString())}"/>
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -24,4 +24,7 @@ class ApiHelperImpl @Inject constructor(
 
     override suspend fun readCPUMode(request: CPUModeRequest): Response<DataResponse> =
         apiService.readCPUMode(request)
+
+    override suspend fun writeCPUMode(request: WriteCPUModeRequest): Response<DataResponse> =
+        apiService.writeCPUMode(request)
 }

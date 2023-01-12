@@ -8,5 +8,6 @@ data class CPUDataUseCaces
     val readCPUStep: ReadCPUStepUseCase,
     val readCPUValue: ReadCPUValueUseCase,
     val writeCPUStartPoint: WriteCPUStartPointUseCase,
-    val writeCPUValue: WriteCPUValueUseCase
+    val writeCPUValue: WriteCPUValueUseCase,
+    val writeCPUMode: WriteCPUModeUseCase
 )
