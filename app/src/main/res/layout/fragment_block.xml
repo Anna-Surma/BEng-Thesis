@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="gripperViewModel"
+            type="com.example.inzynierka_app.viewmodel.GripperViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".fragment.ManualFragment">
+
+        <LinearLayout
+            android:id="@+id/llAuto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btnone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:onClickListener='@{() -> gripperViewModel.chooseStep("Step 1")}'/>
+
+                <Button
+                    android:id="@+id/btntwo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3"
+                    android:onClickListener='@{() -> gripperViewModel.chooseStep("Step 3")}'/>
+
+                <Button
+                    android:id="@+id/btnthree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5"
+                    android:onClickListener='@{() -> gripperViewModel.chooseStep("Step 5")}'/>
+
+                <Button
+                    android:id="@+id/btnFour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="7"
+                    android:onClickListener='@{() -> gripperViewModel.chooseStep("Step 7")}'/>
+
+                <Button
+                    android:id="@+id/btnStart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Start"
+                    android:onClickListener="@{() -> gripperViewModel.startBlock()}" />
+
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btnFive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:onClickListener='@{() -> gripperViewModel.chooseStep("Step 2")}'/>
+
+            <Button
+                android:id="@+id/btnSix"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:onClickListener='@{() -> gripperViewModel.chooseStep("Step 4")}'/>
+
+            <Button
+                android:id="@+id/btnSeven"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="6"
+                android:onClickListener='@{() -> gripperViewModel.chooseStep("Step 6")}'/>
+
+            <Button
+                android:id="@+id/btnEight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8"
+                android:onClickListener='@{() -> gripperViewModel.chooseStep("Step 8")}'/>
+
+            <Button
+                android:id="@+id/btnStop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Stop"
+                android:onClickListener="@{() -> gripperViewModel.stopBlock()}" />
+        </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/setNr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/llAuto"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/tvCycles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/set_cycles"
+                android:textSize="@dimen/params_text_size" />
+
+            <EditText
+                android:id="@+id/etCycles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/params_margin_start"
+                android:hint="@string/none_hint"
+                android:text="@={gripperViewModel.setBlock}"
+                android:inputType="numberDecimal"
+                android:textSize="@dimen/params_text_size" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/userlist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/setNr"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+        </ListView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -2,6 +2,7 @@ package com.example.inzynierka_app.viewmodel
 
 import android.os.CountDownTimer
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.*
 import com.example.inzynierka_app.*
 import com.example.inzynierka_app.db.GripperError
@@ -64,6 +65,12 @@ class GripperViewModel @Inject constructor(
     private val _CPUmode = MutableLiveData<String?>()
     val CPUmode: LiveData<String?> = _CPUmode
 
+    var listOfSteps = mutableListOf<String>()
+
+    val setBlock = MutableLiveData<String>()
+
+    var isBlockActive = false
+
     private var cycleViewModelJob: Job? = null
 
     private var viewModelErrorJob: Job? = null
@@ -101,6 +108,8 @@ class GripperViewModel @Inject constructor(
             viewModelScope.launch {
                 writeData(ParamsWrite("\"DB100\".mb_app_pause", false))
             }
+            writeData2(ParamsWrite("\"DB100\".mb_app_step", false))
+            listOfSteps.clear()
         }
     }
 
@@ -411,6 +420,44 @@ class GripperViewModel @Inject constructor(
                 CPUDataUseCases.writeCPUMode(mode)
             }
         }
+    }
+
+    fun startBlock() {
+        if (_controlActive.value == true) {
+            if(!listOfSteps.isNullOrEmpty()){
+                isBlockActive = true
+                val temp = setBlock.value
+                viewModelScope.launch {
+                    writeData2(ParamsWrite("\"DB100\".mb_app_step", true))
+                    if(setBlock.value != "0" && setBlock.value != "" && setBlock.value != " " && setBlock.value != null){
+                        repeat(temp!!.toInt()){
+                            for (step in listOfSteps) {
+                                CPUDataUseCases.writeCPUStartPoint(step)
+                                delay(500)
+                            }
+                        }
+                    }
+                    else {
+                        while (isBlockActive){
+                            for (step in listOfSteps) {
+                                CPUDataUseCases.writeCPUStartPoint(step)
+                                delay(500)
+                            }
+                        }
+                    }
+                    writeData2(ParamsWrite("\"DB100\".mb_app_step", false))
+                    listOfSteps.clear()
+                }
+            }
+        }
+    }
+
+    fun chooseStep(step: String){
+        listOfSteps.add(step)
+    }
+
+    fun stopBlock(){
+        isBlockActive = false
     }
 
     fun startStep() {

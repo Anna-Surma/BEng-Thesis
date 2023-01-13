@@ -57,6 +57,14 @@ class MainActivity : AppCompatActivity() {
                     binding.ivErrorIcon.visibility = View.VISIBLE
                     binding.fcvError.visibility = View.GONE
                 }
+                R.id.blockFragment -> {
+                    binding.bottomNav.visibility = View.VISIBLE
+                    binding.fcvMode.visibility = View.VISIBLE
+                    binding.tvMode.visibility = View.VISIBLE
+                    binding.tvMode.setText(R.string.block_mode)
+                    binding.ivErrorIcon.visibility = View.VISIBLE
+                    binding.fcvError.visibility = View.GONE
+                }
                 else -> {
                     binding.bottomNav.visibility = View.GONE
                     binding.fcvMode.visibility = View.GONE

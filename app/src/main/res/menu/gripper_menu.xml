@@ -11,5 +11,10 @@
         android:icon="@drawable/manual_mode"
         android:title="@string/manual">
     </item>
+    <item
+        android:id="@+id/blockFragment"
+        android:icon="@drawable/manual_mode"
+        android:title="@string/block_mode">
+    </item>
 
 </menu>

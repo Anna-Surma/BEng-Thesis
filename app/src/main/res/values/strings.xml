@@ -5,6 +5,7 @@
     <string name="gripper_control">GRIPPER\nCONTROL</string>
     <string name="auto_mode">AUTO MODE</string>
     <string name="manual_mode">MANUAL MODE</string>
+    <string name="block_mode">BLOCK MODE</string>
     <string name="parameters">PARAMETERS</string>
     <string name="commands">COMMANDS</string>
     <string name="set_start">Set start</string>
@@ -103,4 +104,7 @@
     <string name="go_to">Go to</string>
     <string name="login_icon">Login icon</string>
     <string name="lock_icon">Lock icon</string>
+
+    <string name="blum_desc">High quality for our customers around the world. We have eight production facility in Austria and facility in the USA, Brazil and Poland. </string>
+
 </resources>

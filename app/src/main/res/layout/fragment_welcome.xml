@@ -7,16 +7,56 @@
     tools:context=".fragment.WelcomeFragment">
 
     <ImageView
+        android:id="@+id/ivBlumLogo"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:contentDescription="@string/map"
+        android:src="@drawable/blum_logo"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/facilitiesCard"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/facilitiesCard"
+        style="?attr/materialCardViewElevatedStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/ivBlumLogo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/ivBlumMap">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:id="@+id/tvBlumDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/blum_desc" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <ImageView
         android:id="@+id/ivBlumMap"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:contentDescription="@string/map"
-        android:src="@drawable/blum_map_cut_logo"
+        android:src="@drawable/blum_map"
         app:layout_constraintBottom_toTopOf="@+id/llDesc"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/facilitiesCard"
         app:layout_constraintVertical_weight="1" />
 
     <LinearLayout
@@ -30,11 +70,6 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/card"
@@ -68,21 +103,24 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
-
-                <Button
-                    android:id="@+id/btnStartButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="15dp"
-                    android:layout_margin="8dp"
-                    android:text="@string/start_now" />
-
-            </LinearLayout>
-
         </ScrollView>
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+    <Button
+        android:id="@+id/btnStartButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        android:text="@string/start_now" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -90,10 +128,7 @@
         android:layout_marginBottom="10dp"
         android:orientation="horizontal"
         android:paddingHorizontal="40dp"
-        android:paddingVertical="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:paddingVertical="5dp">
 
         <ImageView
             android:id="@+id/ivFbIcon"
@@ -126,6 +161,8 @@
             android:layout_weight="1"
             android:contentDescription="@string/yt_icon"
             app:srcCompat="@drawable/yt_icon" />
+
+    </LinearLayout>
 
     </LinearLayout>
 
