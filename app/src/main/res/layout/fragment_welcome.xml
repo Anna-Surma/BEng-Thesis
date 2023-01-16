@@ -36,11 +36,11 @@
             android:padding="16dp">
 
             <TextView
-                android:textAppearance="?attr/textAppearanceBodyMedium"
                 android:id="@+id/tvBlumDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/blum_desc" />
+                android:text="@string/blum_desc"
+                android:textAppearance="?attr/textAppearanceBodyMedium"/>
 
         </LinearLayout>
 

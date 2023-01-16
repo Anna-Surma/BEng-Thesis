@@ -16,6 +16,10 @@ import com.example.inzynierka_app.adapter.ErrorAdapter
 import com.example.inzynierka_app.databinding.FragmentErrorBinding
 import com.example.inzynierka_app.viewmodel.GripperViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import android.view.MenuInflater
+
+
+
 
 @AndroidEntryPoint
 class ErrorFragment : Fragment() {
@@ -33,8 +37,6 @@ class ErrorFragment : Fragment() {
         _binding = FragmentErrorBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        setupMenu()
-
         viewModel = ViewModelProvider(requireActivity()).get(GripperViewModel::class.java)
 
         setupRecyclerView()
@@ -42,6 +44,20 @@ class ErrorFragment : Fragment() {
         viewModel.errorsSortedByDate.observe(viewLifecycleOwner, Observer {
             errorAdapter.submitList(it)
         })
+
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                // Add menu items here
+                menuInflater.inflate(R.menu.options_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                deleteAll()
+                return true
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
         return view
     }
 
@@ -84,4 +100,5 @@ class ErrorFragment : Fragment() {
         adapter = errorAdapter
         layoutManager = LinearLayoutManager(requireContext())
     }
+
 }

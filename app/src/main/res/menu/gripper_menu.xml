@@ -14,7 +14,7 @@
     <item
         android:id="@+id/blockFragment"
         android:icon="@drawable/manual_mode"
-        android:title="@string/block_mode">
+        android:title="@string/block">
     </item>
 
 </menu>

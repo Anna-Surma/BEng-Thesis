@@ -22,18 +22,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/tvOpMode"
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/facilitiesCard"
+                style="?attr/materialCardViewElevatedStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="3dp"
-                android:text="@string/operating_mode"
-                android:textSize="@dimen/heading_text_size"
-                android:textStyle="bold"
+                android:layout_marginVertical="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tvOpMode"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:text="@string/operating_mode"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </com.google.android.material.card.MaterialCardView>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/llMode"
@@ -42,7 +54,7 @@
                 android:layout_marginTop="@dimen/param_margin_bottom"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvOpMode">
+                app:layout_constraintTop_toBottomOf="@+id/facilitiesCard">
 
                 <LinearLayout
                     android:id="@+id/llModeLed"
@@ -75,12 +87,11 @@
 
                         <TextView
                             android:id="@+id/tvRun"
+                            android:textAppearance="?attr/textAppearanceTitleMedium"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/params_margin_start"
                             android:text="@string/run"
-                            android:textSize="@dimen/params_text_size"
-                            android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/ivLedRun"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -108,12 +119,11 @@
 
                         <TextView
                             android:id="@+id/tvStartUp"
+                            android:textAppearance="?attr/textAppearanceTitleMedium"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/params_margin_start"
                             android:text="@string/start_up"
-                            android:textSize="@dimen/params_text_size"
-                            android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/ivLedStartUp"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -145,8 +155,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/params_margin_start"
                             android:text="@string/hold"
-                            android:textSize="@dimen/params_text_size"
-                            android:textStyle="bold"
+                            android:textAppearance="?attr/textAppearanceTitleMedium"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/ivLedHold"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -157,7 +166,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/params_margin_start"
-                        android:layout_marginBottom="@dimen/param_margin_bottom"
                         android:orientation="horizontal">
 
                         <ImageView
@@ -178,8 +186,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/params_margin_start"
                             android:text="@string/stop"
-                            android:textSize="@dimen/params_text_size"
-                            android:textStyle="bold"
+                            android:textAppearance="?attr/textAppearanceTitleMedium"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/ivLedStop"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -188,15 +195,16 @@
 
                 </LinearLayout>
 
-                <ToggleButton
-                    android:id="@+id/tbActive"
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/swActive"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:checked="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/llModeLed"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:onCheckedChanged="@{(toggle, checked) -> gripperViewModel.onControlTbCheckedChanged(checked)}"/>
+                    android:onCheckedChanged="@{(switch, checked) -> gripperViewModel.onControlTbCheckedChanged(checked)}"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -205,31 +213,40 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/params_margin_start"
                 android:orientation="horizontal"
+                android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/llMode">
 
                 <TextView
                     android:id="@+id/tvChangeMode"
+                    android:textAppearance="?attr/textAppearanceBodyLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/change_mode"
-                    android:textSize="@dimen/params_text_size"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <Spinner
-                    android:id="@+id/sChangeMode"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/menu"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:hint="Default"
                     android:layout_marginStart="@dimen/params_margin_start"
-                    android:entries="@array/change_mode"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvChangeMode"
                     app:layout_constraintStart_toEndOf="@+id/tvChangeMode"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:onItemSelected="@{(parent,view,pos,id)-> gripperViewModel.writeCPUMode(parent.getItemAtPosition(pos).toString())}"/>
+                    app:layout_constraintTop_toTopOf="@+id/tvChangeMode">
 
+                    <AutoCompleteTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"
+                        android:padding="0dp"
+                        app:simpleItems="@array/change_mode" />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

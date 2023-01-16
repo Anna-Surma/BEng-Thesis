@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">Inzynierka_app</string>
     <string name="company_desc">Our goal is high-quality furniture fittings that make living more comfortable. We produce lift systems, hinges and drawers as well as pocket solutions for furniture, and our offer is complemented by services and assembly aids.</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="gripper_control">GRIPPER\nCONTROL</string>
     <string name="auto_mode">AUTO MODE</string>
     <string name="manual_mode">MANUAL MODE</string>
     <string name="block_mode">BLOCK MODE</string>
@@ -12,34 +10,32 @@
     <string name="set_cycles">Set cycles</string>
     <string name="set_time">Set time</string>
     <string name="cycles">Cycles</string>
-    <string name="dont_know">dont know</string>
     <string name="set_duration">Set duration</string>
     <string name="time">Time</string>
     <string name="none_hint">None</string>
-    <string name="_0_hint">0</string>
+    <string name="_0_hint" translatable="false">0</string>
     <string name="operating_mode">OPERATING MODE</string>
-    <string name="stop">STOP</string>
-    <string name="run">RUN</string>
-    <string name="start_up">START UP</string>
+    <string name="stop" translatable="false">STOP</string>
+    <string name="run" translatable="false">RUN</string>
+    <string name="start_up" translatable="false">START UP</string>
     <string name="start_now">Start now</string>
-    <string name="start">Start</string>
+    <string name="start" translatable="false">Start</string>
     <string name="pause">Pause</string>
-    <string name="stop_btn">Stop</string>
-    <string name="right">Right</string>
-    <string name="login">Login</string>
+    <string name="stop_btn" translatable="false">Stop</string>
+    <string name="login" translatable="false">Login</string>
     <string name="password">Password</string>
     <string name="step">Step</string>
-    <string name="led">led</string>
+    <string name="led" translatable="false">led</string>
     <string name="change_mode">Change mode</string>
-    <string name="gripper">Gripper</string>
     <string name="map">map</string>
     <string name="social_media">SOCIAL MEDIA</string>
-    <string name="instagram_icon">Instagram_icon</string>
-    <string name="fb_icon">fb_icon</string>
-    <string name="pint_icon">pint_icon</string>
-    <string name="yt_icon">yt_icon</string>
-    <string name="auto">AUTO</string>
+    <string name="instagram_icon" translatable="false">Instagram icon</string>
+    <string name="fb_icon" translatable="false">fb_icon</string>
+    <string name="pint_icon" translatable="false">pint_icon</string>
+    <string name="yt_icon" translatable="false">yt_icon</string>
+    <string name="auto" translatable="false">AUTO</string>
     <string name="manual">MANUAL</string>
+    <string name="block">BLOCK</string>
     <string-array name="start_point">
         <item>Default</item>
         <item>Step 1</item>
@@ -67,27 +63,23 @@
     <string name="gripper_sensor_error_name">GRIPPER SENSOR</string>
     <string name="gripper_sensor_error_desc">Incorrect signal from the gripper sensor.</string>
     <string name="put_error_name">PUT DOWN</string>
-    <string name="put_error_desc">item can not be put down.</string>
+    <string name="put_error_desc">Item can not be put down.</string>
     <string name="not_halt_error_name">SAFETY SWITCH </string>
     <string name="not_hat_error_desc">Emergency stop switch on</string>
 
     <string name="incorrect_password_or_email_error">Incorrect password or email.</string>
     <string name="network_connection_error_name">Network failure</string>
     <string name="network_connection_error_desc">Please Check Your Internet Connection Or Try Again Later</string>
-    <string name="error_icon">Error Icon</string>
+    <string name="error_icon" translatable="false">Error Icon</string>
 
     <string name="delete_history">Are you sure you want to delete history?</string>
-    <string name="delete_history_desc">You can\'\t undo this action.</string>
+    <string name="delete_history_desc">You can\'t undo this action.</string>
 
-    <string name="date">Date: %s</string>
-    <string name="name">Name: %s</string>
-    <string name="desc">Desc: %s</string>
-    <string name="error_desc_icon">Error desc icon</string>
-    <string name="hold">HOLD</string>
+
+    <string name="error_desc_icon" translatable="false">Error desc icon</string>
+    <string name="hold" translatable="false">HOLD</string>
     <string name="duration">Duration</string>
-    <string name="step_time">Step time</string>
-    <string name="unit_s">[s]</string>
-    <string name="average_step_time">Average step time</string>
+    <string name="unit_s" translatable="false">[s]</string>
     <string name="cycle_time">Cycle time</string>
     <string name="avr_cycle_time">Avr cycle time</string>
 
@@ -99,12 +91,16 @@
     <string name="step_6"> Step 6</string>
     <string name="step_7"> Step 7</string>
     <string name="step_8"> Step 8</string>
-    <string name="default_step">Default</string>
+    <string name="default_step" translatable="false">Default</string>
 
     <string name="go_to">Go to</string>
-    <string name="login_icon">Login icon</string>
-    <string name="lock_icon">Lock icon</string>
-
+    <string name="login_icon" translatable="false">Login icon</string>
+    <string name="lock_icon" translatable="false">Lock icon</string>
     <string name="blum_desc">High quality for our customers around the world. We have eight production facility in Austria and facility in the USA, Brazil and Poland. </string>
 
+    <string name="selected_sequence">Selected\nsequence</string>
+
+    <string name="commandAndParams">PARAMETERS &amp; COMMANDS</string>
+    <string name="units" translatable="false"> [ms]</string>
+    <string name="delete"> Delete</string>
 </resources>

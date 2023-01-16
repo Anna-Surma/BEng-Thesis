@@ -1,14 +1,21 @@
 package com.example.inzynierka_app.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.inzynierka_app.adapter.BlockStepAdapter
+import com.example.inzynierka_app.adapter.ErrorAdapter
 import com.example.inzynierka_app.databinding.FragmentBlockBinding
 import com.example.inzynierka_app.model.ReadDataRequest
+import com.example.inzynierka_app.model.StepItem
 import com.example.inzynierka_app.viewmodel.GripperViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,6 +26,7 @@ class BlockFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var viewModel: GripperViewModel
+    private lateinit var stepAdapter: BlockStepAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,14 +41,28 @@ class BlockFragment : Fragment() {
         binding.gripperViewModel = viewModel
         binding.lifecycleOwner = this
 
-        // use arrayadapter and define an array
-        val arrayAdapter: ArrayAdapter<*>
-        val users = arrayOf(
-            "Virat Kohli", "Rohit Sharma", "Steve Smith",
-            "Kane Williamson", "Ross Taylor"
-        )
+
+        setupRecyclerView()
+
+        viewModel.blockSteps.observe(viewLifecycleOwner, Observer {
+            stepAdapter.data = it
+            stepAdapter.notifyDataSetChanged()
+
+        })
 
         return view
+    }
+
+    private fun setupRecyclerView() = binding.mRecycler.apply {
+        stepAdapter = BlockStepAdapter()
+        adapter = stepAdapter
+        layoutManager = LinearLayoutManager(requireContext())
+        addItemDecoration(
+            DividerItemDecoration(
+                context,
+                LinearLayoutManager(requireContext()).orientation
+            )
+        )
     }
 
     override fun onDestroyView() {

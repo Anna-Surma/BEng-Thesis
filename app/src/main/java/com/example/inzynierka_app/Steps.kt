@@ -4,7 +4,7 @@ import com.example.inzynierka_app.model.ParamsWrite
 import com.example.inzynierka_app.model.WriteDataRequest
 
 enum class Steps (val id: Int, val text: Int, val drawable: Int, val request: ArrayList<WriteDataRequest>) {
-    STEP1(1, R.string.step_1, R.drawable.right_up_open, (arrayListOf(
+    STEP1(1, R.string.step_1, R.drawable.step_one, (arrayListOf(
         WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"DB100\".mb_step_2", false)),
         WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"DB100\".mb_step_3", false)),
         WriteDataRequest(1, "2.0", "PlcProgram.Write", ParamsWrite("\"DB100\".mb_step_4", false)),

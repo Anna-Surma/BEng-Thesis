@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Inzynierka_app</string>
+    <string name="company_desc">Naszym celem jest wysokiej jakości okucie meblowe, które czyni mieszkanie bardziej komfortowym. Produkujemy podnośniki, zawiasy i szuflady oraz rozwiązania kieszeniowe do mebli, a naszą ofertę uzupełniają usługi i pomoce montażowe.</string>
+    <string name="auto_mode">TRYB AUTO</string>
+    <string name="manual_mode">TRYB KROKOWY</string>
+    <string name="block_mode">TRYB BLOKOWY</string>
+    <string name="parameters">PARAMETRY</string>
+    <string name="commands">POLECENIA</string>
+    <string name="set_cycles">Cykle</string>
+    <string name="set_start">Start</string>
+    <string name="set_time">Czas</string>
+    <string name="cycles">Cykle</string>
+    <string name="set_duration">Czas działania</string>
+    <string name="time">Czas</string>
+    <string name="operating_mode">TRYB PRACY</string>
+    <string name="start_now">Start</string>
+    <string name="pause">Pauza</string>
+    <string name="password">Hasło</string>
+    <string name="step">Krok</string>
+    <string name="change_mode">"Zmiana trybu "</string>
+    <string name="social_media">MEDIA SPOŁECZNOŚCIOWE</string>
+    <string name="manual">KROKOWY</string>
+    <string name="none_hint">Brak</string>
+    <string name="map">mapa</string>
+    <string name="vtk_top_sensor_error_desc" translatable="false">Niepoprawny sygnał z górnego pionowego czujnika</string>
+    <string name="vtk_top_sensor_error_name">Górny pionowy czujnik</string>
+    <string name="vtk_down_sensor_error_name">Dolny pionowy czujnik</string>
+    <string name="vtk_down_sensor_error_desc">Niepoprawny sygnał z dolnego pionowego czujnika.</string>
+    <string name="hor_right_sensor_error_name" translatable="false">Prawy poziomy czujnik</string>
+    <string name="hor_right_sensor_error_desc">Niepoprawny sygnał z prawego poziomego czujnika.</string>
+    <string name="hor_left_sensor_error_name">Lewy poziomy czujnik</string>
+    <string name="hor_left_sensor_error_desc">Niepoprawny sygnał z lewego poziomego czujnika.</string>
+    <string name="gripper_sensor_error_name">Czujnik chwytaka</string>
+    <string name="gripper_sensor_error_desc">Niepoprawny sygnał z czujnika chwytaka.</string>
+    <string name="put_error_name">Odkładanie</string>
+    <string name="put_error_desc">Problem z odłożeniem elementu.</string>
+    <string name="not_halt_error_name">Wyłącznik bezpieczeństwa</string>
+    <string name="not_hat_error_desc">Wyłącznik bezpieczeństwa załączony.</string>
+    <string name="incorrect_password_or_email_error">Nieprawidłowy email lub hasło</string>
+    <string name="network_connection_error_name">Problem sieci</string>
+    <string name="network_connection_error_desc">Sprawdź połączenie z internetem lub spróbuj ponownie później</string>
+    <string name="delete_history">Czy na pewno chcesz usunąć historię?</string>
+    <string name="delete_history_desc">Tej czynności nie można cofnąć.</string>
+    <string name="duration">Czas ruchu</string>
+    <string name="cycle_time">Czas cyklu</string>
+    <string name="avr_cycle_time">Średni czas cyklu</string>
+    <string name="step_1">Krok 1</string>
+    <string name="step_2">Krok 2</string>
+    <string name="step_3">Krok 3</string>
+    <string name="step_4">Krok 4</string>
+    <string name="step_5">Krok 5</string>
+    <string name="step_6">Krok 6</string>
+    <string name="step_7">Krok 7</string>
+    <string name="step_8">Krok 8</string>
+    <string name="go_to">Wybór kroku</string>
+    <string name="blum_desc" translatable="false">Wysoka jakość dla naszych klientów na całym świecie. Posiadamy osiem zakładów produkcyjnych w Austrii oraz zakłady w USA, Brazylii i Polsce.</string>
+    <string name="block" translatable="false">BLOKOWY</string>
+    <string name="selected_sequence">Wybrana\nsekwencja</string>
+    <string name="commandAndParams">Parametry &amp; Polecenia</string>
+    <string name="delete"> Usuń</string>
+</resources>

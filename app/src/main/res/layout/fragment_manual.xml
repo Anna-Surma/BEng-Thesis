@@ -18,45 +18,55 @@
         <LinearLayout
             android:id="@+id/llAuto"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/tvStepNr"
+                android:textAppearance="?attr/textAppearanceHeadlineMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 tools:text="@string/step_1"
-                android:text="@{context.getString(gripperViewModel.stepsResponse.text)}"
-                android:textSize="@dimen/mode_text_size"
-                android:textStyle="bold" />
+                android:text="@{context.getString(gripperViewModel.stepsResponse.text)}" />
 
             <ImageView
                 android:id="@+id/ivStepImage"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                tools:src="@drawable/left_down_close"
+                tools:src="@drawable/step_one"
                 app:imageResource="@{gripperViewModel.stepsResponse.drawable}"
                 android:layout_marginHorizontal="50dp">
             </ImageView>
 
-            <TextView
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/facilitiesCard"
+                style="?attr/materialCardViewElevatedStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/param_margin_bottom"
-                android:gravity="center"
-                android:padding="2dp"
-                android:text="@string/commands"
-                android:textSize="@dimen/heading_text_size"
-                android:textStyle="bold" />
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:text="@string/commands" />
+
+            </com.google.android.material.card.MaterialCardView>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clFirst"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -64,26 +74,35 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layout_constraintTop_toTopOf="@+id/btnStep"
-                    app:layout_constraintBottom_toBottomOf="@+id/btnStep"
+                    android:layout_marginBottom="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btnStep"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/btnStep">
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
                         android:id="@+id/tvStartPoint"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/go_to"
-                        android:textSize="@dimen/params_text_size" />
+                        android:textAppearance="?attr/textAppearanceBodyLarge" />
 
-                    <Spinner
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/sStartPoint"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/params_margin_start"
-                        android:entries="@array/start_point"
-                        android:textSize="@dimen/params_text_size"
-                        android:onItemSelected="@{(parent,view,pos,id)-> gripperViewModel.writeStartPoint(parent.getItemAtPosition(pos).toString())}"/>
+                        android:hint="Default">
+
+                        <AutoCompleteTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:padding="0dp"
+                            app:simpleItems="@array/start_point" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
 
@@ -92,9 +111,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/step"
+                    android:layout_marginTop="5dp"
                     android:layout_gravity="center"
                     app:layout_constraintStart_toEndOf="@+id/llspin"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/llspin"
+                    app:layout_constraintBottom_toBottomOf="@+id/llspin"
                     app:layout_constraintEnd_toEndOf="parent"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -56,10 +56,10 @@ class GripperViewModel @Inject constructor(
     private val _stepsResponse = MutableLiveData<Steps?>(Steps.STEP1) //to zmienić!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     val stepsResponse: LiveData<Steps?> = _stepsResponse
 
-    private val _avrCyclesTime = MutableLiveData<String>()
+    private val _avrCyclesTime = MutableLiveData("0")
     val avrCyclesTime: LiveData<String> = _avrCyclesTime
 
-    private val _durationCounter = MutableLiveData<String>()
+    private val _durationCounter = MutableLiveData("0")
     val durationCounter: LiveData<String> = _durationCounter
 
     private val _CPUmode = MutableLiveData<String?>()
@@ -67,7 +67,15 @@ class GripperViewModel @Inject constructor(
 
     var listOfSteps = mutableListOf<String>()
 
+    var listStepsLD = mutableListOf<StepItem>()
+
     val setBlock = MutableLiveData<String>()
+
+    var count = 0
+
+    private val _blockSteps = MutableLiveData<MutableList<StepItem>>()
+    val blockSteps: LiveData<MutableList<StepItem>> = _blockSteps
+
 
     var isBlockActive = false
 
@@ -452,8 +460,12 @@ class GripperViewModel @Inject constructor(
         }
     }
 
-    fun chooseStep(step: String){
+    fun chooseStep(step: String) {
         listOfSteps.add(step)
+        listStepsLD.add(StepItem(step))
+        _blockSteps.value = listStepsLD
+
+        Log.i("DUPA", _blockSteps.value.toString())
     }
 
     fun stopBlock(){
