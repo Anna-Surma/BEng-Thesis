@@ -18,9 +18,6 @@ import com.example.inzynierka_app.viewmodel.GripperViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import android.view.MenuInflater
 
-
-
-
 @AndroidEntryPoint
 class ErrorFragment : Fragment() {
 
