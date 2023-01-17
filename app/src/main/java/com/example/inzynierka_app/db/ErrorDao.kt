@@ -8,14 +8,13 @@ import androidx.room.Query
 
 @Dao
 interface ErrorDao {
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(gripperError: GripperError)
+    suspend fun insertError(gripperError: GripperError)
 
     @Query("SELECT * FROM error_table ORDER BY error_date DESC")
     fun getAllErrorsSortedByDate(): LiveData<List<GripperError>>
 
     @Query("DELETE FROM error_table")
-    suspend fun delete()
+    suspend fun deleteAllErrors()
 
 }

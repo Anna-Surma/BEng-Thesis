@@ -71,18 +71,14 @@
     <string name="network_connection_error_name">Network failure</string>
     <string name="network_connection_error_desc">Please Check Your Internet Connection Or Try Again Later</string>
     <string name="error_icon" translatable="false">Error Icon</string>
-
     <string name="delete_history">Are you sure you want to delete history?</string>
     <string name="delete_history_desc">You can\'t undo this action.</string>
-
-
     <string name="error_desc_icon" translatable="false">Error desc icon</string>
     <string name="hold" translatable="false">HOLD</string>
     <string name="duration">Duration</string>
     <string name="unit_s" translatable="false">[s]</string>
     <string name="cycle_time">Cycle time</string>
     <string name="avr_cycle_time">Avr cycle time</string>
-
     <string name="step_1"> Step 1</string>
     <string name="step_2"> Step 2</string>
     <string name="step_3"> Step 3</string>
@@ -91,16 +87,15 @@
     <string name="step_6"> Step 6</string>
     <string name="step_7"> Step 7</string>
     <string name="step_8"> Step 8</string>
-    <string name="default_step" translatable="false">Default</string>
-
+    <string name="default_single" translatable="false">Default</string>
     <string name="go_to">Go to</string>
     <string name="login_icon" translatable="false">Login icon</string>
     <string name="lock_icon" translatable="false">Lock icon</string>
     <string name="blum_desc">High quality for our customers around the world. We have eight production facility in Austria and facility in the USA, Brazil and Poland. </string>
-
     <string name="selected_sequence">Selected\nsequence</string>
-
     <string name="commandAndParams">PARAMETERS &amp; COMMANDS</string>
     <string name="units" translatable="false"> [ms]</string>
     <string name="delete"> Delete</string>
+    <string name="gripper_control" translatable="false"> Gripper Control</string>
+    <string name="about_company">About company</string>
 </resources>

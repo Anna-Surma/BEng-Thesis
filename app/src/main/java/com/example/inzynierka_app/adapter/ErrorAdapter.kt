@@ -10,7 +10,7 @@ import com.example.inzynierka_app.db.GripperError
 
 class ErrorAdapter : RecyclerView.Adapter<ErrorAdapter.ErrorViewHolder>() {
 
-    val diffCallback = object : DiffUtil.ItemCallback<GripperError>() {
+    private val diffCallback = object : DiffUtil.ItemCallback<GripperError>() {
         override fun areItemsTheSame(oldItem: GripperError, newItem: GripperError): Boolean {
             return oldItem.errorId == newItem.errorId
         }
@@ -20,7 +20,7 @@ class ErrorAdapter : RecyclerView.Adapter<ErrorAdapter.ErrorViewHolder>() {
         }
     }
 
-    val differ = AsyncListDiffer(this, diffCallback)
+    private val differ = AsyncListDiffer(this, diffCallback)
 
     fun submitList(list: List<GripperError>) = differ.submitList(list)
 
@@ -34,7 +34,8 @@ class ErrorAdapter : RecyclerView.Adapter<ErrorAdapter.ErrorViewHolder>() {
         holder.bind(item)
     }
 
-    class ErrorViewHolder(private val binding: GripperErrorItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ErrorViewHolder(private val binding: GripperErrorItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         companion object {
             fun inflateFrom(parent: ViewGroup): ErrorViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)

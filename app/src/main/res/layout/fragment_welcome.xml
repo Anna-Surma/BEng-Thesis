@@ -10,9 +10,8 @@
         android:id="@+id/ivBlumLogo"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:contentDescription="@string/map"
-        android:src="@drawable/blum_logo"
         android:layout_marginTop="8dp"
+        android:src="@drawable/blum_logo"
         app:layout_constraintBottom_toTopOf="@+id/facilitiesCard"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -24,10 +23,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/ivBlumLogo"
+        app:layout_constraintBottom_toTopOf="@+id/ivBlumMap"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/ivBlumMap">
+        app:layout_constraintTop_toBottomOf="@+id/ivBlumLogo">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/blum_desc"
-                android:textAppearance="?attr/textAppearanceBodyMedium"/>
+                android:textAppearance="?attr/textAppearanceBodyMedium" />
 
         </LinearLayout>
 
@@ -50,7 +49,6 @@
         android:id="@+id/ivBlumMap"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:contentDescription="@string/map"
         android:src="@drawable/blum_map"
         app:layout_constraintBottom_toTopOf="@+id/llDesc"
         app:layout_constraintHorizontal_bias="0.0"
@@ -71,37 +69,37 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/card"
-                    style="?attr/materialCardViewElevatedStyle"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card"
+                style="?attr/materialCardViewElevatedStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp">
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="16dp">
-
-                        <TextView
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="About company"
+                        android:text="@string/about_company"
                         android:textAppearance="?attr/textAppearanceTitleMedium" />
 
                     <TextView
-                        android:textAppearance="?attr/textAppearanceBodyMedium"
                         android:id="@+id/tvDesc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="@string/company_desc"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
                         app:layout_constraintTop_toBottomOf="@+id/ivBlumMap" />
 
-                    </LinearLayout>
+                </LinearLayout>
 
-                </com.google.android.material.card.MaterialCardView>
+            </com.google.android.material.card.MaterialCardView>
 
         </ScrollView>
 
@@ -112,57 +110,58 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-    <Button
-        android:id="@+id/btnStartButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="8dp"
-        android:text="@string/start_now" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal"
-        android:paddingHorizontal="40dp"
-        android:paddingVertical="5dp">
-
-        <ImageView
-            android:id="@+id/ivFbIcon"
-            android:layout_width="?attr/actionBarSize"
+        <Button
+            android:id="@+id/btnStartButton"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:contentDescription="@string/fb_icon"
-            app:srcCompat="@drawable/fb_icon" />
+            android:layout_gravity="center"
+            android:layout_margin="8dp"
+            android:text="@string/start_now" />
 
-        <ImageView
-            android:id="@+id/ivInstIcon"
-            android:layout_width="?attr/actionBarSize"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:contentDescription="@string/instagram_icon"
-            app:srcCompat="@drawable/inst_icon" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            android:paddingHorizontal="40dp"
+            android:paddingVertical="5dp">
 
-        <ImageView
-            android:id="@+id/ivPintIcon"
-            android:layout_width="?attr/actionBarSize"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:contentDescription="@string/pint_icon"
-            app:srcCompat="@drawable/pint_icon" />
+            <ImageView
+                android:id="@+id/ivFbIcon"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/fb_icon"
+                app:srcCompat="@drawable/fb_icon" />
 
-        <ImageView
-            android:id="@+id/ivYtIcon"
-            android:layout_width="?attr/actionBarSize"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:contentDescription="@string/yt_icon"
-            app:srcCompat="@drawable/yt_icon" />
+            <ImageView
+                android:id="@+id/ivInstIcon"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="@string/instagram_icon"
+                app:srcCompat="@drawable/inst_icon" />
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/ivPintIcon"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="@string/pint_icon"
+                app:srcCompat="@drawable/pint_icon" />
+
+            <ImageView
+                android:id="@+id/ivYtIcon"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/yt_icon"
+                app:srcCompat="@drawable/yt_icon" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

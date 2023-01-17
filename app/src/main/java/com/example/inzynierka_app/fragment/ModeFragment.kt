@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.inzynierka_app.*
@@ -32,7 +33,7 @@ class ModeFragment : Fragment() {
         _binding = FragmentModeBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        viewModel = ViewModelProvider(requireActivity()).get(GripperViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity())[(GripperViewModel::class.java)]
         binding.gripperViewModel = viewModel
         binding.lifecycleOwner = this
 
@@ -45,9 +46,6 @@ class ModeFragment : Fragment() {
                     setIcon(R.drawable.error_red)
                     setPositiveButton("OK") { dialog: DialogInterface, _ ->
                         dialog.cancel()
-                  //      viewModel.writeData2(ParamsWrite("\"DB10\".mb_app_btn_error", true))
-                  //      viewModel.readErrors(RequestArrays.ERRORS.array)
-                  //      viewModel.writeData2(ParamsWrite("\"DB10\".mb_app_btn_error", false))
                         viewModel.quitErrors()
                         Log.i("errorResponse", it.errorName.toString())
                     }
@@ -55,9 +53,15 @@ class ModeFragment : Fragment() {
                 }
                 if (!builder.create().isShowing) {
                     saveErrorToDb(it.errorName, it.errorDesc)
-                    viewModel.writeData2(ParamsWrite("\"DB100\".mb_app_btn_error", false))
+                    viewModel.writeSingleData(ParamsWrite("\"DB100\".mb_app_btn_error", false))
                 }
                 viewModel.stopReadErrors()
+            }
+
+            val adapter = ArrayAdapter(requireContext(), androidx.transition.R.layout.support_simple_spinner_dropdown_item, resources.getStringArray(R.array.change_mode))
+            binding.actvChangeMode.setAdapter(adapter)
+            binding.actvChangeMode.setOnItemClickListener { parent, _, pos, _ ->
+                viewModel.writeCPUMode(parent.getItemAtPosition(pos).toString())
             }
         }
         return view

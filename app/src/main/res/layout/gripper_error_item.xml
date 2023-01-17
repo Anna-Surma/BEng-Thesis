@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="error"
             type="com.example.inzynierka_app.db.GripperError" />
@@ -11,7 +12,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp">
+        android:layout_marginVertical="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,17 +22,17 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/error_icon_desc"
                 android:layout_gravity="center"
                 android:layout_weight="0.5"
-                android:contentDescription="@string/error_desc_icon">
-            </ImageView>
+                android:contentDescription="@string/error_desc_icon"
+                android:src="@drawable/error_icon_desc"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="2"
                 android:orientation="vertical"
-                android:layout_weight="2">
+                android:padding="5dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -42,28 +43,26 @@
                         android:id="@+id/tv_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@android:color/black"
+                        android:layout_marginEnd="10dp"
                         android:text="@{error.errorDate}"
-                        tools:text="00:26/08.11.2022"
-                        android:textStyle="bold"
-                        android:layout_marginEnd="10dp"/>
+                        android:textAppearance="?attr/textAppearanceTitleMedium"
+                        tools:text="00:26/08.11.2022" />
 
                     <TextView
                         android:id="@+id/tv_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@android:color/black"
                         android:text="@{error.errorName}"
-                        tools:text=" RIGHT SENSOR"
-                        android:textStyle="bold"/>
+                        android:textAppearance="?attr/textAppearanceTitleMedium"
+                        tools:text=" RIGHT SENSOR" />
                 </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_desc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
                     android:text="@{error.errorDesc}"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
                     tools:text="No signal from the right sensor" />
 
             </LinearLayout>

@@ -59,4 +59,5 @@
     <string name="selected_sequence">Wybrana\nsekwencja</string>
     <string name="commandAndParams">Parametry &amp; Polecenia</string>
     <string name="delete"> Usuń</string>
+    <string name="about_company">O firmie</string>
 </resources>

@@ -7,9 +7,7 @@ import com.example.inzynierka_app.databinding.StepItemBinding
 import com.example.inzynierka_app.model.StepItem
 
 class BlockStepAdapter : RecyclerView.Adapter<BlockStepAdapter.StepItemViewHolder>() {
-
     var data = listOf<StepItem>()
-
     override fun getItemCount() = data.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
@@ -20,7 +18,8 @@ class BlockStepAdapter : RecyclerView.Adapter<BlockStepAdapter.StepItemViewHolde
         holder.bind(item)
     }
 
-    class StepItemViewHolder(private val binding: StepItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class StepItemViewHolder(private val binding: StepItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         companion object {
             fun inflateFrom(parent: ViewGroup): StepItemViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)

@@ -11,10 +11,8 @@ class ReadCPUModeUseCase @Inject constructor(
 ) {
     suspend operator fun invoke()
             : Resource<String?> {
-        Log.i("ViewModel", "ReadCPUModeUseCase START")
         mainRepository.readCPUMode(CPUModeRequest(1, "2.0", "Plc.ReadOperatingMode")).let {
             if (it.isSuccessful) {
-                Log.i("ViewModel", "ReadCPUModeUseCase DIRING")
                 return Resource.success(it.body()?.result.toString())
             } else {
                 return Resource.error("Data not read", null)

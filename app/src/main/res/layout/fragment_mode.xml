@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="gripperViewModel"
             type="com.example.inzynierka_app.viewmodel.GripperViewModel" />
@@ -35,12 +36,12 @@
 
                 <TextView
                     android:id="@+id/tvOpMode"
-                    android:textAppearance="?attr/textAppearanceTitleMedium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="3dp"
                     android:text="@string/operating_mode"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -78,20 +79,19 @@
                             android:layout_width="@dimen/led_dimen"
                             android:layout_height="@dimen/led_dimen"
                             android:layout_gravity="center"
-                            android:contentDescription="@string/led"
-                            tools:src="@drawable/led_gray"
-                            android:src = '@{gripperViewModel.CPUmode.equals("run") ? @drawable/led_green : @drawable/led_gray }'
+                            android:src='@{gripperViewModel.cpuMode.equals("run") ? @drawable/led_green : @drawable/led_gray }'
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:src="@drawable/led_gray" />
 
                         <TextView
                             android:id="@+id/tvRun"
-                            android:textAppearance="?attr/textAppearanceTitleMedium"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/params_margin_start"
                             android:text="@string/run"
+                            android:textAppearance="?attr/textAppearanceTitleMedium"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/ivLedRun"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -110,20 +110,19 @@
                             android:layout_width="@dimen/led_dimen"
                             android:layout_height="@dimen/led_dimen"
                             android:layout_gravity="center"
-                            android:contentDescription="@string/led"
-                            tools:src="@drawable/led_gray"
-                            android:src = '@{gripperViewModel.CPUmode.equals("startup") ? @drawable/led_yellow : @drawable/led_gray }'
+                            android:src='@{gripperViewModel.cpuMode.equals("startup") ? @drawable/led_yellow : @drawable/led_gray }'
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:src="@drawable/led_gray" />
 
                         <TextView
                             android:id="@+id/tvStartUp"
-                            android:textAppearance="?attr/textAppearanceTitleMedium"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/params_margin_start"
                             android:text="@string/start_up"
+                            android:textAppearance="?attr/textAppearanceTitleMedium"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/ivLedStartUp"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -142,12 +141,11 @@
                             android:layout_width="@dimen/led_dimen"
                             android:layout_height="@dimen/led_dimen"
                             android:layout_gravity="center"
-                            android:contentDescription="@string/led"
-                            tools:src="@drawable/led_gray"
-                            android:src = '@{gripperViewModel.CPUmode.equals("hold") ? @drawable/led_yellow : @drawable/led_gray }'
+                            android:src='@{gripperViewModel.cpuMode.equals("hold") ? @drawable/led_yellow : @drawable/led_gray }'
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:src="@drawable/led_gray" />
 
                         <TextView
                             android:id="@+id/tvHold"
@@ -173,12 +171,11 @@
                             android:layout_width="@dimen/led_dimen"
                             android:layout_height="@dimen/led_dimen"
                             android:layout_gravity="center"
-                            android:contentDescription="@string/led"
-                            tools:src="@drawable/led_gray"
-                            android:src = '@{gripperViewModel.CPUmode.equals("stop") ? @drawable/led_red : @drawable/led_gray }'
+                            android:src='@{gripperViewModel.cpuMode.equals("stop") ? @drawable/led_red : @drawable/led_gray }'
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:src="@drawable/led_gray" />
 
                         <TextView
                             android:id="@+id/tvStop"
@@ -200,11 +197,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:checked="false"
+                    android:onCheckedChanged="@{(switch, checked) -> gripperViewModel.onControlTbCheckedChanged(checked)}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/llModeLed"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:onCheckedChanged="@{(switch, checked) -> gripperViewModel.onControlTbCheckedChanged(checked)}"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -212,36 +209,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/params_margin_start"
-                android:orientation="horizontal"
                 android:layout_marginTop="10dp"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/llMode">
 
                 <TextView
                     android:id="@+id/tvChangeMode"
-                    android:textAppearance="?attr/textAppearanceBodyLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/change_mode"
+                    android:textAppearance="?attr/textAppearanceBodyLarge"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/menu"
+                    android:id="@+id/tilChangeMode"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Default"
                     android:layout_marginStart="@dimen/params_margin_start"
                     app:layout_constraintBottom_toBottomOf="@+id/tvChangeMode"
                     app:layout_constraintStart_toEndOf="@+id/tvChangeMode"
                     app:layout_constraintTop_toTopOf="@+id/tvChangeMode">
 
                     <AutoCompleteTextView
+                        android:id="@+id/actvChangeMode"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/default_single"
                         android:inputType="none"
                         android:padding="0dp"
                         app:simpleItems="@array/change_mode" />

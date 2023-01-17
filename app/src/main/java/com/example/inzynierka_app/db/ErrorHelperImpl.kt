@@ -6,10 +6,12 @@ import javax.inject.Inject
 class ErrorHelperImpl @Inject constructor(
     private val errorDao: ErrorDao
 ) : ErrorHelper {
-    override suspend fun insert(gripperError: GripperError) = errorDao.insert(gripperError)
+    override suspend fun insertError(gripperError: GripperError) =
+        errorDao.insertError(gripperError)
 
     override fun getAllRunsSortedByDate(): LiveData<List<GripperError>> =
         errorDao.getAllErrorsSortedByDate()
 
-    override suspend fun delete() = errorDao.delete()
+    override suspend fun deleteAllErrors() =
+        errorDao.deleteAllErrors()
 }

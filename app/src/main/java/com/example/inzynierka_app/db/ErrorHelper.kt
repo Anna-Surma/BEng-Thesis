@@ -4,10 +4,8 @@ import androidx.lifecycle.LiveData
 
 interface ErrorHelper {
 
-    suspend fun insert(gripperError: GripperError)
-
+    suspend fun insertError(gripperError: GripperError)
     fun getAllRunsSortedByDate(): LiveData<List<GripperError>>
-
-    suspend fun delete()
+    suspend fun deleteAllErrors()
 
 }

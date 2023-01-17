@@ -1,7 +1,8 @@
 package com.example.inzynierka_app.use_case
+
 import javax.inject.Inject
 
-data class CPUDataUseCaces
+data class CPUDataUseCases
 @Inject constructor(
     val readCPUError: ReadCPUErrorUseCase,
     val readCPUMode: ReadCPUModeUseCase,

@@ -13,7 +13,6 @@
         android:id="@+id/ivBlumMap"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:contentDescription="@string/map"
         android:layout_marginBottom="13dp"
         android:src="@drawable/login_icon"/>
 

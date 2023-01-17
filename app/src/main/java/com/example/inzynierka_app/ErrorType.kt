@@ -1,6 +1,6 @@
 package com.example.inzynierka_app
 
-enum class ErrorType (val errorName: Int, val errorDesc: Int){
+enum class ErrorType(val errorName: Int, val errorDesc: Int) {
     LOGIN(0, R.string.incorrect_password_or_email_error),
     NETWORK(R.string.network_connection_error_name, R.string.network_connection_error_desc),
     HOR_LEFT(R.string.hor_left_sensor_error_name, R.string.hor_left_sensor_error_desc),

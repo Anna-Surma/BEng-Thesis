@@ -70,7 +70,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:id="@+id/llspin"
+                    android:id="@+id/llStartPoint"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -88,18 +88,19 @@
                         android:textAppearance="?attr/textAppearanceBodyLarge" />
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/sStartPoint"
+                        android:id="@+id/tilStartPoint"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/params_margin_start"
-                        android:hint="Default">
+                        android:layout_marginStart="@dimen/params_margin_start" >
 
                         <AutoCompleteTextView
+                            android:id="@+id/actvStartPoint"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="none"
                             android:padding="0dp"
+                            android:hint="@string/default_single"
                             app:simpleItems="@array/start_point" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -113,9 +114,9 @@
                     android:text="@string/step"
                     android:layout_marginTop="5dp"
                     android:layout_gravity="center"
-                    app:layout_constraintStart_toEndOf="@+id/llspin"
-                    app:layout_constraintTop_toTopOf="@+id/llspin"
-                    app:layout_constraintBottom_toBottomOf="@+id/llspin"
+                    app:layout_constraintStart_toEndOf="@+id/llStartPoint"
+                    app:layout_constraintTop_toTopOf="@+id/llStartPoint"
+                    app:layout_constraintBottom_toBottomOf="@+id/llStartPoint"
                     app:layout_constraintEnd_toEndOf="parent"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 

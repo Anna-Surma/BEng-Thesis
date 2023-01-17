@@ -1,23 +1,13 @@
 package com.example.inzynierka_app
 
-import android.app.Activity
-import android.content.Context
-import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
-import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.inzynierka_app.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -46,6 +36,7 @@ class MainActivity : AppCompatActivity() {
                 binding.bottomNav.visibility = View.GONE
                 binding.fcvError.visibility = View.VISIBLE
                 errorActive = true
+                binding.ivErrorIcon.visibility = View.GONE
             }
         }
 

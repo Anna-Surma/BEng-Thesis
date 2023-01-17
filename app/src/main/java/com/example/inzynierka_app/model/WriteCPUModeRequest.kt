@@ -1,6 +1,6 @@
 package com.example.inzynierka_app.model
 
-data class WriteCPUModeRequest (
+data class WriteCPUModeRequest(
     var id: Int,
     var jsonrpc: String,
     var method: String,

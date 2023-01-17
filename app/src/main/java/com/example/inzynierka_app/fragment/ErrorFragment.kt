@@ -34,7 +34,7 @@ class ErrorFragment : Fragment() {
         _binding = FragmentErrorBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        viewModel = ViewModelProvider(requireActivity()).get(GripperViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity())[(GripperViewModel::class.java)]
 
         setupRecyclerView()
 
@@ -42,19 +42,7 @@ class ErrorFragment : Fragment() {
             errorAdapter.submitList(it)
         })
 
-        val menuHost: MenuHost = requireActivity()
-        menuHost.addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                // Add menu items here
-                menuInflater.inflate(R.menu.options_menu, menu)
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                deleteAll()
-                return true
-            }
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-
+        setupMenu()
         return view
     }
 
@@ -81,8 +69,8 @@ class ErrorFragment : Fragment() {
             setTitle(R.string.delete_history)
             setMessage(R.string.delete_history_desc)
             builder.setIcon(android.R.drawable.ic_menu_delete)
-            setPositiveButton("Delete"){dialog: DialogInterface,_ -> viewModel.deleteErrors()}
-            setNegativeButton("Cancel"){dialog: DialogInterface,_ -> dialog.cancel()}
+            setPositiveButton("Delete") { _: DialogInterface, _ -> viewModel.deleteErrors() }
+            setNegativeButton("Cancel") { dialog: DialogInterface, _ -> dialog.cancel() }
             show()
         }
     }

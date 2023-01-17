@@ -31,7 +31,7 @@ class LoginFragment : Fragment() {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+        viewModel = ViewModelProvider(this)[(LoginViewModel::class.java)]
 
         binding.btnLogin.setOnClickListener {
             viewModel.onSignInButtonClicked()
@@ -60,7 +60,7 @@ class LoginFragment : Fragment() {
                     setTitle(ErrorType.NETWORK.errorName)
                     setMessage(it)
                     builder.setIcon(R.drawable.error_icon_desc)
-                    setPositiveButton("OK"){dialog: DialogInterface,_ -> dialog.cancel()}
+                    setPositiveButton("OK") { dialog: DialogInterface, _ -> dialog.cancel() }
                     show()
                 }
             } else {

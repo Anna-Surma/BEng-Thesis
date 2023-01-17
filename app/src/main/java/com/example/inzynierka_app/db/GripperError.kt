@@ -12,7 +12,7 @@ data class GripperError(
     var errorName: String = "",
     @ColumnInfo(name = "error_desc")
     var errorDesc: String = "",
-){
+) {
     @PrimaryKey(autoGenerate = true)
     var errorId: Long = 0L
 }

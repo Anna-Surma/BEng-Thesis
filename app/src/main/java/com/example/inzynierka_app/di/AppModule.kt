@@ -101,7 +101,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideErrorDao (db: ErrorDatabase) = db.getErrorDao()
+    fun provideErrorDao(db: ErrorDatabase) = db.getErrorDao()
 
     @Singleton
     @Provides

@@ -37,12 +37,12 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:textAppearance="?attr/textAppearanceTitleMedium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="3dp"
-                    android:text="@string/parameters" />
+                    android:text="@string/parameters"
+                    android:textAppearance="?attr/textAppearanceTitleMedium" />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -58,28 +58,30 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    app:layout_constraintEnd_toStartOf="@+id/llSecond"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/llSecound">
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
                         android:id="@+id/tvStartPoint"
-                        android:textAppearance="?attr/textAppearanceBodyLarge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/set_start" />
+                        android:text="@string/set_start"
+                        android:textAppearance="?attr/textAppearanceBodyLarge" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/sStartPoint"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="Default"
+
                         android:layout_marginStart="@dimen/params_margin_start">
 
                         <AutoCompleteTextView
+                            android:id="@+id/actvStartPoint"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:hint="@string/default_single"
                             android:inputType="none"
                             android:padding="0dp"
                             app:simpleItems="@array/start_point" />
@@ -90,56 +92,56 @@
 
 
                 <LinearLayout
-                    android:id="@+id/llSecound"
+                    android:id="@+id/llSecond"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_marginTop="10dp"
-                    app:layout_constraintStart_toEndOf="@id/llFirst"
-                    app:layout_constraintTop_toTopOf="@+id/llFirst"
+                    android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="@id/llFirst"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/llFirst"
+                    app:layout_constraintTop_toTopOf="@+id/llFirst">
 
                     <TextView
                         android:id="@+id/tvDuration"
-                        android:textAppearance="?attr/textAppearanceBodyLarge"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="@string/duration" />
+                        android:text="@string/duration"
+                        android:textAppearance="?attr/textAppearanceBodyLarge" />
 
                     <Chronometer
                         android:id="@+id/chStopWatch"
-                        android:textAppearance="?attr/textAppearanceBodyLarge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/params_margin_start" />
+                        android:layout_marginStart="@dimen/params_margin_start"
+                        android:textAppearance="?attr/textAppearanceBodyLarge" />
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/llThird"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:id="@+id/llThird"
                     app:layout_constraintStart_toStartOf="@id/llFirst"
                     app:layout_constraintTop_toBottomOf="@id/llFirst">
 
                     <TextView
                         android:id="@+id/tvCycles"
-                        android:textAppearance="?attr/textAppearanceBodyLarge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/set_cycles" />
+                        android:text="@string/set_cycles"
+                        android:textAppearance="?attr/textAppearanceBodyLarge" />
 
                     <EditText
                         android:id="@+id/etCycles"
-                        android:textAppearance="?attr/textAppearanceBodyLarge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/params_margin_start"
                         android:hint="@string/none_hint"
+                        android:inputType="numberDecimal"
                         android:text="@={gripperViewModel.setCycles}"
-                        android:inputType="numberDecimal" />
+                        android:textAppearance="?attr/textAppearanceBodyLarge" />
                 </LinearLayout>
 
 
@@ -150,25 +152,25 @@
                     android:layout_marginTop="12dp"
                     android:layout_marginBottom="13dp"
                     android:orientation="horizontal"
-                    app:layout_constraintStart_toStartOf="@id/llSecound"
-                    app:layout_constraintTop_toTopOf="@+id/llThird"
-                    app:layout_constraintBottom_toBottomOf="@+id/llThird">
+                    app:layout_constraintBottom_toBottomOf="@+id/llThird"
+                    app:layout_constraintStart_toStartOf="@id/llSecond"
+                    app:layout_constraintTop_toTopOf="@+id/llThird">
 
                     <TextView
                         android:id="@+id/tvCyclesParam"
-                        android:textAppearance="?attr/textAppearanceBodyLarge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/cycles" />
+                        android:text="@string/cycles"
+                        android:textAppearance="?attr/textAppearanceBodyLarge" />
 
                     <TextView
                         android:id="@+id/tvCyclesNumber"
-                        android:textAppearance="?attr/textAppearanceBodyLarge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/params_margin_start"
                         android:hint="@string/_0_hint"
-                        android:text="@{gripperViewModel.cyclesNumber}" />
+                        android:text="@{gripperViewModel.cyclesNumber}"
+                        android:textAppearance="?attr/textAppearanceBodyLarge" />
 
                 </LinearLayout>
 
@@ -185,20 +187,20 @@
 
                     <TextView
                         android:id="@+id/tvSetTime"
-                        android:textAppearance="?attr/textAppearanceBodyLarge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/set_time" />
+                        android:text="@string/set_time"
+                        android:textAppearance="?attr/textAppearanceBodyLarge" />
 
                     <EditText
                         android:id="@+id/etTime"
-                        android:textAppearance="?attr/textAppearanceBodyLarge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/params_margin_start"
                         android:hint="@string/none_hint"
                         android:inputType="numberDecimal"
-                        android:text="@={gripperViewModel.setTime}" />
+                        android:text="@={gripperViewModel.setTime}"
+                        android:textAppearance="?attr/textAppearanceBodyLarge" />
 
                 </LinearLayout>
 
@@ -207,25 +209,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="@+id/llFive"
                     app:layout_constraintStart_toStartOf="@id/llFour"
-                    app:layout_constraintTop_toTopOf="@+id/llFive"
-                    app:layout_constraintBottom_toBottomOf="@+id/llFive">
+                    app:layout_constraintTop_toTopOf="@+id/llFive">
 
                     <TextView
                         android:id="@+id/tvTimeParam"
-                        android:textAppearance="?attr/textAppearanceBodyLarge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/time" />
+                        android:text="@string/time"
+                        android:textAppearance="?attr/textAppearanceBodyLarge" />
 
                     <TextView
                         android:id="@+id/tvTimeWatch"
-                        android:textAppearance="?attr/textAppearanceBodyLarge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/params_margin_start"
                         android:hint="@string/_0_hint"
-                        android:text="@{gripperViewModel.durationCounter}" />
+                        android:text="@{gripperViewModel.durationCounter}"
+                        android:textAppearance="?attr/textAppearanceBodyLarge" />
 
                 </LinearLayout>
 
@@ -234,33 +236,33 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    app:layout_constraintEnd_toStartOf="@+id/llAvrCycleTime"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/llFive"
-                    app:layout_constraintEnd_toStartOf="@+id/llAvrCycleTime">
+                    app:layout_constraintTop_toBottomOf="@id/llFive">
 
                     <TextView
                         android:id="@+id/tvCycleTime"
-                        android:textAppearance="?attr/textAppearanceBodyLarge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/cycle_time" />
+                        android:text="@string/cycle_time"
+                        android:textAppearance="?attr/textAppearanceBodyLarge" />
 
                     <TextView
                         android:id="@+id/tvCyclesTimeDisp"
-                        android:textAppearance="?attr/textAppearanceBodyLarge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/params_margin_start"
                         android:layout_marginEnd="3dp"
                         android:hint="@string/_0_hint"
-                        android:text="@{gripperViewModel.cyclesTime}" />
+                        android:text="@{gripperViewModel.cyclesTime}"
+                        android:textAppearance="?attr/textAppearanceBodyLarge" />
 
                     <TextView
                         android:id="@+id/tvCtUnits"
-                        android:textAppearance="?attr/textAppearanceBodyMedium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/units" />
+                        android:text="@string/units"
+                        android:textAppearance="?attr/textAppearanceBodyMedium" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -269,32 +271,33 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/params_margin_start"
                     android:orientation="horizontal"
-                    app:layout_constraintStart_toEndOf="@+id/llSetAvrCycleTime"
-                    app:layout_constraintTop_toTopOf="@+id/llSetAvrCycleTime"
                     app:layout_constraintBottom_toBottomOf="@+id/llSetAvrCycleTime"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/llSetAvrCycleTime"
+                    app:layout_constraintTop_toTopOf="@+id/llSetAvrCycleTime">
+
                     <TextView
                         android:id="@+id/tvAvrCycleTime"
-                        android:textAppearance="?attr/textAppearanceBodyLarge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/avr_cycle_time" />
+                        android:text="@string/avr_cycle_time"
+                        android:textAppearance="?attr/textAppearanceBodyLarge" />
 
                     <TextView
                         android:id="@+id/tvAvrCyclesTimeDisp"
-                        android:textAppearance="?attr/textAppearanceBodyLarge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/params_margin_start"
                         android:hint="@string/_0_hint"
-                        android:text="@{gripperViewModel.avrCyclesTime}" />
+                        android:text="@{gripperViewModel.avrCyclesTime}"
+                        android:textAppearance="?attr/textAppearanceBodyLarge" />
 
                     <TextView
                         android:id="@+id/tvActUnits"
-                        android:textAppearance="?attr/textAppearanceBodyMedium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/units" />
+                        android:text="@string/units"
+                        android:textAppearance="?attr/textAppearanceBodyMedium" />
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -311,12 +314,12 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:textAppearance="?attr/textAppearanceTitleMedium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="2dp"
-                    android:text="@string/commands" />
+                    android:text="@string/commands"
+                    android:textAppearance="?attr/textAppearanceTitleMedium" />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -328,34 +331,34 @@
                     android:id="@+id/btnStartButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClickListener="@{() -> gripperViewModel.onStartBtnClicked()}"
                     android:text="@string/start"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/btnPauseButton"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:onClickListener="@{() -> gripperViewModel.onStartBtnClicked()}"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
                     android:id="@+id/btnStopButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClickListener="@{()-> gripperViewModel.onStopBtnClicked()}"
                     android:text="@string/stop_btn"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/btnPauseButton"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:onClickListener="@{()-> gripperViewModel.onStopBtnClicked()}"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
                     android:id="@+id/btnPauseButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClickListener="@{() -> gripperViewModel.onPauseBtnClicked()}"
                     android:text="@string/pause"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/btnStartButton"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/btnStopButton"
-                    android:onClickListener="@{() -> gripperViewModel.onPauseBtnClicked()}"/>
+                    app:layout_constraintStart_toEndOf="@+id/btnStartButton"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
