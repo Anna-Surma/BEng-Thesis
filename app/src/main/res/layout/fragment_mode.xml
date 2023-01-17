@@ -7,13 +7,13 @@
 
         <variable
             name="gripperViewModel"
-            type="com.example.inzynierka_app.viewmodel.GripperViewModel" />
+            type="com.example.inzynierka_app.ui.viewmodel.GripperViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".fragment.ModeFragment">
+        tools:context=".ui.fragment.ModeFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clOperatingMode"

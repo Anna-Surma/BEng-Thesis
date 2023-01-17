@@ -34,10 +34,10 @@
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/fcvMode"
-                android:name="com.example.inzynierka_app.fragment.ModeFragment"
+                android:name="com.example.inzynierka_app.ui.fragment.ModeFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:context=".MainActivity" />
+                tools:context=".ui.activity.MainActivity" />
 
             <ImageView
                 android:id="@+id/ivErrorIcon"
@@ -56,14 +56,14 @@
             android:layout_height="match_parent"
             app:defaultNavHost="true"
             app:navGraph="@navigation/nav_graph"
-            tools:context=".MainActivity" />
+            tools:context=".ui.activity.MainActivity" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fcvError"
-            android:name="com.example.inzynierka_app.fragment.ErrorFragment"
+            android:name="com.example.inzynierka_app.ui.fragment.ErrorFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".MainActivity" />
+            tools:context=".ui.activity.MainActivity" />
 
     </LinearLayout>
 

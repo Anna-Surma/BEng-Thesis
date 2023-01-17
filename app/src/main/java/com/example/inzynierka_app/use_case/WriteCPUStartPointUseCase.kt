@@ -1,7 +1,7 @@
 package com.example.inzynierka_app.use_case
 
 import android.util.Log
-import com.example.inzynierka_app.Steps
+import com.example.inzynierka_app.other.Steps
 import com.example.inzynierka_app.repository.MainRepository
 import javax.inject.Inject
 

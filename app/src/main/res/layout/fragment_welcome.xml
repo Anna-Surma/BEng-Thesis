@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.WelcomeFragment">
+    tools:context=".ui.fragment.WelcomeFragment">
 
     <ImageView
         android:id="@+id/ivBlumLogo"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
-        android:src="@drawable/blum_logo"
+        android:src="@drawable/logo_blum"
         app:layout_constraintBottom_toTopOf="@+id/facilitiesCard"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

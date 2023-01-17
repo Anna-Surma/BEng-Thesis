@@ -6,14 +6,14 @@
     <data>
         <variable
             name="gripperViewModel"
-            type="com.example.inzynierka_app.viewmodel.GripperViewModel" />
+            type="com.example.inzynierka_app.ui.viewmodel.GripperViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".fragment.ManualFragment">
+        tools:context=".ui.fragment.ManualFragment">
 
         <LinearLayout
             android:id="@+id/llAuto"
@@ -38,7 +38,7 @@
                 android:id="@+id/ivStepImage"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                tools:src="@drawable/step_one"
+                tools:src="@drawable/step_1"
                 app:imageResource="@{gripperViewModel.stepsResponse.drawable}"
                 android:layout_marginHorizontal="50dp">
             </ImageView>

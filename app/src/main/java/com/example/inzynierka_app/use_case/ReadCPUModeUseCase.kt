@@ -1,7 +1,6 @@
 package com.example.inzynierka_app.use_case
 
-import android.util.Log
-import com.example.inzynierka_app.Resource
+import com.example.inzynierka_app.other.Resource
 import com.example.inzynierka_app.model.CPUModeRequest
 import com.example.inzynierka_app.repository.MainRepository
 import javax.inject.Inject

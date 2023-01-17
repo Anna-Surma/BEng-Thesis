@@ -1,6 +1,6 @@
 package com.example.inzynierka_app.use_case
 
-import com.example.inzynierka_app.Resource
+import com.example.inzynierka_app.other.Resource
 import com.example.inzynierka_app.model.ParamsRead
 import com.example.inzynierka_app.model.ReadDataRequest
 import com.example.inzynierka_app.repository.MainRepository
