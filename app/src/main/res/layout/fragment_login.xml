@@ -17,7 +17,7 @@
         android:src="@drawable/login_icon"/>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/emailTextInputLayout"
+        android:id="@+id/loginTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint = "@string/login"
@@ -26,6 +26,7 @@
         app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/loginTextInputText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -40,6 +41,7 @@
         app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordTextInputText"
             android:layout_height = "wrap_content"
             android:layout_width = "match_parent" />
     </com.google.android.material.textfield.TextInputLayout>

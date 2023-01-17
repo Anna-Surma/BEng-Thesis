@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/autoFragment">
+    app:startDestination="@id/welcomeFragment">
 
     <fragment
         android:id="@+id/welcomeFragment"
-        android:name="com.example.inzynierka_app.fragment.WelcomeFragment"
+        android:name="com.example.inzynierka_app.ui.fragment.WelcomeFragment"
         android:label="fragment_welcome"
-        tools:layout="@layout/fragment_welcome" >
+        tools:layout="@layout/fragment_welcome">
         <action
             android:id="@+id/action_welcomeFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -17,26 +17,26 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.inzynierka_app.fragment.LoginFragment"
+        android:name="com.example.inzynierka_app.ui.fragment.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_autoFragment"
             app:destination="@id/autoFragment" />
     </fragment>
     <fragment
         android:id="@+id/manualFragment"
-        android:name="com.example.inzynierka_app.fragment.ManualFragment"
+        android:name="com.example.inzynierka_app.ui.fragment.ManualFragment"
         android:label="fragment_manual"
         tools:layout="@layout/fragment_manual" />
     <fragment
         android:id="@+id/autoFragment"
-        android:name="com.example.inzynierka_app.fragment.AutoFragment"
+        android:name="com.example.inzynierka_app.ui.fragment.AutoFragment"
         android:label="fragment_auto"
         tools:layout="@layout/fragment_auto" />
     <fragment
         android:id="@+id/blockFragment"
-        android:name="com.example.inzynierka_app.fragment.BlockFragment"
+        android:name="com.example.inzynierka_app.ui.fragment.BlockFragment"
         android:label="fragment_block"
         tools:layout="@layout/fragment_block" />
 </navigation>

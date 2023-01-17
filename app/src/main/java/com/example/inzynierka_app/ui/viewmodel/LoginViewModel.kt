@@ -31,11 +31,7 @@ class LoginViewModel @Inject constructor(
     private val _networkErrorMessageBox = MutableLiveData<Int?>(null)
     val networkErrorMessageBox: LiveData<Int?> = _networkErrorMessageBox
 
-    fun onSignInButtonClicked() {
-        loginUser(params)
-    }
-
-    private fun loginUser(param: ParamsLogin) = viewModelScope.launch {
+    fun loginUser(param: ParamsLogin) = viewModelScope.launch {
         mainRepository.login(LoginRequest(id = 0, jsonrpc = "2.0", method = "Api.Login", param))
             .enqueue(object : Callback<LoginResponse> {
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {

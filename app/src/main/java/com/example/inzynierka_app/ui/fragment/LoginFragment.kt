@@ -3,6 +3,7 @@ package com.example.inzynierka_app.ui.fragment
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.inzynierka_app.other.ErrorType
 import com.example.inzynierka_app.R
 import com.example.inzynierka_app.databinding.FragmentLoginBinding
+import com.example.inzynierka_app.model.ParamsLogin
 import com.example.inzynierka_app.ui.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,7 +36,7 @@ class LoginFragment : Fragment() {
         viewModel = ViewModelProvider(this)[(LoginViewModel::class.java)]
 
         binding.btnLogin.setOnClickListener {
-            viewModel.onSignInButtonClicked()
+            viewModel.loginUser(ParamsLogin(binding.loginTextInputText.text.toString(), binding.passwordTextInputText.text.toString()))
         }
 
         viewModel.logInEvent.observe(viewLifecycleOwner) {
@@ -45,10 +47,10 @@ class LoginFragment : Fragment() {
 
         viewModel.loginErrorMessage.observe(viewLifecycleOwner) {
             if (it != null) {
-                binding.emailTextInputLayout.error = resources.getString(it)
+                binding.loginTextInputLayout.error = resources.getString(it)
                 binding.passwordTextInputLayout.error = resources.getString(it)
             } else {
-                binding.emailTextInputLayout.error = null
+                binding.loginTextInputLayout.error = null
                 binding.passwordTextInputLayout.error = null
             }
         }
@@ -64,7 +66,7 @@ class LoginFragment : Fragment() {
                     show()
                 }
             } else {
-                binding.emailTextInputLayout.error = null
+                binding.loginTextInputLayout.error = null
                 binding.passwordTextInputLayout.error = null
             }
         }
