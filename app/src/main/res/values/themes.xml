@@ -30,4 +30,30 @@
 
     </style>
 
+    <style name="MaterialAlertDialog__Center" parent="@style/ThemeOverlay.Material3.MaterialAlertDialog.Centered">
+    </style>
+
+    <style name="MaterialAlertDialog__Horizontal" parent="@style/ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="materialAlertDialogTitlePanelStyle">@style/Title.Panel.Center</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/Message.Center</item>
+        <item name="materialAlertDialogTitleIconStyle">@style/Message.Center2</item>
+    </style>
+
+    <style name="Title.Panel.Center" parent="MaterialAlertDialog.MaterialComponents.Title.Panel">
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="Message.Center" parent="MaterialAlertDialog.MaterialComponents">
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="Message.Center2" parent="MaterialAlertDialog.MaterialComponents.Title.Icon">
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+
+    <style name="MaterialAlertDialog__Delete" parent="@style/ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="materialAlertDialogBodyTextStyle">@style/Message.Center</item>
+    </style>
+
 </resources>

@@ -80,6 +80,7 @@ class GripperViewModel @Inject constructor(
     private var viewModelStepsJob: Job? = null
 
     private var viewModelCPUModeJob: Job? = null
+    var count = 0
 
     init {
         resetCycles()
@@ -285,7 +286,14 @@ class GripperViewModel @Inject constructor(
 
     private fun countAvrTime(sum: Int, cycleTime: Int, nrOfCycle: Int): Int {
         try {
-            _avrCyclesTime.value = ((sum + cycleTime) / nrOfCycle).toString()
+            if(count == 0){
+                _avrCyclesTime.value = ((sum + cycleTime) / (nrOfCycle-1)).toString()
+                count = 1
+            }
+            else{
+                _avrCyclesTime.value = ((sum + cycleTime) / (nrOfCycle)).toString()
+            }
+            _avrCyclesTime.value = ((sum + cycleTime) / (nrOfCycle-1)).toString()
         } catch (e: Exception) {
             Log.i("GripperViewModel", "Divided by zero")
         }

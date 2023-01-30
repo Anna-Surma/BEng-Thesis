@@ -1,9 +1,7 @@
 package com.example.inzynierka_app.ui.fragment
 
-import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +13,7 @@ import com.example.inzynierka_app.R
 import com.example.inzynierka_app.databinding.FragmentLoginBinding
 import com.example.inzynierka_app.model.ParamsLogin
 import com.example.inzynierka_app.ui.viewmodel.LoginViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -57,11 +56,11 @@ class LoginFragment : Fragment() {
 
         viewModel.networkErrorMessageBox.observe(viewLifecycleOwner) {
             if (it != null) {
-                val builder = AlertDialog.Builder(context)
+                val builder = context?.let { it1 -> MaterialAlertDialogBuilder(it1, R.style.MaterialAlertDialog__Center) }
                 with(builder) {
-                    setTitle(ErrorType.NETWORK.errorName)
-                    setMessage(it)
-                    builder.setIcon(R.drawable.error_icon_desc)
+                    this!!.setTitle(ErrorType.NETWORK.errorName)
+                    setMessage(ErrorType.NETWORK.errorDesc)
+                    builder!!.setIcon(R.drawable.no_signal)
                     setPositiveButton("OK") { dialog: DialogInterface, _ -> dialog.cancel() }
                     show()
                 }

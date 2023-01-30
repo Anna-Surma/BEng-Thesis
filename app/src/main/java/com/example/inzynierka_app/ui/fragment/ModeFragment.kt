@@ -13,7 +13,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.inzynierka_app.*
 import com.example.inzynierka_app.databinding.FragmentModeBinding
 import com.example.inzynierka_app.model.ParamsWrite
+import com.example.inzynierka_app.other.ErrorType
 import com.example.inzynierka_app.ui.viewmodel.GripperViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -39,11 +41,11 @@ class ModeFragment : Fragment() {
 
         viewModel.errorResponse.observe(viewLifecycleOwner) {
             if (it != null) {
-                val builder = AlertDialog.Builder(context)
+                val builder = context?.let { it1 -> MaterialAlertDialogBuilder(it1, R.style.MaterialAlertDialog__Horizontal) }
                 with(builder) {
-                    setTitle(it.errorName)
+                    this!!.setTitle(it.errorName)
                     setMessage(it.errorDesc)
-                    setIcon(R.drawable.ic_error)
+                    builder!!.setIcon(R.drawable.ic_error)
                     setPositiveButton("OK") { dialog: DialogInterface, _ ->
                         dialog.cancel()
                         viewModel.quitErrors()
@@ -51,19 +53,24 @@ class ModeFragment : Fragment() {
                     }
                     show()
                 }
-                if (!builder.create().isShowing) {
+                if (!builder!!.create().isShowing) {
                     saveErrorToDb(it.errorName, it.errorDesc)
                     viewModel.writeSingleData(ParamsWrite("\"DB100\".mb_app_btn_error", false))
                 }
                 viewModel.stopReadErrors()
             }
-
-            val adapter = ArrayAdapter(requireContext(), androidx.transition.R.layout.support_simple_spinner_dropdown_item, resources.getStringArray(R.array.change_mode))
-            binding.actvChangeMode.setAdapter(adapter)
-            binding.actvChangeMode.setOnItemClickListener { parent, _, pos, _ ->
-                viewModel.writeCPUMode(parent.getItemAtPosition(pos).toString())
-            }
         }
+
+        val adapter = ArrayAdapter(
+            requireContext(),
+            androidx.transition.R.layout.support_simple_spinner_dropdown_item,
+            resources.getStringArray(R.array.change_mode)
+        )
+        binding.actvChangeMode.setAdapter(adapter)
+        binding.actvChangeMode.setOnItemClickListener { parent, _, pos, _ ->
+            viewModel.writeCPUMode(parent.getItemAtPosition(pos).toString())
+        }
+
         return view
     }
 

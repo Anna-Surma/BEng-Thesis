@@ -1,6 +1,7 @@
 package com.example.inzynierka_app.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,6 +56,7 @@ class AutoFragment : Fragment() {
         binding.actvStartPoint.setAdapter(adapter)
         binding.actvStartPoint.setOnItemClickListener { parent, _, pos, _ ->
             viewModel.writeStartPoint(parent.getItemAtPosition(pos).toString())
+            Log.i("puma", parent.getItemAtPosition(pos).toString())
         }
 
         return view

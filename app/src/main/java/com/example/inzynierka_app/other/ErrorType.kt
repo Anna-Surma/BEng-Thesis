@@ -3,7 +3,7 @@ package com.example.inzynierka_app.other
 import com.example.inzynierka_app.R
 
 enum class ErrorType(val errorName: Int, val errorDesc: Int) {
-    LOGIN(0, R.string.incorrect_password_or_email_error),
+    LOGIN(0, R.string.incorrect_login_or_password_error),
     NETWORK(R.string.network_connection_error_name, R.string.network_connection_error_desc),
     HOR_LEFT(R.string.hor_left_sensor_error_name, R.string.hor_left_sensor_error_desc),
     HOR_RIGHT(R.string.hor_right_sensor_error_name, R.string.hor_right_sensor_error_desc),

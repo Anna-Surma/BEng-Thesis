@@ -1,5 +1,6 @@
 package com.example.inzynierka_app.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,9 +19,6 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val mainRepository: MainRepository
 ) : ViewModel() {
-
-    private var params: ParamsLogin = ParamsLogin("json", "json")
-
     private val _logInEvent = MutableLiveData(LogInEvent(false, null))
     val logInEvent: LiveData<LogInEvent>
         get() = _logInEvent
@@ -31,6 +29,9 @@ class LoginViewModel @Inject constructor(
     private val _networkErrorMessageBox = MutableLiveData<Int?>(null)
     val networkErrorMessageBox: LiveData<Int?> = _networkErrorMessageBox
 
+    init {
+        mainRepository.saveAuthToken("null")
+    }
     fun loginUser(param: ParamsLogin) = viewModelScope.launch {
         mainRepository.login(LoginRequest(id = 0, jsonrpc = "2.0", method = "Api.Login", param))
             .enqueue(object : Callback<LoginResponse> {
@@ -45,10 +46,11 @@ class LoginViewModel @Inject constructor(
                     val loginResponse = response.body()
                     if (response.isSuccessful) {
                         if (loginResponse?.result?.token != null) {
+                            Log.i("KOT", "IF")
                             mainRepository.saveAuthToken(loginResponse.result.token)
                             _logInEvent.value = LogInEvent(true, loginResponse.result.token)
                         } else {
-                            _logInEvent.value = LogInEvent(true, mainRepository.fetchAuthToken())
+                           // _logInEvent.value = LogInEvent(true, mainRepository.fetchAuthToken())
                             assignFullError(ErrorType.LOGIN.errorDesc)
                         }
                     }

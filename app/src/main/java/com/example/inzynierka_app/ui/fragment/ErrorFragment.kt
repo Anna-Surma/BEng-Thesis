@@ -1,6 +1,5 @@
 package com.example.inzynierka_app.ui.fragment
 
-import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
@@ -17,6 +16,7 @@ import com.example.inzynierka_app.databinding.FragmentErrorBinding
 import com.example.inzynierka_app.ui.viewmodel.GripperViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import android.view.MenuInflater
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 @AndroidEntryPoint
 class ErrorFragment : Fragment() {
@@ -64,11 +64,11 @@ class ErrorFragment : Fragment() {
 
 
     private fun deleteAll() {
-        val builder = AlertDialog.Builder(context)
+        val builder = context?.let { it1 -> MaterialAlertDialogBuilder(it1, R.style.MaterialAlertDialog__Delete) }
         with(builder) {
-            setTitle(R.string.delete_history)
+            this!!.setTitle(R.string.delete_history)
             setMessage(R.string.delete_history_desc)
-            builder.setIcon(android.R.drawable.ic_menu_delete)
+            builder!!.setIcon(android.R.drawable.ic_menu_delete)
             setPositiveButton("Delete") { _: DialogInterface, _ -> viewModel.deleteErrors() }
             setNegativeButton("Cancel") { dialog: DialogInterface, _ -> dialog.cancel() }
             show()

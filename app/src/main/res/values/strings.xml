@@ -53,23 +53,23 @@
         <item>STOP</item>
     </string-array>
     <string name="vtk_top_sensor_error_name">VTK TOP SENSOR</string>
-    <string name="vtk_top_sensor_error_desc">Incorrect signal from the vtk top sensor.</string>
+    <string name="vtk_top_sensor_error_desc">Incorrect signal from the vertical top sensor.</string>
     <string name="vtk_down_sensor_error_name">VTK DOWN SENSOR</string>
-    <string name="vtk_down_sensor_error_desc">Incorrect signal from the vtk down sensor.</string>
+    <string name="vtk_down_sensor_error_desc">Incorrect signal from the vertical down sensor.</string>
     <string name="hor_right_sensor_error_name">HOR RIGHT SENSOR</string>
-    <string name="hor_right_sensor_error_desc">Incorrect signal from the hor right sensor.</string>
+    <string name="hor_right_sensor_error_desc">Incorrect signal from the horizontal right sensor.</string>
     <string name="hor_left_sensor_error_name">HOR LEFT SENSOR</string>
-    <string name="hor_left_sensor_error_desc">Incorrect signal from the hor left sensor.</string>
+    <string name="hor_left_sensor_error_desc">Incorrect signal from the horizontal left sensor.</string>
     <string name="gripper_sensor_error_name">GRIPPER SENSOR</string>
     <string name="gripper_sensor_error_desc">Incorrect signal from the gripper sensor.</string>
     <string name="put_error_name">PUT DOWN</string>
     <string name="put_error_desc">Item can not be put down.</string>
     <string name="not_halt_error_name">SAFETY SWITCH </string>
-    <string name="not_hat_error_desc">Emergency stop switch on</string>
+    <string name="not_hat_error_desc">Emergency stop switch on.</string>
 
-    <string name="incorrect_password_or_email_error">Incorrect password or email.</string>
+    <string name="incorrect_login_or_password_error">Incorrect login or password.</string>
     <string name="network_connection_error_name">Network failure</string>
-    <string name="network_connection_error_desc">Please Check Your Internet Connection Or Try Again Later</string>
+    <string name="network_connection_error_desc">Please Check Your Internet Connection Or Try Again Later.</string>
     <string name="error_icon" translatable="false">Error Icon</string>
     <string name="delete_history">Are you sure you want to delete history?</string>
     <string name="delete_history_desc">You can\'t undo this action.</string>

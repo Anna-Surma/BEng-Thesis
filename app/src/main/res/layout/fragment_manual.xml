@@ -38,7 +38,7 @@
                 android:id="@+id/ivStepImage"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                tools:src="@drawable/step_1"
+                tools:src="@drawable/step_5"
                 app:imageResource="@{gripperViewModel.stepsResponse.drawable}"
                 android:layout_marginHorizontal="50dp">
             </ImageView>

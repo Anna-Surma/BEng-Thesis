@@ -13,7 +13,7 @@
     </item>
     <item
         android:id="@+id/blockFragment"
-        android:icon="@drawable/manual_mode"
+        android:icon="@drawable/block_mode"
         android:title="@string/block">
     </item>
 
